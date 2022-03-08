@@ -1,5 +1,5 @@
 ---
-title: "Unity DOTS 01 - 프로젝트 생성"
+title: "Unity DOTS - 01 프로젝트 생성"
 excerpt: "Unity DOTS 프로젝트 생성해보기"
 categories:
     - "Unity"
