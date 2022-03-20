@@ -11,7 +11,7 @@ date: 2021-03-08
 
 > 게임 개발자가 되기 위해 공부하면서 배우는 여러가지 내용들을 기록하기 위한 블로그입니다. 포스팅에 참고한 모든 강의와 자료들은 하단에 "Reference"에 남겨두었습니다.
 
-<div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/12zV7u6Bh0vHpu" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/hamburglar-12zV7u6Bh0vHpu"></a></p>
+<p align="center"><iframe src="https://giphy.com/embed/12zV7u6Bh0vHpu" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hamburglar-12zV7u6Bh0vHpu"><a></p></p>
 
 ## 전방선언(Forward Declaration)
 
