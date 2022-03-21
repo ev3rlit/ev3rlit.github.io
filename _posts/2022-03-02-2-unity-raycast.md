@@ -10,7 +10,7 @@ date: 2021-03-02
 last_modified_at: 2021-03-02
 ---
 
-> 게임 개발자가 되기 위해 공부하면서 배우는 여러가지 내용들을 기록하기 위한 블로그입니다. 포스팅에 참고한 모든 강의와 자료들은 하단에 "Reference"에 남겨두었습니다.
+> 게임 개발자가 되기 위해 공부하면서 배우는 여러가지 내용들을 기록하기 위한 블로그입니다. 포스팅에 참고한 모든 강의와 자료들은 하단에 "참조"에 남겨두었습니다.
 
 ---
 
@@ -152,7 +152,7 @@ public class MoveMouseInput : MonoBehaviour
 
 ~~움직이는 유티니짱이 너무 맘에든다.~~
 
-## Reference
+## 참조
 
 - [Code Monkey - Moudlar Move](https://youtu.be/mJRc9kLxFSk)
 - [NavMeshAgent](https://docs.unity3d.com/2022.2/Documentation/Manual/class-NavMeshAgent.html)

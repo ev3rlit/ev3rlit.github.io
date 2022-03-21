@@ -7,6 +7,8 @@ tags:
     - [Euler, Coordinate System, UE4, Unreal]
 ---
 
+> 게임 개발자가 되기 위해 공부하면서 배우는 여러가지 내용들을 기록하기 위한 블로그입니다. 포스팅에 참고한 모든 강의와 자료들은 하단에 "참조"에 남겨두었습니다.
+
 <p align="center"><iframe src="https://giphy.com/embed/5xtDarDRj4xd6D0E9sQ" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pislices-3d-cinema-4d-5xtDarDRj4xd6D0E9sQ"></a></p></p>
 
 ## Pitch Yaw Roll
@@ -35,7 +37,7 @@ tags:
 
 
 
-## 참고
+## 참조
 
 - [좌표계 용어집](https://docs.unrealengine.com/4.27/ko/Basics/Actors/CoordinateSpace/)
 - [Aircraft principal axes](https://en.wikipedia.org/wiki/Aircraft_principal_axes)
