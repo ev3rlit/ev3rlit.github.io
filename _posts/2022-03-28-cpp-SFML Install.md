@@ -32,11 +32,11 @@ date: 2021-03-28
 
 SFML을 다운로드 하기 전에, 먼저 Visual Studio에서 빈 프로젝트를 하나 생성해줍니다. 
 
-![](/assets/2022-03-28-cpp-SFML%20Install/01%20create%20new%20empty%20project.png){: .align-cetner}
+![](/assets/2022-03-28-cpp-SFML%20Install/01%20create%20new%20empty%20project.png){: .align-center}
 
 프로젝트 명은 자유롭게 설정해주시면 됩니다. 그리고 하단의 ```솔루션 및 프로젝트를 같은 디렉터리에 배치```를 클릭해줍니다.
 
-![](/assets/2022-03-28-cpp-SFML%20Install/02%20set%20project%20name.png){: .align-cetner}
+![](/assets/2022-03-28-cpp-SFML%20Install/02%20set%20project%20name.png){: .align-center}
 
 
 ## 2. SFML 다운로드 및 폴더 복사
