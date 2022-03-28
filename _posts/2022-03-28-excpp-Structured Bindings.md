@@ -30,6 +30,8 @@ std::array<int, 3> value = {1,2,3};
 
 ```cpp
 auto [x,y,z] = value;
+auto [x,y,z,r] = value; // X
+int [x,y,z] = value;    // X
 ```
 
 > 구조적 바인딩으로 선언된 변수의 수는 오른쪽 표현식 값의 수와 일치해야 합니다. 
