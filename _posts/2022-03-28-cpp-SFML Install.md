@@ -67,11 +67,10 @@ bin 폴더에는 외부 코드 사용을 위한 dll 파일이 들어있습니다
 프로젝트 속성을 설정하기에 앞서, 해당 프로젝트가 사용하고 있는 언어가 무엇인지 인식하기 위해서는 최소 하나 이상의 파일을 추가해야 합니다. 'main.cpp'로 소스파일을 하나 추가해줍니다.
 
 ![](/assets/2022-03-28-cpp-SFML%20Install/07%20create%20new%20cpp%20file.png){: .align-center}
-{: .align-center}
 
 상단 탭에서 ```프로젝트 - Project-SFML 속성``` 눌러 속성 페이지를 엽니다. 그다음 ```구성```과 ```플랫폼```을 **모든 구성**과 **모든 플랫폼**으로 설정합니다.
 
-![](/assets/2022-03-28-cpp-SFML%20Install/08%20set%20configuration%20and%20target%20platform.png)
+![](/assets/2022-03-28-cpp-SFML%20Install/08%20set%20configuration%20and%20target%20platform.png){: .align-center}
 
 include 폴더를 추가하기 위해서 ```C/C++ - 일반```에서 '추가 포함 디렉토리'에 다음 경로를 추가합니다.
 
