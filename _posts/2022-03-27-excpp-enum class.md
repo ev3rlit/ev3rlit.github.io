@@ -80,10 +80,11 @@ if(piece == size)
 }
 ```
 
-> 이러한 문제는 컴파일 단계에서 컴파일러에 의해 경고될 수 있습니다.
-> ```console
-> warning: comparison between 'enum PieceType' and 'enum PieceSize'
-> ```
+이러한 문제는 컴파일 단계에서 컴파일러에 의해 경고될 수 있습니다.
+
+```console
+warning: comparison between 'enum PieceType' and 'enum PieceSize'
+```
 
 Enum Class는 이러한 문제를 해결할 수 있습니다. 예를 들어, 다음 코드는 type-safe한 버전의 PieceType 열거형입니다.
 
