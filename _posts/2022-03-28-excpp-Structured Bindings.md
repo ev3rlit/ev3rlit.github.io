@@ -8,8 +8,9 @@ tags:
 
 date: 2021-03-28
 ---
-
 > 게임 개발자가 되기 위해 공부하면서 배우는 여러가지 내용들을 기록하기 위한 블로그입니다. 포스팅에 참고한 모든 강의와 자료들은 하단에 "참조"에 남겨두었습니다.
+> 
+> 본 포스팅은 마크 그레고리의 "전문가를 위한 c++"의 내용을 정리하였습니다.
 
 ![](https://media1.giphy.com/media/nthoYgQ91Up2u7qmcE/giphy.gif?cid=ecf05e474qok4grj7vz9gydiu4lba82d6qhq7g8ebxj67p20&rid=giphy.gif&ct=g){: .align-center}
 
@@ -58,4 +59,4 @@ code = 82;      // 국가번호 수정
 ## 참고
 
 - 전문가를 위한 C++
-- ("[C++17] Structured Bindings")[http://egloos.zum.com/sweeper/v/3203903]
+- [\[C++17\] Structured Bindings](http://egloos.zum.com/sweeper/v/3203903)
