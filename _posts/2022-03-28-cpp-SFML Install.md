@@ -82,7 +82,7 @@ $(SolutionDir)include
 
 ![](/assets/2022-03-28-cpp-SFML%20Install/09%20additional%20include%20directory.png){: .align-center}
 
-> $(SolutionDir)은 현제 프로젝트의 절대 경로를 나타내는 심볼입니다.
+> $(SolutionDir)은 현제 프로젝트의 절대 경로를 나타내는 매크로입니다.
 
 라이브러리 폴더를 추가하는 과정또한 유사합니다. lib 폴더를 추가하기 위해서 ```링커 - 일반```에서 '추가 라이브러리 디렉터리'에 다음 경로를 추가합니다.
 
@@ -94,14 +94,27 @@ $(SolutionDir)lib
 
 ![](/assets/2022-03-28-cpp-SFML%20Install/10%20additional%20library%20directory.png){: .align-center}
 
-마지막으로, 프로그램 실행시 필요한 라이브러리를 위해 ```링커 - 입력```에서 '추가 종속성'에 다음 경로를 추가합니다.
+마지막으로, 프로그램 실행시 필요한 라이브러리를 위해 ```링커 - 입력```에서 '추가 종속성'에 다음 경로를 추가합니다. 
+
+상단의 구성에서 **Debug**로 변경하고 다음 경로를 추가합니다.
 
 ```console
-$(SolutionDir)lib\*.lib
+$(SolutionDir)lib\sfml-graphics-d.lib
+$(SolutionDir)lib\sfml-system-d.lib
+$(SolutionDir)lib\sfml-window-d.lib
 ```
 
-![](/assets/2022-03-28-cpp-SFML%20Install/11%20%20additional%20dependency.png){: .align-center}
+![](/assets/2022-03-28-cpp-SFML%20Install/11%20debug%20additional%20dependency.png){: .align-center}
 
+상단의 구성에서 **Release**로 변경하고 다음 경로를 추가합니다.
+
+```console
+$(SolutionDir)lib\sfml-graphics.lib
+$(SolutionDir)lib\sfml-system.lib
+$(SolutionDir)lib\sfml-window.lib
+```
+
+![](/assets/2022-03-28-cpp-SFML%20Install/11%20release%20additional%20dependency.png){: .align-center}
 
 SFML 라이브러리를 사용하기 위한 프로젝트 설정이 끝났으므로, 적용을 누르고 창을 닫아줍니다. 
 
