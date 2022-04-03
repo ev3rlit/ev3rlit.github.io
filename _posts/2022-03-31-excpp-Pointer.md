@@ -1,5 +1,5 @@
 ---
-tite: "전문가를 위한 C++ - 포인터"
+title: "전문가를 위한 C++ - 포인터"
 excerpt: ""
 categories:
     - "excpp"
