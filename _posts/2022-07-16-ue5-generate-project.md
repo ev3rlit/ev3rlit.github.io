@@ -13,3 +13,7 @@ tags:
 ``` terminal
 /Users/Shared/Epic\ Games/UE_5.0/Engine/Build/BatchFiles/Mac/GenerateProjectFiles.sh -project="<.uproject 파일 절대 경로>" -VSCode
 ```
+
+## 프로젝트 빌드
+
+```Cmd``` + ```Shift``` + ```B```를 누르고 DebugGame 빌드
