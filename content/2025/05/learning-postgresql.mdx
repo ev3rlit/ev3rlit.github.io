@@ -1,0 +1,22 @@
+---
+title: "Learning PostgreSQL with FSD"
+date: "2025-05-01"
+description: "A deep dive into PostgreSQL running in the browser using PGlite."
+tags: ["PostgreSQL", "FSD", "Next.js"]
+draft: true
+---
+# Introduction
+
+This is a sample post demonstrating **interactive SQL** and **FSD architecture**.
+
+## Interactive SQL
+
+Below is a live SQL playground running `pglite`.
+
+<SqlPlayground 
+  setup="CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT); INSERT INTO users (name) VALUES ('Alice'), ('Bob');"
+/>
+
+## Schema Diagram
+
+<SchemaDiagram />
