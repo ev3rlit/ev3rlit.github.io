@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-stone-900 dark:text-stone-100 overflow-hidden h-screen w-screen bg-white dark:bg-stone-950 transition-colors duration-300;
+  }
+
+  /* Custom Scrollbar for Dark Mode */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-stone-200 dark:bg-stone-800 rounded-full hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors;
+  }
+
+  /* React Flow Dark Mode Overrides */
+  .dark .react-flow__controls {
+    @apply bg-stone-900 border-stone-800 shadow-xl shadow-black/20;
+  }
+
+  .dark .react-flow__controls-button {
+    @apply border-stone-800 bg-stone-900 fill-stone-400 hover:bg-stone-800;
+  }
+
+  .dark .react-flow__attribution {
+    @apply bg-stone-900/50 text-stone-600;
+  }
+
+  .dark .react-flow__edge-path {
+    @apply stroke-stone-700;
+  }
+
+  /* React Flow Handle Snapping Feedback */
+  .react-flow__handle-connecting,
+  .react-flow__handle-valid {
+    @apply !bg-indigo-500 !w-6 !h-6 !-left-3 !-top-3 !opacity-40 transition-all;
+  }
+
+  .react-flow__pane.dragging .react-flow__handle {
+    pointer-events: none;
+  }
+
+  /* Disable node content interactions during connection to allow "node-body" handle to capture events */
+  .react-flow__connection-active .nodegroup-content {
+    pointer-events: none !important;
+  }
+}
