@@ -33,7 +33,7 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
                         {/* Minimal ID */}
                         <Link href="/about">
                             <Card className="flex h-14 w-14 items-center justify-center overflow-hidden border-2 border-indigo-100 p-0 hover:border-indigo-400 transition-colors" radius="md" shadow="lg">
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Me" className="h-full w-full object-cover" />
+                                <img src="/profile.png" alt="Me" className="h-full w-full object-cover" />
                             </Card>
                         </Link>
 
