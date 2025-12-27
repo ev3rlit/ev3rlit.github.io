@@ -23,7 +23,7 @@ export function IdentityWidget() {
             <div className="mb-4 h-24 w-24 overflow-hidden rounded-full border-4 border-indigo-50 bg-indigo-100 shadow-inner">
                 {/* Placeholder for Memoji/Avatar */}
                 <img
-                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${PROFILE_CONFIG.nickname}`}
+                    src="/profile.png"
                     alt="Profile"
                     className="h-full w-full object-cover"
                 />
