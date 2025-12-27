@@ -4,8 +4,6 @@ import matter from 'gray-matter';
 import { Post, PostMeta } from '../model/types';
 import { SITE_CONFIG } from '@/shared/config/site';
 
-const CONTENT_PATH = path.join(process.cwd(), 'content');
-
 // Recursive function to get all files
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
     const files = fs.readdirSync(dirPath);
@@ -23,7 +21,19 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
     return arrayOfFiles;
 }
 
+export function getAllPostSlugs(): string[] {
+    const CONTENT_PATH = path.join(process.cwd(), 'content');
+    if (!fs.existsSync(CONTENT_PATH)) return [];
+
+    const files = getAllFiles(CONTENT_PATH);
+    return files.map((filePath) => {
+        const relativePath = path.relative(CONTENT_PATH, filePath);
+        return relativePath.replace(/\.mdx?$/, '').split(path.sep).join('-');
+    });
+}
+
 export async function getPostList(): Promise<Post[]> {
+    const CONTENT_PATH = path.join(process.cwd(), 'content');
     if (!fs.existsSync(CONTENT_PATH)) return [];
 
     const files = getAllFiles(CONTENT_PATH);
@@ -90,6 +100,7 @@ export async function getPostWithNeighbors(slug: string) {
 }
 
 export async function getPageContent(fileName: string): Promise<Post | null> {
+    const CONTENT_PATH = path.join(process.cwd(), 'content');
     const filePath = path.join(CONTENT_PATH, fileName);
     if (!fs.existsSync(filePath)) return null;
 

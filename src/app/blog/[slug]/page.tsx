@@ -1,16 +1,25 @@
-import { getPostList, getPostWithNeighbors } from '@/entities/post/api/get-posts';
+import { getAllPostSlugs, getPostWithNeighbors } from '@/entities/post/api/get-posts';
 import { PostDetailPage } from '@/views/post-detail/ui/PostDetailPage';
 import { notFound } from 'next/navigation';
 
+// Ensure we only generate static paths for known posts
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-    const posts = await getPostList();
-    return posts.map((post) => ({
-        slug: post.slug,
-    }));
+    try {
+        const slugs = getAllPostSlugs();
+        return slugs.map((slug) => ({
+            slug,
+        }));
+    } catch (error) {
+        console.error('[generateStaticParams] Error fetching slugs:', error);
+        return [];
+    }
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    const data = await getPostWithNeighbors(params.slug);
+    const { slug } = params;
+    const data = await getPostWithNeighbors(slug);
 
     if (!data) {
         notFound();
