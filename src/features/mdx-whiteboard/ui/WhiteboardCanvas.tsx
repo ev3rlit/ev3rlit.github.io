@@ -1,0 +1,65 @@
+"use client";
+
+import React, { useMemo, useEffect } from 'react';
+import ReactFlow, {
+    Background,
+    Controls,
+    BackgroundVariant,
+    ConnectionMode,
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { SectionNode, ListNode, ComponentNode, RootNode } from './CustomNodes';
+import { useTheme } from 'next-themes';
+
+const nodeTypes = {
+    root: RootNode,
+    section: SectionNode,
+    list: ListNode,
+    component: ComponentNode,
+};
+
+export function WhiteboardCanvas() {
+    const { resolvedTheme } = useTheme();
+    const isDark = resolvedTheme === 'dark';
+
+    const {
+        nodes,
+        edges,
+        onNodesChange,
+        onEdgesChange,
+        onConnect,
+        setEditingNodeId,
+        setReactFlowInstance
+    } = useWhiteboardStore();
+
+    return (
+        <div className="h-full w-full bg-transparent relative overflow-hidden">
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                nodeTypes={nodeTypes}
+                onPaneClick={() => setEditingNodeId(null)}
+                connectionMode={ConnectionMode.Loose}
+                onInit={setReactFlowInstance}
+                fitView
+                className="bg-transparent"
+            >
+                <Background
+                    key={resolvedTheme}
+                    color={isDark ? "#57534e" : "#cbd5e1"}
+                    gap={20}
+                    size={1}
+                    variant={BackgroundVariant.Dots}
+                />
+                <Controls
+                    className="!bg-white dark:!bg-stone-900 !border-slate-200 dark:!border-stone-800 !shadow-lg"
+                    showInteractive={false}
+                />
+            </ReactFlow>
+        </div>
+    );
+}
