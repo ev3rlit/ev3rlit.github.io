@@ -1,81 +1,113 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
-import { parseMdxToGraph } from '../lib/parser';
-import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { clsx } from 'clsx';
+import {
+    headingsPlugin,
+    listsPlugin,
+    quotePlugin,
+    thematicBreakPlugin,
+    markdownShortcutPlugin,
+    frontmatterPlugin,
+    useCodeBlockEditorContext,
+    jsxPlugin,
+    diffSourcePlugin,
+    toolbarPlugin,
+    UndoRedo,
+    BoldItalicUnderlineToggles,
+    DiffSourceToggleWrapper,
+    linkPlugin,
+    imagePlugin,
+    tablePlugin,
+    codeBlockPlugin
+} from '@mdxeditor/editor';
+import '@mdxeditor/editor/style.css';
+import { useTheme } from 'next-themes';
+import dynamic from 'next/dynamic';
+import { parseMdxToGraph } from '../lib/parser';
+
+const MDXEditor = dynamic(
+    () => import('@mdxeditor/editor').then((mod) => mod.MDXEditor),
+    { ssr: false }
+);
 
 export function MdxEditor() {
-    const { mdxSource, setMdxSource, setNodes, setEdges, isEditorOpen, toggleEditor, setCursorIndex } = useWhiteboardStore();
-    const [localSource, setLocalSource] = useState(mdxSource);
+    const { mdxSource, setMdxSource, isEditorOpen, toggleEditor, setNodes, setEdges } = useWhiteboardStore();
+    const { resolvedTheme } = useTheme();
 
-    // Initial parsing or when mdxSource changes externally
+    // Parse parsing logic when mdxSource changes
     useEffect(() => {
-        const { nodes, edges } = parseMdxToGraph(localSource);
+        const { nodes, edges } = parseMdxToGraph(mdxSource);
         setNodes(nodes);
         setEdges(edges);
-    }, [localSource, setNodes, setEdges]);
-
-    // Sync local state when global store changes (e.g. from Toolbar)
-    useEffect(() => {
-        if (mdxSource !== localSource) {
-            setLocalSource(mdxSource);
-        }
-    }, [mdxSource]);
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value;
-        setLocalSource(value);
-        setMdxSource(value);
-    };
-
-    const handleCursorUpdate = (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
-        setCursorIndex(e.currentTarget.selectionStart);
-    };
+    }, [mdxSource, setNodes, setEdges]);
 
     return (
         <div className={clsx(
-            "relative h-full transition-all duration-300 ease-in-out bg-white/90 dark:bg-stone-900/90 backdrop-blur-xl group overflow-hidden border border-slate-200 dark:border-stone-800 shadow-2xl rounded-2xl",
-            isEditorOpen ? "w-[450px]" : "w-0 border-0 pointer-events-none"
+            "relative h-full transition-all duration-300 ease-in-out bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl group overflow-hidden border border-slate-200 dark:border-stone-800 shadow-2xl rounded-2xl flex flex-col",
+            isEditorOpen ? "w-[500px]" : "w-0 border-0 pointer-events-none"
         )}>
+            {/* Header */}
             <div className={clsx(
-                "h-full w-[450px] flex flex-col transition-opacity duration-200",
+                "flex-none p-4 border-b border-slate-200 dark:border-stone-800 flex justify-between items-center bg-stone-50/50 dark:bg-stone-950/50 transition-opacity duration-200",
                 !isEditorOpen && "opacity-0"
             )}>
-                <div className="p-4 border-b border-slate-200 dark:border-stone-800 flex justify-between items-center bg-stone-50/50 dark:bg-stone-950/50">
-                    <h2 className="text-xs font-bold text-slate-500 dark:text-stone-400 uppercase tracking-widest font-mono">MDX Source</h2>
-                    <div className="flex gap-2">
-                        <button className="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-stone-800 text-stone-500 transition-colors">
-                            <Maximize2 size={14} />
-                        </button>
-                    </div>
+                <h2 className="text-xs font-bold text-slate-500 dark:text-stone-400 uppercase tracking-widest font-mono">MDX Editor</h2>
+                <div className="flex gap-2">
+                    <button className="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-stone-800 text-stone-500 transition-colors">
+                        <Maximize2 size={14} />
+                    </button>
                 </div>
+            </div>
 
-                <textarea
-                    className="flex-1 w-full p-6 font-mono text-sm bg-transparent outline-none resize-none text-slate-700 dark:text-stone-300 leading-relaxed placeholder:text-stone-600/30"
-                    value={localSource}
-                    onChange={handleChange}
-                    onSelect={handleCursorUpdate}
-                    onClick={handleCursorUpdate}
-                    onKeyUp={handleCursorUpdate}
-                    placeholder={`---
-title: Untitled
-date: ${new Date().toISOString().split('T')[0]}
-tags: []
----
-
-# Start writing MDX...
-`}
+            {/* Editor Content */}
+            <div className={clsx(
+                "flex-1 overflow-y-auto mdx-editor-wrapper",
+                !isEditorOpen && "opacity-0"
+            )}>
+                <MDXEditor
+                    markdown={mdxSource}
+                    onChange={setMdxSource}
+                    className={clsx(
+                        "h-full font-mono text-sm",
+                        resolvedTheme === 'dark' ? 'dark-theme' : ''
+                    )}
+                    contentEditableClassName="prose dark:prose-invert max-w-none px-6 py-4 focus:outline-none"
+                    plugins={[
+                        headingsPlugin(),
+                        listsPlugin(),
+                        quotePlugin(),
+                        thematicBreakPlugin(),
+                        markdownShortcutPlugin(),
+                        frontmatterPlugin(),
+                        jsxPlugin(),
+                        diffSourcePlugin({ viewMode: 'source' }),
+                        linkPlugin(),
+                        imagePlugin(),
+                        tablePlugin(),
+                        codeBlockPlugin({ defaultCodeBlockLanguage: 'typescript' }),
+                        toolbarPlugin({
+                            toolbarContents: () => (
+                                <div className="flex gap-2 p-1">
+                                    <DiffSourceToggleWrapper>
+                                        <UndoRedo />
+                                        <BoldItalicUnderlineToggles />
+                                    </DiffSourceToggleWrapper>
+                                </div>
+                            )
+                        })
+                    ]}
                 />
             </div>
 
-            {/* Toggle Button - Repositioned slightly */}
+            {/* Toggle Button */}
             <button
                 onClick={toggleEditor}
                 className={clsx(
                     "absolute top-6 right-0 translate-x-1/2 z-50 w-8 h-8 rounded-full bg-white dark:bg-stone-900 border border-slate-200 dark:border-stone-800 shadow-md flex items-center justify-center text-slate-500 dark:text-stone-400 hover:text-blue-500 transition-all",
-                    !isEditorOpen && "translate-x-12 opacity-0 pointer-events-none" // Hide toggle when closed, we'll need an external trigger or different logic if we want to re-open
+                    !isEditorOpen && "translate-x-12 opacity-0 pointer-events-none"
                 )}
             >
                 {isEditorOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
