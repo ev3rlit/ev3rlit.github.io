@@ -15,12 +15,13 @@ interface WhiteboardLayoutProps {
 }
 
 export function WhiteboardLayout({ sidebarContent, children, posts }: WhiteboardLayoutProps) {
-    const { isSidebarOpen, toggleSidebar, isPlaygroundMode } = useSidebarStore();
+    const { isSidebarOpen, toggleSidebar, isPlaygroundMode, isWhiteboardMode } = useSidebarStore();
+    const isFullscreenMode = isPlaygroundMode || isWhiteboardMode;
 
     return (
         <div className="relative h-screen w-screen overflow-hidden bg-slate-50 dark:bg-stone-950">
             {/* Grid Pattern Background */}
-            {!isPlaygroundMode && (
+            {!isFullscreenMode && (
                 <div className="absolute inset-0 z-0 bg-dot bg-dot-pattern dark:bg-dot-pattern-dark pointer-events-none opacity-80" />
             )}
             {/* Mesh Gradient Background */}
@@ -82,12 +83,12 @@ export function WhiteboardLayout({ sidebarContent, children, posts }: Whiteboard
                 transition={layoutTransition}
                 className={cn(
                     "relative h-full w-full overflow-hidden",
-                    !isPlaygroundMode && "pt-12 pb-24 md:pb-12 md:pl-24 overflow-y-auto"
+                    !isFullscreenMode && "pt-12 pb-24 md:pb-12 md:pl-24 overflow-y-auto"
                 )}
             >
                 <div className={cn(
                     "h-full w-full",
-                    !isPlaygroundMode && "mx-auto max-w-5xl px-4 md:px-8"
+                    !isFullscreenMode && "mx-auto max-w-5xl px-4 md:px-8"
                 )}>
                     {children}
                 </div>
