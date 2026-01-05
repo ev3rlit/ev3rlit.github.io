@@ -60,7 +60,7 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
             </GenericSidebar.Group>
 
             {/* 2. Main Navigation */}
-            <GenericSidebar.Group id="main" collapsible defaultOpen>
+            <GenericSidebar.Group id="main" defaultOpen>
                 <GenericSidebar.Item
                     icon={<Home size={18} />}
                     title="Home"
@@ -79,18 +79,16 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
                 />
             </GenericSidebar.Group>
 
-            <GenericSidebar.Divider />
-
             {/* 3. Contextual Tools (Playground / Whiteboard) */}
             {(isPlaygroundMode || isWhiteboardMode) && (
-                <GenericSidebar.Group id="tools" collapsible defaultOpen>
+                <GenericSidebar.Group id="tools" defaultOpen>
                     {isPlaygroundMode && <PlaygroundToolbar />}
                     {isWhiteboardMode && <WhiteboardToolbar />}
                 </GenericSidebar.Group>
             )}
 
             {/* 4. System / App Tools */}
-            <GenericSidebar.Group id="system" collapsible>
+            <GenericSidebar.Group id="system">
 
                 {mounted && (
                     <GenericSidebar.Item
@@ -99,8 +97,6 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
                         onClick={toggleTheme}
                     />
                 )}
-
-                <GenericSidebar.Divider />
 
                 {!isPlaygroundMode && (
                     <GenericSidebar.Item
