@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Card } from "@/shared/ui/Card";
 import { Button } from "@/shared/ui/Button";
-import { Home, Search, PenTool, Sun, ChevronLeft, Edit } from 'lucide-react';
+import { Home, Search, PenTool, Brush, NotebookPen, ChevronLeft, Layout } from 'lucide-react';
 import { useSidebarStore } from "@/features/layout/model/useSidebarStore";
 import { PlaygroundToolbar } from "@/features/playground-toolbar/ui/PlaygroundToolbar";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,15 +12,22 @@ import { useSearchStore } from "@/features/search-menu/model/useSearchStore";
 import { SearchMenu } from "@/features/search-menu/ui/SearchMenu";
 import { ThemeToggle } from "@/features/theme-toggle/ui/ThemeToggle";
 
+import { useWhiteboardStore } from "@/entities/whiteboard/model/whiteboardStore";
+import { ComponentPickerMenu } from "@/features/mdx-whiteboard/ui/ComponentPickerMenu";
+import { WhiteboardToolbar } from "@/widgets/whiteboard-toolbar/ui/WhiteboardToolbar";
+
 export function Sidebar({ posts = [] }: { posts?: any[] }) {
-    const { isPlaygroundMode } = useSidebarStore();
-    const { isOpen, close } = useSearchStore();
+    const { isPlaygroundMode, isWhiteboardMode } = useSidebarStore();
+    const { isOpen: isSearchOpen, close: closeSearch } = useSearchStore();
+    const isComponentPickerOpen = useWhiteboardStore(s => s.isComponentPickerOpen);
 
     return (
         <div className="flex gap-4 relative flex-row md:flex-col">
             <AnimatePresence mode="wait">
-                {isOpen ? (
+                {isSearchOpen ? (
                     <SearchMenu posts={posts} key="search-panel" />
+                ) : isComponentPickerOpen ? (
+                    <ComponentPickerMenu key="component-picker-panel" />
                 ) : (
                     <motion.div
                         key="sidebar-nav"
@@ -59,6 +66,21 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
                             )}
                         </AnimatePresence>
 
+                        {/* Whiteboard Specific Tools */}
+                        <AnimatePresence>
+                            {isWhiteboardMode && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                >
+                                    <Card className="flex flex-col p-2" radius="md" shadow="lg">
+                                        <WhiteboardToolbar />
+                                    </Card>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                         {/* System Tools */}
                         <Card className="flex gap-2 p-2 flex-row md:flex-col items-center" radius="md" shadow="lg">
                             <ThemeToggle />
@@ -69,10 +91,19 @@ export function Sidebar({ posts = [] }: { posts?: any[] }) {
                                         intent="ghost"
                                         title="Open Playground"
                                     >
-                                        <Edit size={20} />
+                                        <Brush size={20} />
                                     </Button>
                                 </Link>
                             )}
+                            <Link href="/whiteboard">
+                                <Button
+                                    size="icon"
+                                    intent="ghost"
+                                    title="Open Whiteboard"
+                                >
+                                    <NotebookPen size={20} />
+                                </Button>
+                            </Link>
                             <Button size="icon" intent="ghost" title="Collapse" onClick={useSidebarStore.getState().toggleSidebar}>
                                 <ChevronLeft size={20} />
                             </Button>
