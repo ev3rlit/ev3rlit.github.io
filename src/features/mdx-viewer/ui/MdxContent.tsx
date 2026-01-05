@@ -1,21 +1,30 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { SqlPlayground } from "@/features/sql-playground/ui/SqlPlayground";
 import { SchemaDiagram } from "@/features/schema-diagram/ui/SchemaDiagram";
+import { ContextArchitectureFlow, FinalArchitectureFlow } from "@/features/schema-diagram/ui/LogArchitectureDiagrams";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { CareerTimeline } from "@/features/about/ui/CareerTimeline";
 import { Experience, Project, Feature, FeatureItem } from "@/features/about/ui/TimelineItems";
+import { CodeComparison } from "./CodeComparison";
+import { BenchmarkSimulator } from "./BenchmarkSimulator";
+import { ContextRaceDemo } from "./ContextRaceDemo";
 
 const components = {
     SqlPlayground,
     SchemaDiagram,
+    ContextArchitectureFlow,
+    FinalArchitectureFlow,
     Button,
     Card,
     CareerTimeline,
     Experience,
     Project,
     Feature,
-    FeatureItem
+    FeatureItem,
+    CodeComparison,
+    BenchmarkSimulator,
+    ContextRaceDemo
 };
 
 interface MdxContentProps {
@@ -24,8 +33,11 @@ interface MdxContentProps {
 
 export function MdxContent({ source }: MdxContentProps) {
     return (
-        <article className="prose prose-stone dark:prose-invert max-w-none break-words prose-headings:font-bold prose-h1:text-2xl md:prose-h1:text-3xl prose-h2:text-xl md:prose-h2:text-2xl prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl prose-img:w-full prose-img:h-auto">
-            <MDXRemote source={source} components={components} />
+        <article className="prose dark:prose-invert max-w-none break-words prose-strong:font-bold prose-strong:text-foreground">
+            <MDXRemote
+                source={source}
+                components={components}
+            />
         </article>
     );
 }
