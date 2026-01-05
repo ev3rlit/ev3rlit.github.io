@@ -6,10 +6,12 @@ import { notFound } from 'next/navigation';
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
+    console.log('[BlogPage] Generating static params...');
     try {
         const slugs = getAllPostSlugs();
+        console.log('[BlogPage] Found slugs count:', slugs.length);
         return slugs.map((slug) => ({
-            slug,
+            slug: slug,
         }));
     } catch (error) {
         console.error('[generateStaticParams] Error fetching slugs:', error);
