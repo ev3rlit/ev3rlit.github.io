@@ -20,8 +20,13 @@ const nodeTypes = {
 };
 
 export function WhiteboardCanvas() {
+    const [mounted, setMounted] = React.useState(false);
     const { resolvedTheme } = useTheme();
     const isDark = resolvedTheme === 'dark';
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const {
         nodes,
@@ -32,6 +37,8 @@ export function WhiteboardCanvas() {
         setEditingNodeId,
         setReactFlowInstance
     } = useWhiteboardStore();
+
+    if (!mounted) return null;
 
     return (
         <div className="h-full w-full bg-transparent relative overflow-hidden">
