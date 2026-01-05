@@ -44,7 +44,7 @@ export function WhiteboardLayout({ sidebarContent, children, posts }: Whiteboard
                         )}
                     >
                         <div className={cn(
-                            "flex pointer-events-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+                            "flex pointer-events-auto scrollbar-hide",
                             // Desktop wrapper
                             "md:flex-col md:gap-4 md:py-8 md:overflow-y-auto md:max-h-screen",
                             // Mobile wrapper

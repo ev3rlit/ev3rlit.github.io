@@ -5,40 +5,48 @@ import { Square, Circle, Type, MousePointer2, Plus, ArrowUpRight } from 'lucide-
 import { Button } from '@/shared/ui/Button';
 import { Card } from '@/shared/ui/Card';
 import { usePlaygroundStore } from '@/features/playground-canvas/model/usePlaygroundStore';
+import { Sidebar } from '@/shared/ui/sidebar/Sidebar';
 
 export function PlaygroundToolbar() {
     const addNode = usePlaygroundStore(s => s.addNode);
 
     return (
-        <Card
-            className="flex flex-col gap-3 p-2.5 w-14 border border-slate-200/50 bg-white/95 backdrop-blur-md items-center"
-            radius="full"
-            padding="none"
-            shadow="lg"
-        >
-            <Button size="icon" intent="ghost" title="Select" className="text-slate-400 hover:text-slate-900 active:scale-90">
-                <MousePointer2 size={18} />
-            </Button>
+        <>
+            <Sidebar.Item
+                icon={<MousePointer2 size={18} />}
+                title="Select"
+                className="text-slate-400 hover:text-slate-900"
+            />
 
-            <div className="h-px w-6 bg-slate-100/80" />
+            <Sidebar.Divider />
 
-            <Button size="icon" intent="ghost" title="Rectangle" onClick={() => addNode('Rectangle')} className="text-blue-500 hover:bg-blue-50 active:scale-90">
-                <Square size={20} />
-            </Button>
+            <Sidebar.Item
+                icon={<Square size={20} />}
+                title="Rectangle"
+                onClick={() => addNode('Rectangle')}
+                className="text-blue-500 hover:bg-blue-50"
+            />
+            <Sidebar.Item
+                icon={<Circle size={20} />}
+                title="Circle"
+                onClick={() => addNode('Circle')}
+                className="text-orange-500 hover:bg-orange-50"
+            />
+            <Sidebar.Item
+                icon={<Type size={20} />}
+                title="Text"
+                onClick={() => addNode('Text')}
+                className="text-purple-500 hover:bg-purple-50"
+            />
 
-            <Button size="icon" intent="ghost" title="Circle" onClick={() => addNode('Circle')} className="text-orange-500 hover:bg-orange-50 active:scale-90">
-                <Circle size={20} />
-            </Button>
+            <Sidebar.Divider />
 
-            <Button size="icon" intent="ghost" title="Text" onClick={() => addNode('Text')} className="text-purple-500 hover:bg-purple-50 active:scale-90">
-                <Type size={20} />
-            </Button>
-
-            <div className="h-px w-6 bg-slate-100/80" />
-
-            <Button size="icon" intent="ghost" title="Sticky Note" onClick={() => addNode('Sticky')} className="text-yellow-500 hover:bg-yellow-50 active:scale-90">
-                <Plus size={22} className="text-yellow-600" />
-            </Button>
-        </Card>
+            <Sidebar.Item
+                icon={<Plus size={22} className="text-yellow-600" />}
+                title="Sticky Note"
+                onClick={() => addNode('Sticky')}
+                className="text-yellow-500 hover:bg-yellow-50"
+            />
+        </>
     );
 }
