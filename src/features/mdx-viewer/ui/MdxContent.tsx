@@ -9,6 +9,7 @@ import { Experience, Project, Feature, FeatureItem } from "@/features/about/ui/T
 import { CodeComparison } from "./CodeComparison";
 import { BenchmarkSimulator } from "./BenchmarkSimulator";
 import { ContextRaceDemo } from "./ContextRaceDemo";
+import { StatCard } from "./StatCard";
 
 const components = {
     SqlPlayground,
@@ -24,7 +25,8 @@ const components = {
     FeatureItem,
     CodeComparison,
     BenchmarkSimulator,
-    ContextRaceDemo
+    ContextRaceDemo,
+    StatCard
 };
 
 interface MdxContentProps {
