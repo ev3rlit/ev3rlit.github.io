@@ -39,6 +39,12 @@ interface WhiteboardState {
     insertContent: (content: string) => void;
     isComponentPickerOpen: boolean;
     setComponentPickerOpen: (open: boolean) => void;
+
+    fileHandle: any | null; // using any to avoid TS issues with File System Access API if types aren't loaded
+    setFileHandle: (handle: any | null) => void;
+
+    insertMarkdown: ((markdown: string) => void) | null;
+    setInsertMarkdown: (fn: (markdown: string) => void) => void;
 }
 
 export const useWhiteboardStore = create<WhiteboardState>((set, get) => ({
@@ -102,4 +108,10 @@ tags: []
     }),
     isComponentPickerOpen: false,
     setComponentPickerOpen: (open) => set({ isComponentPickerOpen: open }),
+
+    fileHandle: null,
+    setFileHandle: (handle) => set({ fileHandle: handle }),
+
+    insertMarkdown: null,
+    setInsertMarkdown: (fn) => set({ insertMarkdown: fn }),
 }));

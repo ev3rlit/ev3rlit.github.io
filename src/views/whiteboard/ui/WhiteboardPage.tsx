@@ -9,6 +9,7 @@ import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore'
 import { useEffect } from 'react';
 import { ReactFlowProvider } from 'reactflow';
 import { ChevronRight } from 'lucide-react';
+import { cn } from '@/shared/lib/cn';
 
 export function WhiteboardPage() {
     const isEditorOpen = useWhiteboardStore(state => state.isEditorOpen);
@@ -28,7 +29,7 @@ export function WhiteboardPage() {
                 </div>
             </ReactFlowProvider>
 
-            {/* Floating Editor (Left, Z-Index 40) - Spacing from sidebar (approx 80px) */}
+            {/* Floating Editor (Left, Z-Index 40) - Fixed Position */}
             <div className="absolute left-[100px] top-4 bottom-4 z-40 pointer-events-none flex flex-col justify-center transition-all duration-300">
                 <div className="h-full pointer-events-auto">
                     <MdxEditor />
