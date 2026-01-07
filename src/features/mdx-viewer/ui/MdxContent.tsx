@@ -11,6 +11,13 @@ import { BenchmarkSimulator } from "./BenchmarkSimulator";
 import { ContextRaceDemo } from "./ContextRaceDemo";
 import { StatCard } from "./StatCard";
 
+// MDX Operators (Polymorphic Components)
+import { Head } from "@/features/mdx-operators/ui/Head";
+import { Branch } from "@/features/mdx-operators/ui/Branch";
+import { Compose } from "@/features/mdx-operators/ui/Compose";
+import { Switch, Case, Default } from "@/features/mdx-operators/ui/Switch";
+import { Map } from "@/features/mdx-operators/ui/Map";
+
 const components = {
     SqlPlayground,
     SchemaDiagram,
@@ -26,7 +33,15 @@ const components = {
     CodeComparison,
     BenchmarkSimulator,
     ContextRaceDemo,
-    StatCard
+    StatCard,
+    // MDX Operators
+    Head,
+    Branch,
+    Compose,
+    Switch,
+    Case,
+    Default,
+    Map,
 };
 
 interface MdxContentProps {
