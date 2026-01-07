@@ -12,7 +12,7 @@ interface ParsedResult {
     edges: Edge[];
 }
 
-export const parseMdxToGraph = (mdxContent: string): ParsedResult | null => {
+export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }): ParsedResult | null => {
     // 1. Parse Frontmatter
     let content = "";
     let frontmatter: any = {};
@@ -26,6 +26,9 @@ export const parseMdxToGraph = (mdxContent: string): ParsedResult | null => {
         content = mdxContent;
     }
 
+    // Use provided title or fallback to frontmatter.title
+    const rootTitle = options?.title || frontmatter.title || 'Untitled';
+
     const processor = unified().use(remarkParse).use(remarkGfm).use(remarkMdx);
 
     // Safety check for empty content
@@ -34,7 +37,7 @@ export const parseMdxToGraph = (mdxContent: string): ParsedResult | null => {
             nodes: [{
                 id: 'root',
                 type: 'root',
-                data: { label: frontmatter.title || 'Untitled', depth: 0, frontmatter },
+                data: { label: rootTitle, depth: 0, frontmatter },
                 position: { x: 0, y: 0 }
             }],
             edges: []
@@ -64,7 +67,7 @@ export const parseMdxToGraph = (mdxContent: string): ParsedResult | null => {
         id: rootId,
         type: 'root',
         data: {
-            label: frontmatter.title || 'Untitled',
+            label: rootTitle,
             depth: 0,
             frontmatter
         },
