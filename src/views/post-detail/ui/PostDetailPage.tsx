@@ -5,7 +5,7 @@ import { FullscreenMindmapPage } from '@/features/mdx-viewer/ui/FullscreenMindma
 import { ViewModeWrapper } from '@/features/mdx-viewer/ui/ViewModeWrapper';
 import { CommentsWidget } from '@/features/comments/ui/CommentsWidget';
 import { Button } from '@/shared/ui/Button';
-import { ViewModeSetter } from './ViewModeSetter';
+import { ViewModeSync } from './ViewModeSync';
 
 interface PostDetailPageProps {
     post: Post;
@@ -20,7 +20,7 @@ export function PostDetailPage({ post, nextPost, prevPost }: PostDetailPageProps
     return (
         <>
             {/* Sync frontmatter defaultView to app-level Context */}
-            <ViewModeSetter defaultView={defaultView} />
+            <ViewModeSync defaultView={defaultView} />
 
             {/* Mindmap Mode: Fullscreen Canvas (like WhiteboardPage) */}
             <ViewModeWrapper mode="mindmap">
