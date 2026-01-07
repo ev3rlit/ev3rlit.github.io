@@ -1,4 +1,5 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { Network } from "lucide-react";
 import { SqlPlayground } from "@/features/sql-playground/ui/SqlPlayground";
 import { SchemaDiagram } from "@/features/schema-diagram/ui/SchemaDiagram";
 import { ContextArchitectureFlow, FinalArchitectureFlow } from "@/features/schema-diagram/ui/LogArchitectureDiagrams";
@@ -17,6 +18,7 @@ import { Branch } from "@/features/mdx-operators/ui/Branch";
 import { Compose } from "@/features/mdx-operators/ui/Compose";
 import { Switch, Case, Default } from "@/features/mdx-operators/ui/Switch";
 import { Map } from "@/features/mdx-operators/ui/Map";
+import { MindmapViewer } from "@/features/mdx-viewer/ui/MindmapViewer";
 
 const components = {
     SqlPlayground,
@@ -42,6 +44,8 @@ const components = {
     Case,
     Default,
     Map,
+    MindmapViewer,
+    Network,
 };
 
 interface MdxContentProps {
