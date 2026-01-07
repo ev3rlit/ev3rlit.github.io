@@ -8,6 +8,7 @@ import { Sidebar } from '@/widgets/sidebar/ui';
 import { getPostList } from '@/entities/post/api/get-posts';
 
 import { ThemeProvider } from '@/app/providers/ThemeProvider';
+import { ViewProvider } from '@/shared/context/ViewContext';
 import { SITE_CONFIG } from '@/shared/config/site';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -33,12 +34,15 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <WhiteboardLayout sidebarContent={<Sidebar posts={posts} />} posts={posts}>
-                        {children}
-                    </WhiteboardLayout>
+                    <ViewProvider>
+                        <WhiteboardLayout sidebarContent={<Sidebar posts={posts} />} posts={posts}>
+                            {children}
+                        </WhiteboardLayout>
+                    </ViewProvider>
                     {process.env.NODE_ENV === 'development' && <ContentWatchdog />}
                 </ThemeProvider>
             </body>
         </html>
     );
 }
+
