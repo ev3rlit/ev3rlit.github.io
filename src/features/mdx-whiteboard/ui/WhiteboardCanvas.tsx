@@ -9,7 +9,18 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
-import { SectionNode, ListNode, ComponentNode, RootNode } from './CustomNodes';
+import {
+    SectionNode,
+    ListNode,
+    ComponentNode,
+    RootNode,
+    TableNode,
+    CodeNode,
+    BlockquoteNode,
+    ChartNode,
+    MathNode,
+    StatsNode
+} from './nodes';
 import { useTheme } from 'next-themes';
 
 const nodeTypes = {
@@ -17,6 +28,12 @@ const nodeTypes = {
     section: SectionNode,
     list: ListNode,
     component: ComponentNode,
+    table: TableNode,
+    code: CodeNode,
+    blockquote: BlockquoteNode,
+    chart: ChartNode,
+    math: MathNode,
+    stats: StatsNode,
 };
 
 export function WhiteboardCanvas() {

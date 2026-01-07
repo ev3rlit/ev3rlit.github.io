@@ -11,7 +11,6 @@ import {
     thematicBreakPlugin,
     markdownShortcutPlugin,
     frontmatterPlugin,
-    useCodeBlockEditorContext,
     jsxPlugin,
     diffSourcePlugin,
     toolbarPlugin,
@@ -27,9 +26,11 @@ import '@mdxeditor/editor/style.css';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import { parseMdxToGraph } from '../lib/parser';
+import { MdxComponentAutocompletePlugin } from './MdxComponentAutocompletePlugin';
+import { descriptors } from '@/features/mdx-whiteboard/ui/nodes/descriptors';
 
 const MDXEditor = dynamic(
-    () => import('@mdxeditor/editor').then((mod) => mod.MDXEditor),
+    () => import('./InitializedMDXEditor'),
     { ssr: false }
 );
 
@@ -37,11 +38,13 @@ export function MdxEditor() {
     const { mdxSource, setMdxSource, isEditorOpen, toggleEditor, setNodes, setEdges } = useWhiteboardStore();
     const { resolvedTheme } = useTheme();
 
-    // Parse parsing logic when mdxSource changes
+    // Parse MDX to graph when mdxSource changes
     useEffect(() => {
-        const { nodes, edges } = parseMdxToGraph(mdxSource);
-        setNodes(nodes);
-        setEdges(edges);
+        const result = parseMdxToGraph(mdxSource);
+        if (result) {
+            setNodes(result.nodes);
+            setEdges(result.edges);
+        }
     }, [mdxSource, setNodes, setEdges]);
 
     return (
@@ -82,8 +85,10 @@ export function MdxEditor() {
                         thematicBreakPlugin(),
                         markdownShortcutPlugin(),
                         frontmatterPlugin(),
-                        jsxPlugin(),
-                        diffSourcePlugin({ viewMode: 'source' }),
+                        jsxPlugin({
+                            jsxComponentDescriptors: descriptors
+                        }),
+                        diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'source' }),
                         linkPlugin(),
                         imagePlugin(),
                         tablePlugin(),
@@ -94,6 +99,7 @@ export function MdxEditor() {
                                     <DiffSourceToggleWrapper>
                                         <UndoRedo />
                                         <BoldItalicUnderlineToggles />
+                                        <MdxComponentAutocompletePlugin />
                                     </DiffSourceToggleWrapper>
                                 </div>
                             )
@@ -112,6 +118,6 @@ export function MdxEditor() {
             >
                 {isEditorOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
             </button>
-        </div>
+        </div >
     );
 }
