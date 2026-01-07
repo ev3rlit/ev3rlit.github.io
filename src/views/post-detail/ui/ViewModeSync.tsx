@@ -1,9 +1,11 @@
 "use client";
 
+// Force refresh
+
 import { useEffect } from 'react';
 import { useViewMode, ViewMode } from '@/shared/context/ViewContext';
 
-interface ViewModeSetterProps {
+interface ViewModeSyncProps {
     defaultView?: string;
 }
 
@@ -11,7 +13,7 @@ interface ViewModeSetterProps {
  * Client component that syncs frontmatter defaultView to app-level Context
  * This runs on the client side after hydration
  */
-export function ViewModeSetter({ defaultView }: ViewModeSetterProps) {
+export function ViewModeSync({ defaultView }: ViewModeSyncProps) {
     const { setViewMode } = useViewMode();
 
     useEffect(() => {
