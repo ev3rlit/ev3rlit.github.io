@@ -13,6 +13,9 @@ import {
     applyEdgeChanges,
     ReactFlowInstance
 } from 'reactflow';
+import { recalculateLayout } from '@/features/mdx-whiteboard/lib/subtreeLayout';
+import { nodesToMdx } from '@/features/mdx-whiteboard/lib/nodesToMdx';
+import { History, Command, CommandContext } from '@/features/mdx-whiteboard/lib/commands';
 
 interface WhiteboardState {
     mdxSource: string;
@@ -45,6 +48,23 @@ interface WhiteboardState {
 
     insertMarkdown: ((markdown: string) => void) | null;
     setInsertMarkdown: (fn: (markdown: string) => void) => void;
+
+    // Layout recalculation
+    applyLayout: () => void;
+
+    // Bidirectional sync
+    frontmatter: Record<string, any>;
+    setFrontmatter: (fm: Record<string, any>) => void;
+    syncToMdx: () => void;
+
+    // Command pattern (Undo/Redo)
+    history: History;
+    executeCommand: (command: Command) => boolean;
+    undo: () => boolean;
+    redo: () => boolean;
+    canUndo: () => boolean;
+    canRedo: () => boolean;
+    getCommandContext: () => CommandContext;
 }
 
 export const useWhiteboardStore = create<WhiteboardState>((set, get) => ({
@@ -114,4 +134,51 @@ tags: []
 
     insertMarkdown: null,
     setInsertMarkdown: (fn) => set({ insertMarkdown: fn }),
+
+    // Recalculate layout using subtree bounding box algorithm
+    applyLayout: () => {
+        const { nodes, edges } = get();
+        if (nodes.length === 0) return;
+
+        const { nodes: layoutedNodes, edges: updatedEdges } = recalculateLayout(nodes, edges);
+        set({ nodes: layoutedNodes, edges: updatedEdges });
+    },
+
+    // Bidirectional sync: Node → MDX
+    frontmatter: {},
+    setFrontmatter: (fm) => set({ frontmatter: fm }),
+    syncToMdx: () => {
+        const { nodes, edges, frontmatter } = get();
+        if (nodes.length === 0) return;
+
+        const mdx = nodesToMdx(nodes, edges, frontmatter);
+        set({ mdxSource: mdx });
+    },
+
+    // Command pattern (Undo/Redo)
+    history: new History(50),
+
+    getCommandContext: (): CommandContext => ({
+        getNodes: () => get().nodes,
+        getEdges: () => get().edges,
+        setNodes: (nodes) => set({ nodes }),
+        setEdges: (edges) => set({ edges }),
+        syncToMdx: () => get().syncToMdx(),
+        applyLayout: () => get().applyLayout(),
+    }),
+
+    executeCommand: (command: Command) => {
+        return get().history.execute(command);
+    },
+
+    undo: () => {
+        return get().history.undo();
+    },
+
+    redo: () => {
+        return get().history.redo();
+    },
+
+    canUndo: () => get().history.canUndo(),
+    canRedo: () => get().history.canRedo(),
 }));

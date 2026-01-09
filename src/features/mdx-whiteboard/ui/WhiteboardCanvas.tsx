@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -52,8 +52,43 @@ export function WhiteboardCanvas() {
         onEdgesChange,
         onConnect,
         setEditingNodeId,
-        setReactFlowInstance
+        setReactFlowInstance,
+        undo,
+        redo,
     } = useWhiteboardStore();
+
+    // Keyboard shortcuts for Undo/Redo
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+        // Ignore if focus is on input/textarea
+        const target = event.target as HTMLElement;
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+            return;
+        }
+
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const modKey = isMac ? event.metaKey : event.ctrlKey;
+
+        if (modKey && event.key === 'z') {
+            event.preventDefault();
+            if (event.shiftKey) {
+                redo();
+            } else {
+                undo();
+            }
+        }
+        // Ctrl+Y for redo (Windows convention)
+        if (!isMac && event.ctrlKey && event.key === 'y') {
+            event.preventDefault();
+            redo();
+        }
+    }, [undo, redo]);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [handleKeyDown]);
 
     if (!mounted) return null;
 
