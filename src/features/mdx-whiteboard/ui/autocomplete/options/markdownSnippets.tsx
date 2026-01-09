@@ -12,9 +12,15 @@ interface InsertTablePayload {
     columns?: number;
 }
 
+interface InsertCodeBlockPayload {
+    language: string;
+    code: string;
+}
+
 export const getMarkdownSnippetOptions = (
     editor: LexicalEditor,
-    insertTable: (payload: InsertTablePayload) => void
+    insertTable: (payload: InsertTablePayload) => void,
+    insertCodeBlock: (payload: InsertCodeBlockPayload) => void
 ) => {
     return [
         new ComponentPickerOption('Table', {
@@ -61,10 +67,7 @@ export const getMarkdownSnippetOptions = (
             keywords: ['code', 'snippet', 'markdown', 'block'],
             onSelect: (closeMenu) => {
                 editor.update(() => {
-                    const selection = $getSelection();
-                    if ($isRangeSelection(selection)) {
-                        selection.insertText('```typescript\n// code here\n```');
-                    }
+                    insertCodeBlock({ language: 'ts', code: '' });
                     closeMenu();
                 });
             },

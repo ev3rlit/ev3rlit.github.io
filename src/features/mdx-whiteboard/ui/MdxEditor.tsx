@@ -20,7 +20,8 @@ import {
     linkPlugin,
     imagePlugin,
     tablePlugin,
-    codeBlockPlugin
+    codeBlockPlugin,
+    codeMirrorPlugin
 } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 import { useTheme } from 'next-themes';
@@ -28,6 +29,7 @@ import dynamic from 'next/dynamic';
 import { parseMdxToGraph } from '../lib/parser';
 import { MdxComponentAutocompletePlugin } from './MdxComponentAutocompletePlugin';
 import { descriptors } from '@/features/mdx-whiteboard/ui/nodes/descriptors';
+import { ALL_CODE_BLOCK_LANGUAGES } from '@/features/mdx-whiteboard/config/code-languages';
 
 const MDXEditor = dynamic(
     () => import('./InitializedMDXEditor'),
@@ -92,7 +94,11 @@ export function MdxEditor() {
                         linkPlugin(),
                         imagePlugin(),
                         tablePlugin(),
-                        codeBlockPlugin({ defaultCodeBlockLanguage: 'typescript' }),
+                        codeBlockPlugin({ defaultCodeBlockLanguage: 'ts' }),
+                        codeMirrorPlugin({
+                            codeBlockLanguages: ALL_CODE_BLOCK_LANGUAGES,
+                            autoLoadLanguageSupport: true
+                        }),
                         toolbarPlugin({
                             toolbarContents: () => (
                                 <div className="flex gap-2 p-1">
