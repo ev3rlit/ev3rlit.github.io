@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "generate:snippets": "tsx scripts/generate-snippets.ts",
     "test": "vitest"
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "jsdom": "^27.4.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.0.16"
   }
