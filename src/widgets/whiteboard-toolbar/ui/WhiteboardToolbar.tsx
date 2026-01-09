@@ -15,15 +15,15 @@ import { Sidebar } from '@/shared/ui/sidebar/Sidebar';
 
 export function WhiteboardToolbar() {
     const reactFlowInstance = useWhiteboardStore(s => s.reactFlowInstance);
-    const { 
-        isComponentPickerOpen, 
+    const {
+        isComponentPickerOpen,
         setComponentPickerOpen,
         mdxSource,
         setMdxSource,
         fileHandle,
         setFileHandle,
     } = useWhiteboardStore();
-    
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Zoom tools
@@ -41,10 +41,10 @@ export function WhiteboardToolbar() {
                     }],
                     multiple: false
                 });
-                
+
                 const file = await handle.getFile();
                 const content = await file.text();
-                
+
                 setMdxSource(content);
                 setFileHandle(handle);
                 return;
@@ -56,14 +56,14 @@ export function WhiteboardToolbar() {
                 }
             }
         }
-        
+
         fileInputRef.current?.click();
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        
+
         const reader = new FileReader();
         reader.onload = (ev) => {
             const content = ev.target?.result as string;
@@ -106,7 +106,7 @@ export function WhiteboardToolbar() {
                 const writable = await handle.createWritable();
                 await writable.write(mdxSource);
                 await writable.close();
-                
+
                 setFileHandle(handle);
                 alert("Saved successfully!");
                 return;
@@ -119,11 +119,11 @@ export function WhiteboardToolbar() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        
+
         const titleMatch = mdxSource.match(/^title:\s*(.*)$/m);
         const title = titleMatch ? titleMatch[1].trim().replace(/['"]/g, '') : 'whiteboard';
         const filename = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mdx`;
-        
+
         a.download = filename;
         a.click();
         URL.revokeObjectURL(url);
@@ -131,11 +131,11 @@ export function WhiteboardToolbar() {
 
     return (
         <>
-            <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleFileChange} 
-                className="hidden" 
+            <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
                 accept=".md,.mdx,.txt"
             />
             <Sidebar.Item
@@ -148,7 +148,50 @@ export function WhiteboardToolbar() {
                 title={fileHandle ? "Save" : "Save As..."}
                 onClick={handleSaveFile}
             />
-            
+            {process.env.NODE_ENV === 'development' && (
+                <Sidebar.Item
+                    icon={<Settings size={18} className="text-red-400" />}
+                    title="Dev Save (API)"
+                    onClick={async () => {
+                        const titleMatch = mdxSource.match(/^title:\s*(.*)$/m);
+                        const title = titleMatch ? titleMatch[1].trim().replace(/['"]/g, '') : 'whiteboard';
+                        const dateMatch = mdxSource.match(/^date:\s*(.*)$/m);
+
+                        let defaultPath = `content/`;
+                        if (dateMatch) {
+                            // Try to parse YYYY-MM
+                            const date = new Date(dateMatch[1].trim());
+                            if (!isNaN(date.getTime())) {
+                                const year = date.getFullYear();
+                                const month = String(date.getMonth() + 1).padStart(2, '0');
+                                defaultPath = `content/${year}/${month}/`;
+                            }
+                        }
+
+                        const filename = `${title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.mdx`;
+                        const fullPath = prompt("Enter file path (relative to project root):", defaultPath + filename);
+
+                        if (fullPath) {
+                            try {
+                                const res = await fetch('/api/dev/save-file', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ filename: fullPath, content: mdxSource })
+                                });
+                                if (res.ok) {
+                                    alert('Saved to project!');
+                                } else {
+                                    const err = await res.json();
+                                    alert('Failed: ' + err.error);
+                                }
+                            } catch (e) {
+                                alert('Error saving file');
+                            }
+                        }
+                    }}
+                />
+            )}
+
             <Sidebar.Divider />
 
             <Sidebar.Item

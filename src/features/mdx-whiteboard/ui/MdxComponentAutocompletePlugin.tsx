@@ -1,6 +1,6 @@
 "use client";
 
-import { usePublisher, insertJsx$, insertTable$ } from '@mdxeditor/editor';
+import { usePublisher, insertJsx$, insertTable$, insertCodeBlock$ } from '@mdxeditor/editor';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { LexicalTypeaheadMenuPlugin, useBasicTypeaheadTriggerMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { TextNode } from 'lexical';
@@ -16,6 +16,7 @@ export function MdxComponentAutocompletePlugin() {
     const [editor] = useLexicalComposerContext();
     const insertJsx = usePublisher(insertJsx$);
     const insertTable = usePublisher(insertTable$);
+    const insertCodeBlock = usePublisher(insertCodeBlock$);
     const [queryString, setQueryString] = useState<string | null>(null);
 
     // Use standard hook again
@@ -25,7 +26,7 @@ export function MdxComponentAutocompletePlugin() {
 
     const options = useMemo(() => {
         const customComponents = getCustomComponentOptions(editor, insertJsx);
-        const markdownSnippets = getMarkdownSnippetOptions(editor, insertTable);
+        const markdownSnippets = getMarkdownSnippetOptions(editor, insertTable, insertCodeBlock);
         const htmlTags = getHtmlTagOptions(editor);
 
         const allOptions = [...customComponents, ...markdownSnippets, ...htmlTags];

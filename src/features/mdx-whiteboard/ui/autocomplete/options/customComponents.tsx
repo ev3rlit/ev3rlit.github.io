@@ -1,5 +1,5 @@
 import { ComponentPickerOption } from '../ComponentPickerOption';
-import { Database, Layout, MessageSquare, BarChart2, LineChart, BarChart, Sigma, Activity } from 'lucide-react';
+import { Database, Layout, MessageSquare, BarChart2, LineChart, BarChart, Sigma, Activity, FileCode as FileCodeIcon, PlayCircle, Zap, Clock, Briefcase, GitFork } from 'lucide-react';
 import { LexicalEditor } from 'lexical';
 
 interface InsertJsxPayload {
@@ -68,6 +68,101 @@ export const getCustomComponentOptions = (
                         name: 'StatCard',
                         kind: 'flow',
                         props: { label: 'Label', value: '100' }
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        // --- Interactive Demos ---
+        new ComponentPickerOption('Code Comparison', {
+            icon: <FileCodeIcon size={16} />,
+            keywords: ['code', 'diff', 'comparison'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'CodeComparison',
+                        kind: 'flow',
+                        props: {
+                            items: "[{ title: 'A', code: '' }, { title: 'B', code: '' }]"
+                        }
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        new ComponentPickerOption('Benchmark Simulator', {
+            icon: <PlayCircle size={16} />,
+            keywords: ['benchmark', 'simulator', 'demo'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'BenchmarkSimulator',
+                        kind: 'flow',
+                        props: {}
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        new ComponentPickerOption('Context Race Demo', {
+            icon: <Zap size={16} />,
+            keywords: ['race', 'condition', 'demo', 'context'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'ContextRaceDemo',
+                        kind: 'flow',
+                        props: {}
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        // --- Timeline ---
+        new ComponentPickerOption('Career Timeline', {
+            icon: <Clock size={16} />,
+            keywords: ['career', 'timeline', 'resume'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'CareerTimeline',
+                        kind: 'flow',
+                        props: {}
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        new ComponentPickerOption('Experience', {
+            icon: <Briefcase size={16} />,
+            keywords: ['experience', 'job', 'work'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'Experience',
+                        kind: 'flow',
+                        props: { period: '2024 - Present', role: 'Role', company: 'Company' }
+                    });
+                    closeMenu();
+                });
+            },
+        }),
+        // --- Logic ---
+        new ComponentPickerOption('Switch Case', {
+            icon: <GitFork size={16} />,
+            keywords: ['switch', 'case', 'logic'],
+            priority: 1,
+            onSelect: (closeMenu) => {
+                editor.update(() => {
+                    insertJsx({
+                        name: 'Switch',
+                        kind: 'flow',
+                        props: { value: 'condition' }
                     });
                     closeMenu();
                 });
