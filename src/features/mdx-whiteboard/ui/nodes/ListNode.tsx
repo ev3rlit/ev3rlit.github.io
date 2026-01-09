@@ -13,6 +13,7 @@ export const ListNode = memo(({ data, selected }: NodeProps) => {
     return (
         <div className={cn(
             "px-3 py-1.5 rounded-md bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700/50",
+            "max-w-[250px] whitespace-pre-wrap break-words",
             selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950"
         )}>
             <Handle type="target" position={Position.Left} id="left" className="w-1.5 h-1.5 !bg-stone-400" />
