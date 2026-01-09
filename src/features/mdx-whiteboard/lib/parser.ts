@@ -3,9 +3,8 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import remarkGfm from 'remark-gfm';
-import { visit } from 'unist-util-visit';
 import { Node, Edge } from 'reactflow';
-import dagre from 'dagre';
+import { applySubtreeLayout } from './subtreeLayout';
 
 interface ParsedResult {
     nodes: Node[];
@@ -408,7 +407,7 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
         });
     }
 
-    return applyLayout(nodes, edges);
+    return applySubtreeLayout(nodes, edges);
 };
 
 // ... keep helpers ...
@@ -462,206 +461,5 @@ const extractTableData = (tableNode: any): { headers: string[]; rows: string[][]
     return { headers, rows };
 };
 
-// Original recursive helper (removed or renamed if needed, but 'extractText' was replaced above)
-// We'll keep the logic inline or use the new helper.
-const extractText = extractCurrentNodeText; // Alias for compatibility if reused elsewhere
-
-const applyLayout = (nodes: Node[], edges: Edge[]): ParsedResult => {
-    const rootNode = nodes.find(n => n.type === 'root');
-    if (!rootNode) return { nodes, edges };
-
-    // 1. Identify direct children of Root and maintain original order
-    const rootChildrenIds = edges
-        .filter(e => e.source === rootNode.id)
-        .map(e => e.target);
-
-    // 2. Separate Layout Groups (Smart Balancing)
-    const leftNodeIds = new Set<string>();
-    const rightNodeIds = new Set<string>();
-
-    // Helper: Estimate height of a single node
-    const getNodeHeight = (nodeId: string): number => {
-        const node = nodes.find(n => n.id === nodeId);
-        if (!node) return 60;
-
-        if (node.type === 'component') return 120;
-        if (node.type === 'table') {
-            const tableData = node.data?.tableData as { headers: string[]; rows: string[][] } | undefined;
-            const rows = (tableData?.rows?.length || 1) + 1;
-            return Math.max(80, rows * 30 + 40);
-        }
-        if (node.type === 'code') return 150;
-        if (node.type === 'blockquote') return 70;
-        return 60;
-    };
-
-    // Helper: Collect all descendant IDs recursively
-    const getDescendants = (nodeId: string): string[] => {
-        const children = edges.filter(e => e.source === nodeId).map(e => e.target);
-        const descendants = [...children];
-        children.forEach(childId => {
-            descendants.push(...getDescendants(childId));
-        });
-        return descendants;
-    };
-
-    // Helper: Calculate total height weight of a branch
-    const getBranchWeight = (rootChildId: string): number => {
-        let weight = getNodeHeight(rootChildId);
-        const descendants = getDescendants(rootChildId);
-        descendants.forEach(dId => {
-            weight += getNodeHeight(dId);
-        });
-        return weight;
-    };
-
-    // Greedy Balance Algorithm
-    let leftWeight = 0;
-    let rightWeight = 0;
-
-    rootChildrenIds.forEach((childId) => {
-        const branchWeight = getBranchWeight(childId);
-
-        // Add to the lighter side
-        if (leftWeight <= rightWeight) {
-            leftNodeIds.add(childId);
-            getDescendants(childId).forEach(dId => leftNodeIds.add(dId));
-            leftWeight += branchWeight;
-        } else {
-            rightNodeIds.add(childId);
-            getDescendants(childId).forEach(dId => rightNodeIds.add(dId));
-            rightWeight += branchWeight;
-        }
-    });
-
-    // 3. Run Dagre for each side
-    const runDagre = (subsetNodeIds: Set<string>) => {
-        const g = new dagre.graphlib.Graph();
-        g.setGraph({ rankdir: 'LR', nodesep: 30, ranksep: 80 });
-        g.setDefaultEdgeLabel(() => ({}));
-
-        nodes.forEach(node => {
-            if (subsetNodeIds.has(node.id)) {
-                let width = 250;
-                let height = 60;
-                if (node.type === 'component') {
-                    width = 300;
-                    height = 120;
-                } else if (node.type === 'table') {
-                    // Estimate table size based on content
-                    const tableData = node.data?.tableData as { headers: string[]; rows: string[][] } | undefined;
-                    const cols = tableData?.headers?.length || 2;
-                    const rows = (tableData?.rows?.length || 1) + 1; // +1 for header
-                    width = Math.max(250, cols * 100);
-                    height = Math.max(80, rows * 30 + 40);
-                } else if (node.type === 'code') {
-                    // Code blocks are wider
-                    width = 320;
-                    height = 150;
-                } else if (node.type === 'blockquote') {
-                    width = 280;
-                    height = 70;
-                }
-                g.setNode(node.id, { width, height });
-            }
-        });
-
-        edges.forEach(edge => {
-            if (subsetNodeIds.has(edge.source) && subsetNodeIds.has(edge.target)) {
-                g.setEdge(edge.source, edge.target);
-            }
-        });
-
-        dagre.layout(g);
-        return g;
-    };
-
-    const gRight = runDagre(rightNodeIds);
-    const gLeft = runDagre(leftNodeIds);
-
-    // Helper: Vertical Alignment
-    const getVerticalOffset = (graph: dagre.graphlib.Graph, subsetNodeIds: Set<string>) => {
-        const directChildren = rootChildrenIds.filter(id => subsetNodeIds.has(id));
-        if (directChildren.length === 0) return 0;
-
-        const avgY = directChildren.reduce((acc, id) => {
-            const n = graph.node(id);
-            return acc + (n ? n.y : 0);
-        }, 0) / directChildren.length;
-
-        return avgY;
-    };
-
-    const rightOffsetY = getVerticalOffset(gRight, rightNodeIds);
-    const leftOffsetY = getVerticalOffset(gLeft, leftNodeIds);
-
-    // 4. Merge Nodes and Inject Direction
-    const layoutedNodes = nodes.map(node => {
-        if (node.id === rootNode.id) {
-            return {
-                ...node,
-                data: { ...node.data, direction: 'root' },
-                position: { x: 0, y: 0 }
-            };
-        }
-
-        if (rightNodeIds.has(node.id)) {
-            const pos = gRight.node(node.id);
-            if (!pos) return node;
-            const width = node.type === 'component' ? 300 : 250;
-            const height = node.type === 'component' ? 120 : 60;
-
-            return {
-                ...node,
-                data: { ...node.data, direction: 'right' },
-                position: {
-                    x: (pos.x + 200) - width / 2, // Center to Top-Left
-                    y: (pos.y - rightOffsetY) - height / 2
-                }
-            };
-        }
-
-        if (leftNodeIds.has(node.id)) {
-            const pos = gLeft.node(node.id);
-            if (!pos) return node;
-            const width = node.type === 'component' ? 300 : 250;
-            const height = node.type === 'component' ? 120 : 60;
-
-            // Mirror X logic: NewCenter = -OldCenter - 200
-            // TopLeft = NewCenter - Width/2
-            return {
-                ...node,
-                data: { ...node.data, direction: 'left' },
-                position: {
-                    x: (-pos.x - 200) - width / 2,
-                    y: (pos.y - leftOffsetY) - height / 2
-                }
-            };
-        }
-
-        return node;
-    });
-
-    // 5. Update Edges with Handles
-    const updatedEdges = edges.map(edge => {
-        const targetIsLeft = leftNodeIds.has(edge.target);
-
-        if (targetIsLeft) {
-            // Flow: Right -> Left
-            return {
-                ...edge,
-                sourceHandle: 'left',
-                targetHandle: 'right'
-            };
-        } else {
-            // Flow: Left -> Right (Standard)
-            return {
-                ...edge,
-                sourceHandle: 'right',
-                targetHandle: 'left'
-            };
-        }
-    });
-
-    return { nodes: layoutedNodes, edges: updatedEdges };
-};
+// Alias for compatibility
+const extractText = extractCurrentNodeText;

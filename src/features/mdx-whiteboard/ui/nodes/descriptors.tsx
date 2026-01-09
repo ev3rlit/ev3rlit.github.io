@@ -28,6 +28,119 @@ const calloutDescriptor: JsxComponentDescriptor = {
     Editor: InlineCodeEditor
 };
 
+// --- Interactive Demos ---
+const codeComparisonDescriptor: JsxComponentDescriptor = {
+    name: 'CodeComparison',
+    kind: 'flow',
+    props: [
+        { name: 'items', type: 'expression' }
+    ],
+    hasChildren: false,
+    Editor: InlineCodeEditor
+};
+
+const benchmarkSimulatorDescriptor: JsxComponentDescriptor = {
+    name: 'BenchmarkSimulator',
+    kind: 'flow',
+    props: [],
+    hasChildren: false,
+    Editor: InlineCodeEditor
+};
+
+const contextRaceDemoDescriptor: JsxComponentDescriptor = {
+    name: 'ContextRaceDemo',
+    kind: 'flow',
+    props: [],
+    hasChildren: false,
+    Editor: InlineCodeEditor
+};
+
+// --- Resume / Timeline ---
+const careerTimelineDescriptor: JsxComponentDescriptor = {
+    name: 'CareerTimeline',
+    kind: 'flow',
+    props: [],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const experienceDescriptor: JsxComponentDescriptor = {
+    name: 'Experience',
+    kind: 'flow',
+    props: [
+        { name: 'period', type: 'string' },
+        { name: 'role', type: 'string' },
+        { name: 'company', type: 'string' }
+    ],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const projectDescriptor: JsxComponentDescriptor = {
+    name: 'Project',
+    kind: 'flow',
+    props: [
+        { name: 'title', type: 'string' },
+        { name: 'role', type: 'string' },
+        { name: 'tech', type: 'string' }
+    ],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const featureDescriptor: JsxComponentDescriptor = {
+    name: 'Feature',
+    kind: 'flow',
+    props: [
+        { name: 'title', type: 'string' }
+    ],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const featureItemDescriptor: JsxComponentDescriptor = {
+    name: 'FeatureItem',
+    kind: 'text', // Component within text (inline-ish) or flow? Usually flow in timeline.
+    props: [
+        { name: 'status', type: 'string' }
+    ],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+// --- Logic Operators ---
+const switchDescriptor: JsxComponentDescriptor = {
+    name: 'Switch',
+    kind: 'flow',
+    props: [{ name: 'value', type: 'expression' }],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const caseDescriptor: JsxComponentDescriptor = {
+    name: 'Case',
+    kind: 'flow',
+    props: [{ name: 'when', type: 'expression' }],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const defaultDescriptor: JsxComponentDescriptor = {
+    name: 'Default',
+    kind: 'flow',
+    props: [],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
+const mapDescriptor: JsxComponentDescriptor = {
+    name: 'Map',
+    kind: 'flow',
+    props: [{ name: 'data', type: 'expression' }],
+    hasChildren: true,
+    Editor: InlineCodeEditor
+};
+
 export const descriptors: JsxComponentDescriptor[] = [
     sqlPlaygroundDescriptor,
     schemaDiagramDescriptor,
@@ -35,5 +148,18 @@ export const descriptors: JsxComponentDescriptor[] = [
     calloutDescriptor,
     chartDescriptor,
     mathDescriptor,
-    statsDescriptor
+    statsDescriptor,
+    // New
+    codeComparisonDescriptor,
+    benchmarkSimulatorDescriptor,
+    contextRaceDemoDescriptor,
+    careerTimelineDescriptor,
+    experienceDescriptor,
+    projectDescriptor,
+    featureDescriptor,
+    featureItemDescriptor,
+    switchDescriptor,
+    caseDescriptor,
+    defaultDescriptor,
+    mapDescriptor
 ];
