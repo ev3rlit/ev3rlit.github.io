@@ -1,7 +1,5 @@
 "use client";
 
-import { type JsxComponentDescriptor } from '@mdxeditor/editor';
-import { InlineCodeEditor } from '@/features/mdx-whiteboard/ui/editors/InlineCodeEditor';
 import React from "react";
 import ReactFlow, { Background, Controls } from "reactflow";
 import "reactflow/dist/style.css";
@@ -60,11 +58,3 @@ export function SchemaDiagram() {
         </Card>
     );
 }
-
-export const schemaDiagramDescriptor: JsxComponentDescriptor = {
-    name: 'SchemaDiagram',
-    kind: 'flow',
-    props: [],
-    hasChildren: false,
-    Editor: InlineCodeEditor
-};

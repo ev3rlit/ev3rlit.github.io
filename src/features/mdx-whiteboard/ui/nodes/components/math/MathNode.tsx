@@ -1,7 +1,5 @@
 "use client";
 
-import { type JsxComponentDescriptor } from '@mdxeditor/editor';
-import { InlineCodeEditor } from '@/features/mdx-whiteboard/ui/editors/InlineCodeEditor';
 import React, { memo } from 'react';
 import { NodeProps } from 'reactflow';
 import { BaseComponentNode } from '../../base/BaseComponentNode';
@@ -28,11 +26,3 @@ export const MathNode = memo(({ data, selected }: NodeProps) => {
 });
 
 MathNode.displayName = 'MathNode';
-
-export const mathDescriptor: JsxComponentDescriptor = {
-    name: 'Math',
-    kind: 'flow',
-    props: [{ name: 'formula', type: 'string' }],
-    hasChildren: false,
-    Editor: InlineCodeEditor
-};
