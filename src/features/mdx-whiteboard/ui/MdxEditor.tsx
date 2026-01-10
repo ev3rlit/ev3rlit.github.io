@@ -4,41 +4,11 @@ import React, { useEffect } from 'react';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
 import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { clsx } from 'clsx';
-import {
-    headingsPlugin,
-    listsPlugin,
-    quotePlugin,
-    thematicBreakPlugin,
-    markdownShortcutPlugin,
-    frontmatterPlugin,
-    jsxPlugin,
-    diffSourcePlugin,
-    toolbarPlugin,
-    UndoRedo,
-    BoldItalicUnderlineToggles,
-    DiffSourceToggleWrapper,
-    linkPlugin,
-    imagePlugin,
-    tablePlugin,
-    codeBlockPlugin,
-    codeMirrorPlugin
-} from '@mdxeditor/editor';
-import '@mdxeditor/editor/style.css';
-import { useTheme } from 'next-themes';
-import dynamic from 'next/dynamic';
 import { parseMdxToGraph } from '../lib/parser';
-import { MdxComponentAutocompletePlugin } from './MdxComponentAutocompletePlugin';
-import { descriptors } from '@/features/mdx-whiteboard/ui/nodes/descriptors';
-import { ALL_CODE_BLOCK_LANGUAGES } from '@/features/mdx-whiteboard/config/code-languages';
-
-const MDXEditor = dynamic(
-    () => import('./InitializedMDXEditor'),
-    { ssr: false }
-);
+import { MonacoEditor } from './MonacoEditor';
 
 export function MdxEditor() {
     const { mdxSource, setMdxSource, isEditorOpen, toggleEditor, setNodes, setEdges } = useWhiteboardStore();
-    const { resolvedTheme } = useTheme();
 
     // Parse MDX to graph when mdxSource changes
     useEffect(() => {
@@ -69,48 +39,13 @@ export function MdxEditor() {
 
             {/* Editor Content */}
             <div className={clsx(
-                "flex-1 overflow-y-auto mdx-editor-wrapper",
+                "flex-1 overflow-hidden",
                 !isEditorOpen && "opacity-0"
             )}>
-                <MDXEditor
-                    markdown={mdxSource}
+                <MonacoEditor
+                    value={mdxSource}
                     onChange={setMdxSource}
-                    className={clsx(
-                        "h-full font-mono text-sm",
-                        resolvedTheme === 'dark' ? 'dark-theme' : ''
-                    )}
-                    contentEditableClassName="prose dark:prose-invert max-w-none px-6 py-4 focus:outline-none"
-                    plugins={[
-                        headingsPlugin(),
-                        listsPlugin(),
-                        quotePlugin(),
-                        thematicBreakPlugin(),
-                        markdownShortcutPlugin(),
-                        frontmatterPlugin(),
-                        jsxPlugin({
-                            jsxComponentDescriptors: descriptors
-                        }),
-                        diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'source' }),
-                        linkPlugin(),
-                        imagePlugin(),
-                        tablePlugin(),
-                        codeBlockPlugin({ defaultCodeBlockLanguage: 'ts' }),
-                        codeMirrorPlugin({
-                            codeBlockLanguages: ALL_CODE_BLOCK_LANGUAGES,
-                            autoLoadLanguageSupport: true
-                        }),
-                        toolbarPlugin({
-                            toolbarContents: () => (
-                                <div className="flex gap-2 p-1">
-                                    <DiffSourceToggleWrapper>
-                                        <UndoRedo />
-                                        <BoldItalicUnderlineToggles />
-                                        <MdxComponentAutocompletePlugin />
-                                    </DiffSourceToggleWrapper>
-                                </div>
-                            )
-                        })
-                    ]}
+                    className="h-full"
                 />
             </div>
 
