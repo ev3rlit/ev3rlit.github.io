@@ -106,6 +106,9 @@ export function WhiteboardCanvas() {
                 onInit={setReactFlowInstance}
                 fitView
                 className="bg-transparent"
+                // Disable space key for panning to allow Monaco Editor to use it
+                selectionKeyCode={null}
+                panActivationKeyCode={null}
             >
                 <Background
                     key={resolvedTheme}
