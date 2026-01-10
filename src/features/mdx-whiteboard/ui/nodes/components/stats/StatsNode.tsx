@@ -1,7 +1,5 @@
 "use client";
 
-import { type JsxComponentDescriptor } from '@mdxeditor/editor';
-import { InlineCodeEditor } from '@/features/mdx-whiteboard/ui/editors/InlineCodeEditor';
 import React, { memo } from 'react';
 import { NodeProps } from 'reactflow';
 import { BaseComponentNode } from '../../base/BaseComponentNode';
@@ -46,16 +44,3 @@ export const StatsNode = memo(({ data, selected }: NodeProps) => {
 });
 
 StatsNode.displayName = 'StatsNode';
-
-export const statsDescriptor: JsxComponentDescriptor = {
-    name: 'Stats',
-    kind: 'flow',
-    props: [
-        { name: 'title', type: 'string' },
-        { name: 'value', type: 'string' },
-        { name: 'delta', type: 'string' },
-        { name: 'trend', type: 'string' }
-    ],
-    hasChildren: false,
-    Editor: InlineCodeEditor
-};

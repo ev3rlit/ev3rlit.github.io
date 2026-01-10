@@ -1,7 +1,5 @@
 "use client";
 
-import { type JsxComponentDescriptor } from '@mdxeditor/editor';
-import { InlineCodeEditor } from '@/features/mdx-whiteboard/ui/editors/InlineCodeEditor';
 import React, { memo } from 'react';
 import { NodeProps } from 'reactflow';
 import { BaseComponentNode } from '../../base/BaseComponentNode';
@@ -110,16 +108,3 @@ export const ChartNode = memo(({ data, selected }: NodeProps) => {
 });
 
 ChartNode.displayName = 'ChartNode';
-
-export const chartDescriptor: JsxComponentDescriptor = {
-    name: 'Chart',
-    kind: 'flow',
-    props: [
-        { name: 'type', type: 'string' },
-        { name: 'data', type: 'expression' },
-        { name: 'xKey', type: 'string' },
-        { name: 'yKey', type: 'string' }
-    ],
-    hasChildren: false,
-    Editor: InlineCodeEditor
-};

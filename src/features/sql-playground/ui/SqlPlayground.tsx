@@ -1,7 +1,5 @@
 "use client";
 
-import { type JsxComponentDescriptor } from '@mdxeditor/editor';
-import { InlineCodeEditor } from '@/features/mdx-whiteboard/ui/editors/InlineCodeEditor';
 import React, { useEffect, useState } from "react";
 import { PGlite } from "@electric-sql/pglite";
 import { Card } from "@/shared/ui/Card";
@@ -105,10 +103,4 @@ export function SqlPlayground({ setup }: SqlPlaygroundProps) {
     );
 }
 
-export const sqlPlaygroundDescriptor: JsxComponentDescriptor = {
-    name: 'SqlPlayground',
-    kind: 'flow',
-    props: [{ name: 'setup', type: 'string' }],
-    hasChildren: false,
-    Editor: InlineCodeEditor
-};
+
