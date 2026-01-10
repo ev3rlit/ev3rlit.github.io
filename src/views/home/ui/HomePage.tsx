@@ -148,7 +148,7 @@ export default function HomePage({ posts }: { posts: any[] }) {
                                     <div className="flex-1 flex flex-col">
                                         <div className="flex justify-between items-start">
                                             <span className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-3 block">
-                                                {post.meta.date}
+                                                {String(post.meta.date)}
                                             </span>
                                             {post.meta.draft && (
                                                 <span className="px-1.5 py-0.5 rounded bg-red-500 text-white text-[9px] font-black uppercase tracking-tighter shadow-sm animate-pulse">

@@ -54,7 +54,7 @@ export function PostDetailPage({ post, nextPost, prevPost }: PostDetailPageProps
                                 {post.meta.title}
                             </h1>
                             <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-stone-500">
-                                <time dateTime={post.meta.date}>{post.meta.date}</time>
+                                <time dateTime={String(post.meta.date)}>{String(post.meta.date)}</time>
                             </div>
                         </header>
 
