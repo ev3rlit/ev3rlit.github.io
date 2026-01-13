@@ -116,6 +116,41 @@ const x = 1;
 
     });
 
+    it('should handle code blocks and components inside list items', () => {
+        const mdx = `
+- Item with code
+  \`\`\`javascript
+  const x = 1;
+  \`\`\`
+- Item with component
+  <SqlPlayground query="SELECT 1" />
+`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        // We expect: 2 list items, 1 code block, 1 component
+        const lists = result.nodes.filter(n => n.type === 'list');
+        const codeNodes = result.nodes.filter(n => n.type === 'code');
+        const componentNodes = result.nodes.filter(n => n.type === 'component');
+
+        expect(lists).toHaveLength(2);
+        expect(codeNodes).toHaveLength(1);
+        expect(componentNodes).toHaveLength(1);
+
+        // Check parent-child relationship via edges
+        // Code block should be child of first list item
+        const firstListItem = lists.find(l => l.data.label.includes('code'));
+        const codeNode = codeNodes[0];
+        const codeEdge = result.edges.find(e => e.target === codeNode.id);
+        expect(codeEdge?.source).toBe(firstListItem?.id);
+
+        // Component should be child of second list item
+        const secondListItem = lists.find(l => l.data.label.includes('component'));
+        const componentNode = componentNodes[0];
+        const componentEdge = result.edges.find(e => e.target === componentNode.id);
+        expect(componentEdge?.source).toBe(secondListItem?.id);
+    });
+
     it('should balance layout groups smartly', () => {
         // Scenario: ONE heavy section and THREE light sections.
         // Heavy section (Table + Code) -> Should go to Side A.

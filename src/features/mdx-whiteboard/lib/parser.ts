@@ -4,7 +4,7 @@ import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import remarkGfm from 'remark-gfm';
 import { Node, Edge } from 'reactflow';
-import { applySubtreeLayout } from './subtreeLayout';
+import { applyLayout } from './layoutEngine';
 
 interface ParsedResult {
     nodes: Node[];
@@ -333,6 +333,22 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
 
                 createdNodeId = nodeId;
             }
+
+        } else if (node.type === 'list') {
+            // List container (ordered or unordered)
+            // A list doesn't create its own node, but its children (listItems) should be
+            // parented to the CURRENT lexicalParentId.
+            // This is crucial for nested lists: the nested list's items should be children
+            // of the parent listItem, not siblings of it.
+
+            if (node.children) {
+                node.children.forEach((listItemChild: any) => {
+                    traverse(listItemChild, lexicalParentId);
+                });
+            }
+
+            // No node created, just return null
+            return null;
         }
 
         // --- RECURSION ---
@@ -410,7 +426,7 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
         });
     }
 
-    return applySubtreeLayout(nodes, edges);
+    return applyLayout(nodes, edges);
 };
 
 // ... keep helpers ...
