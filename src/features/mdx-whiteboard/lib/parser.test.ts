@@ -151,6 +151,107 @@ const x = 1;
         expect(componentEdge?.source).toBe(secondListItem?.id);
     });
 
+    it('should handle list item with ONLY code block (no preceding text)', () => {
+        // This is the CRITICAL case: 
+        // - ```python
+        //   hello world
+        //   ```
+        // Should create: root + 1 code block ONLY (NO listItem node!)
+        const mdx = `
+- \`\`\`python
+  hello world
+  \`\`\`
+`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        // Should have: root + 1 code block = 2 nodes total (NO listItem!)
+        const lists = result.nodes.filter(n => n.type === 'list');
+        const codeNodes = result.nodes.filter(n => n.type === 'code');
+        const textNodesWithCodeContent = result.nodes.filter(n =>
+            n.data.label && n.data.label.includes('hello world')
+        );
+
+        expect(lists).toHaveLength(0); // No listItem node created!
+        expect(codeNodes).toHaveLength(1);
+        expect(textNodesWithCodeContent).toHaveLength(0);
+        expect(result.nodes).toHaveLength(2);
+    });
+
+
+
+    it('should handle code block with nested list correctly (no text duplication)', () => {
+        // User reported case:
+        // - ```python
+        //   hello world
+        //   ```
+        //     - child 1
+        const mdx = `
+- \`\`\`python
+  ㅇㅈㅇ
+  ㅁㅈㅇㅁㅈㅇ
+  hello world
+  \`\`\`
+  - ㅁㅇㅁㅈㅇ
+  - ㅁㅇㅁㅈㅇ
+`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        // Should have:
+        // 1. Root
+        // 2. ListItem (parent) -> Label should be placeholder "📝 Code", NOT "hello world"
+        // 3. CodeBlock (child of ListItem)
+        // 4. ListItem (child node) -> "child 1"
+
+        const lists = result.nodes.filter(n => n.type === 'list');
+        const codeNodes = result.nodes.filter(n => n.type === 'code');
+
+        // 1. Ensure NO 'ListItem' wrapping the code (label "📝 Code" or text)
+        // The lists found should ONLY be the nested list items + container list
+        const listWithCodeContent = lists.find(l =>
+            l.data.label.includes('ㅇㅈㅇ') ||
+            l.data.label.includes('hello world') ||
+            l.data.label.includes('📝 Code')
+        );
+        expect(listWithCodeContent).toBeUndefined();
+
+        // 2. Code node should exist
+        expect(codeNodes).toHaveLength(1);
+
+
+
+
+    });
+
+    it('should handle table with nested list correctly (no text duplication)', () => {
+        // User reported case:
+        // - | A | B |
+        //   |---|---|
+        //   | 1 | 2 |
+        //     - child A
+        const mdx = `
+- | A | B |
+  |---|---|
+  | 1 | 2 |
+  - child A
+`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        const lists = result.nodes.filter(n => n.type === 'list');
+        const tableNodes = result.nodes.filter(n => n.type === 'table');
+
+        // Check NO wrapping list item
+        const wrapperList = lists.find(l =>
+            (l.data.label.includes('A') && l.data.label.includes('B')) ||
+            l.data.label.includes('📊 Table')
+        );
+        expect(wrapperList).toBeUndefined();
+
+        expect(tableNodes).toHaveLength(1);
+    });
+
     it('should balance layout groups smartly', () => {
         // Scenario: ONE heavy section and THREE light sections.
         // Heavy section (Table + Code) -> Should go to Side A.
