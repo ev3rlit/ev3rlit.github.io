@@ -77,6 +77,77 @@ export function MonacoEditor({ value, onChange, className = '' }: MonacoEditorPr
     const handleMount: OnMount = (editor, monaco) => {
         // Focus editor
         editor.focus();
+
+        // Custom Enter key handler for smart list continuation
+        editor.addCommand(monaco.KeyCode.Enter, () => {
+            const model = editor.getModel();
+            const position = editor.getPosition();
+            if (!model || !position) {
+                return;
+            }
+
+            const fullText = model.getValue();
+            const offset = model.getOffsetAt(position);
+
+            // Check if cursor is inside a code block
+            const isInsideCodeBlock = checkIfInsideCodeBlock(fullText, offset);
+
+            let textToInsert = '\n';
+
+            if (!isInsideCodeBlock) {
+                // Outside code block: check for list continuation
+                const currentLine = model.getLineContent(position.lineNumber);
+                const listMatch = currentLine.match(/^(\s*)([*\-+]|\d+\.)\s+/);
+
+                if (listMatch) {
+                    const indent = listMatch[1];
+                    const marker = listMatch[2];
+
+                    // If the line only contains the list marker (empty item), don't continue
+                    const contentAfterMarker = currentLine.slice(listMatch[0].length).trim();
+                    if (contentAfterMarker) {
+                        // Continue the list with same marker
+                        let newMarker = marker;
+                        if (/^\d+\.$/.test(marker)) {
+                            // Increment number for ordered lists
+                            const num = parseInt(marker) + 1;
+                            newMarker = `${num}.`;
+                        }
+                        textToInsert = `\n${indent}${newMarker} `;
+                    }
+                }
+            }
+
+            // Use executeEdits to insert text (doesn't re-trigger handlers)
+            const range = new monaco.Range(
+                position.lineNumber,
+                position.column,
+                position.lineNumber,
+                position.column
+            );
+
+            editor.executeEdits('list-continuation', [{
+                range: range,
+                text: textToInsert,
+                forceMoveMarkers: true
+            }]);
+
+            // Move cursor to end of inserted text
+            const newPosition = model.getPositionAt(offset + textToInsert.length);
+            editor.setPosition(newPosition);
+        });
+    };
+
+    // Helper function to check if offset is inside a code block
+    const checkIfInsideCodeBlock = (text: string, offset: number): boolean => {
+        const textBeforeCursor = text.slice(0, offset);
+
+        // Count occurrences of ``` before cursor
+        const codeBlockMarkers = textBeforeCursor.match(/```/g);
+        const count = codeBlockMarkers ? codeBlockMarkers.length : 0;
+
+        // Odd number of markers means we're inside a code block
+        return count % 2 === 1;
     };
 
     return (
