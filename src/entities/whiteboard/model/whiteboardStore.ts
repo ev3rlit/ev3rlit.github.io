@@ -13,7 +13,7 @@ import {
     applyEdgeChanges,
     ReactFlowInstance
 } from 'reactflow';
-import { recalculateLayout } from '@/features/mdx-whiteboard/lib/subtreeLayout';
+import { applyLayout as engineApplyLayout } from '@/features/mdx-whiteboard/lib/layoutEngine';
 import { nodesToMdx } from '@/features/mdx-whiteboard/lib/nodesToMdx';
 import { History, Command, CommandContext } from '@/features/mdx-whiteboard/lib/commands';
 
@@ -141,12 +141,12 @@ tags: []
     insertMarkdown: null,
     setInsertMarkdown: (fn) => set({ insertMarkdown: fn }),
 
-    // Recalculate layout using subtree bounding box algorithm
+    // Recalculate layout using new layout engine
     applyLayout: () => {
         const { nodes, edges } = get();
         if (nodes.length === 0) return;
 
-        const { nodes: layoutedNodes, edges: updatedEdges } = recalculateLayout(nodes, edges);
+        const { nodes: layoutedNodes, edges: updatedEdges } = engineApplyLayout(nodes, edges);
         set({ nodes: layoutedNodes, edges: updatedEdges });
     },
 
