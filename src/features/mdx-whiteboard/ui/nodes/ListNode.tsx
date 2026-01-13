@@ -2,13 +2,9 @@
 
 import React, { memo, useMemo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import { renderInlineContent } from '../../lib/renderInlineContent';
-
-function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import { NODE_STYLES } from '../../lib/nodeStyles';
+import { cn } from '@/shared/lib/cn';
 
 export const ListNode = memo(({ data, selected }: NodeProps) => {
     // mdxNode가 있으면 인라인 콘텐츠를 렌더링, 없으면 label 사용
@@ -21,16 +17,14 @@ export const ListNode = memo(({ data, selected }: NodeProps) => {
 
     return (
         <div className={cn(
-            "px-3 py-1.5 rounded-md bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700/50",
-            "max-w-[250px] whitespace-pre-wrap break-words",
+            NODE_STYLES.list,
             selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950"
         )}>
             <Handle type="target" position={Position.Left} id="left" className="w-1.5 h-1.5 !bg-stone-400" />
             <Handle type="source" position={Position.Left} id="left" className="w-1.5 h-1.5 !bg-stone-400" />
 
-            <div className="text-xs text-stone-600 dark:text-stone-400">
-                {content}
-            </div>
+            {/* NODE_STYLES.list에 text 스타일이 포함되어 있으므로 직접 렌더링 */}
+            {content}
 
             <Handle type="source" position={Position.Right} id="right" className="w-1.5 h-1.5 !bg-stone-400" />
             <Handle type="target" position={Position.Right} id="right" className="w-1.5 h-1.5 !bg-stone-400" />
@@ -39,4 +33,3 @@ export const ListNode = memo(({ data, selected }: NodeProps) => {
 });
 
 ListNode.displayName = 'ListNode';
-
