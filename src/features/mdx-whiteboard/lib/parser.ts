@@ -306,6 +306,66 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
             createdNodeId = nodeId;
             return createdNodeId;
 
+        } else if (node.type === 'link') {
+            // Link node
+            nodeId = `link-${node.position?.start.line}-${node.position?.start.column}`;
+            type = 'link';
+            label = extractCurrentNodeText(node);
+
+            nodes.push({
+                id: nodeId,
+                type,
+                data: {
+                    label,
+                    url: node.url || '',
+                    depth: 0,
+                    props: {},
+                    mdxNode: node
+                },
+                position: { x: 0, y: 0 }
+            });
+
+            edges.push({
+                id: `e-${lexicalParentId}-${nodeId}`,
+                source: lexicalParentId,
+                target: nodeId,
+                type: 'smoothstep',
+                style: { stroke: '#94a3b8' }
+            });
+
+            createdNodeId = nodeId;
+            return createdNodeId;
+
+        } else if (node.type === 'image') {
+            // Image node
+            nodeId = `image-${node.position?.start.line}-${node.position?.start.column}`;
+            type = 'image';
+            label = node.alt || '';
+
+            nodes.push({
+                id: nodeId,
+                type,
+                data: {
+                    label,
+                    url: node.url || '',
+                    depth: 0,
+                    props: {},
+                    mdxNode: node
+                },
+                position: { x: 0, y: 0 }
+            });
+
+            edges.push({
+                id: `e-${lexicalParentId}-${nodeId}`,
+                source: lexicalParentId,
+                target: nodeId,
+                type: 'smoothstep',
+                style: { stroke: '#94a3b8' }
+            });
+
+            createdNodeId = nodeId;
+            return createdNodeId;
+
         } else if (node.type === 'paragraph') {
             const text = extractCurrentNodeText(node);
             if (text && text.trim()) {
