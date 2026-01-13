@@ -19,7 +19,9 @@ import {
     BlockquoteNode,
     ChartNode,
     MathNode,
-    StatsNode
+    StatsNode,
+    LinkNode,
+    ImageNode
 } from './nodes';
 import { useTheme } from 'next-themes';
 
@@ -34,6 +36,8 @@ const nodeTypes = {
     chart: ChartNode,
     math: MathNode,
     stats: StatsNode,
+    link: LinkNode,
+    image: ImageNode,
 };
 
 export function WhiteboardCanvas() {

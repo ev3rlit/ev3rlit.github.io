@@ -11,6 +11,10 @@ export * from './BlockquoteNode';
 // Generic Fallback
 export * from './ComponentNode';
 
+// Link & Image Nodes
+export * from './LinkNode';
+export * from './ImageNode';
+
 // Specialized Visualization Nodes
 export * from './components/chart/ChartNode';
 export * from './components/math/MathNode';
