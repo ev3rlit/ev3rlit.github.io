@@ -47,6 +47,14 @@ export const estimateDimensions = (node: Node): { width: number; height: number 
         return { width, height };
     }
 
+    if (node.type === 'link') {
+        return { width: 200, height: 50 };
+    }
+
+    if (node.type === 'image') {
+        return { width: 200, height: 140 };  // 썸네일 높이 포함
+    }
+
     if (node.type === 'section') {
         const maxWidth = 300;
         const label = node.data?.label || '';
@@ -80,16 +88,27 @@ const buildChildrenMap = (edges: Edge[]): Map<string, string[]> => {
     return childrenMap;
 };
 
-// Calculate subtree height recursively (Bottom-Up)
+// Calculate subtree height recursively (Bottom-Up) with cycle detection
 const calculateSubtreeHeight = (
     nodeId: string,
     nodeMap: Map<string, LayoutNode>,
     childrenMap: Map<string, string[]>,
-    cache: Map<string, SubtreeInfo>
+    cache: Map<string, SubtreeInfo>,
+    visitedStack: Set<string> = new Set()
 ): SubtreeInfo => {
     // Return cached result if available
     if (cache.has(nodeId)) {
         return cache.get(nodeId)!;
+    }
+
+    // CYCLE DETECTION: Check if node is already being visited in current path
+    if (visitedStack.has(nodeId)) {
+        // Return safe default to break the cycle (don't cache to avoid masking issue)
+        const node = nodeMap.get(nodeId);
+        return {
+            height: node?.height || 0,
+            topOffset: (node?.height || 0) / 2
+        };
     }
 
     const node = nodeMap.get(nodeId);
@@ -99,10 +118,14 @@ const calculateSubtreeHeight = (
         return defaultInfo;
     }
 
+    // Add current node to visiting stack
+    visitedStack.add(nodeId);
+
     const children = childrenMap.get(nodeId) || [];
 
     // Leaf node: return own height
     if (children.length === 0) {
+        visitedStack.delete(nodeId);
         const info = { height: node.height, topOffset: node.height / 2 };
         cache.set(nodeId, info);
         return info;
@@ -113,7 +136,7 @@ const calculateSubtreeHeight = (
     const childInfos: SubtreeInfo[] = [];
 
     children.forEach((childId, index) => {
-        const childInfo = calculateSubtreeHeight(childId, nodeMap, childrenMap, cache);
+        const childInfo = calculateSubtreeHeight(childId, nodeMap, childrenMap, cache, visitedStack);
         childInfos.push(childInfo);
         childrenTotalHeight += childInfo.height;
 
@@ -129,6 +152,9 @@ const calculateSubtreeHeight = (
     // Calculate top offset: position where this node's center should be
     // Node should be vertically centered relative to its children
     const topOffset = childrenTotalHeight / 2;
+
+    // Remove from visiting stack before caching and returning
+    visitedStack.delete(nodeId);
 
     const info = { height: subtreeHeight, topOffset };
     cache.set(nodeId, info);
@@ -227,21 +253,26 @@ const balanceLeftRight = (
     return { left, right };
 };
 
-// Get all descendants of a node
+// Get all descendants of a node (with cycle protection)
 const getDescendants = (
     nodeId: string,
     childrenMap: Map<string, string[]>
 ): Set<string> => {
     const descendants = new Set<string>();
     const stack = [nodeId];
+    const visited = new Set<string>([nodeId]); // Track visited nodes to prevent infinite loop
 
     while (stack.length > 0) {
         const current = stack.pop()!;
         const children = childrenMap.get(current) || [];
 
         children.forEach(childId => {
-            descendants.add(childId);
-            stack.push(childId);
+            // Only process if not already visited (prevents infinite loop from cycles)
+            if (!visited.has(childId)) {
+                descendants.add(childId);
+                visited.add(childId);
+                stack.push(childId);
+            }
         });
     }
 

@@ -141,6 +141,16 @@ const convertNodeToMdx = (node: TreeNode, depth: number): string => {
             // 인용
             return '\n> ' + label + '\n\n';
 
+        case 'link':
+            // 링크: [텍스트](url)
+            const linkUrl = data?.url || '';
+            return '[' + label + '](' + linkUrl + ')\n';
+
+        case 'image':
+            // 이미지: ![alt](url)
+            const imageUrl = data?.url || '';
+            return '![' + label + '](' + imageUrl + ')\n';
+
         case 'component':
         case 'chart':
         case 'math':
