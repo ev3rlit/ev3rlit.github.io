@@ -47,7 +47,7 @@ const isValidMdx = (mdxContent: string): boolean => {
     }
 };
 
-const DEBOUNCE_DELAY = 300;
+const DEBOUNCE_DELAY = 500;
 
 export function MdxEditor() {
     const { mdxSource, setMdxSource, isEditorOpen, toggleEditor, setNodes, setEdges } = useWhiteboardStore();
