@@ -96,6 +96,12 @@ tags: []
         });
     },
     onConnect: (connection: Connection) => {
+        // Prevent self-loops (connecting node to itself)
+        if (!connection.source || !connection.target) return;
+        if (connection.source === connection.target) {
+            return;
+        }
+
         set({
             edges: addEdge(connection, get().edges),
         });
