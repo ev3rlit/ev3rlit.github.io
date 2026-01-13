@@ -5,6 +5,7 @@ import { Handle, Position, NodeProps } from 'reactflow';
 import { cn } from '@/shared/lib/cn';
 import { Highlight, themes } from 'prism-react-renderer';
 import { Copy, Check, Terminal } from 'lucide-react';
+import { CODE_NODE_STYLES } from '../../lib/nodeStyles';
 
 export const CodeNode = memo(({ data, selected }: NodeProps) => {
     const codeData = data.codeData as { lang: string; value: string } | undefined;
@@ -25,14 +26,14 @@ export const CodeNode = memo(({ data, selected }: NodeProps) => {
 
     return (
         <div className={cn(
-            "rounded-xl overflow-hidden bg-[#1e1e1e] border border-stone-800 shadow-xl min-w-[300px] transition-shadow duration-200",
+            CODE_NODE_STYLES.container,
             selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950 shadow-blue-500/20"
         )}>
             <Handle type="target" position={Position.Left} id="left" className="w-2 h-2 !bg-stone-500" />
             <Handle type="source" position={Position.Left} id="left" className="w-2 h-2 !bg-stone-500" />
 
             {/* Default MacOS-like Window Header */}
-            <div className="flex items-center justify-between px-4 py-2 bg-[#252526] border-b border-stone-800">
+            <div className={CODE_NODE_STYLES.header}>
                 <div className="flex items-center gap-2">
                     <div className="flex gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
@@ -63,7 +64,7 @@ export const CodeNode = memo(({ data, selected }: NodeProps) => {
             </div>
 
             {/* Code Content */}
-            <div className="relative group">
+            <div className={CODE_NODE_STYLES.contentWrapper}>
                 <Highlight
                     theme={themes.vsDark}
                     code={code.length > 300 ? code.slice(0, 300) + '\n// ...' : code}
@@ -71,7 +72,7 @@ export const CodeNode = memo(({ data, selected }: NodeProps) => {
                 >
                     {({ style, tokens, getLineProps, getTokenProps }) => (
                         <pre
-                            className="text-xs font-mono overflow-x-auto max-w-[400px] max-h-[300px] overflow-y-auto p-4 custom-scrollbar"
+                            className={CODE_NODE_STYLES.pre}
                             style={{ ...style, background: 'transparent', margin: 0 }}
                         >
                             {tokens.map((line, i) => (
