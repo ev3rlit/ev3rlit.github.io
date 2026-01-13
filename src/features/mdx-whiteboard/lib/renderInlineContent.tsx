@@ -13,6 +13,21 @@ interface InlineNode {
 }
 
 /**
+ * 유튜브 URL에서 비디오 ID 추출
+ */
+const getYouTubeVideoId = (url: string): string | null => {
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+    ];
+
+    for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match) return match[1];
+    }
+    return null;
+};
+
+/**
  * AST의 인라인 요소들을 React 요소로 변환
  * paragraph, listItem 등의 노드에서 인라인 콘텐츠를 추출하여 렌더링
  */
@@ -47,7 +62,45 @@ const renderNode = (node: InlineNode, key: number): React.ReactNode => {
         case 'text':
             return <span key={key}>{node.value}</span>;
 
-        case 'link':
+        case 'link': {
+            // 유튜브 링크 감지
+            const youtubeVideoId = getYouTubeVideoId(node.url || '');
+
+            if (youtubeVideoId) {
+                // 유튜브 링크: 썸네일 표시
+                const thumbnailUrl = `https://img.youtube.com/vi/${youtubeVideoId}/mqdefault.jpg`;
+                return (
+                    <a
+                        key={key}
+                        href={node.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex flex-col items-center gap-0.5 align-middle cursor-pointer mx-1 group"
+                        onClick={(e) => e.stopPropagation()}
+                        title={node.children?.map(c => c.value).join('') || 'YouTube Video'}
+                    >
+                        <div className="relative">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={thumbnailUrl}
+                                alt="YouTube thumbnail"
+                                className="h-16 w-auto max-w-[120px] rounded-md object-cover border border-red-200 dark:border-red-800 shadow-sm group-hover:shadow-md transition-shadow"
+                            />
+                            {/* 재생 버튼 오버레이 */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-8 h-6 bg-red-600 rounded-md flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                                    <span className="text-white text-xs">▶</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span className="text-[9px] text-red-600 dark:text-red-400 max-w-[120px] truncate text-center">
+                            {node.children?.map(c => c.value).join('') || 'YouTube'}
+                        </span>
+                    </a>
+                );
+            }
+
+            // 일반 링크
             return (
                 <a
                     key={key}
@@ -61,17 +114,38 @@ const renderNode = (node: InlineNode, key: number): React.ReactNode => {
                     <ExternalLink size={10} className="inline ml-0.5 flex-shrink-0" />
                 </a>
             );
+        }
 
         case 'image':
-            // 인라인 이미지는 이모지 + alt 텍스트로 표시
+            // 인라인 이미지를 유튜브 썸네일 스타일로 표시
             return (
-                <span
+                <a
                     key={key}
-                    className="inline-flex items-center gap-1 text-purple-600 dark:text-purple-400"
-                    title={node.url}
+                    href={node.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex flex-col items-center gap-0.5 align-middle cursor-pointer mx-1 group"
+                    onClick={(e) => e.stopPropagation()}
+                    title={node.alt || node.url}
                 >
-                    🖼️ {node.alt || 'image'}
-                </span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src={node.url}
+                        alt={node.alt || 'image'}
+                        className="h-16 w-auto max-w-[120px] rounded-md object-cover border border-purple-200 dark:border-purple-800 shadow-sm group-hover:shadow-md transition-shadow"
+                        onError={(e) => {
+                            // 이미지 로딩 실패 시 fallback
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            target.insertAdjacentHTML('afterend', '<span class="text-purple-500 text-2xl">🖼️</span>');
+                        }}
+                    />
+                    {node.alt && (
+                        <span className="text-[9px] text-purple-600 dark:text-purple-400 max-w-[120px] truncate text-center">
+                            {node.alt}
+                        </span>
+                    )}
+                </a>
             );
 
         case 'strong':
