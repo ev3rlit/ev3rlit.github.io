@@ -10,3 +10,11 @@ export const NODE_STYLES = {
     image: "p-1 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 shadow-sm inline-block"
 };
 
+// Specific styles for complex components to ensure consistency between
+// the React component (CodeNode.tsx) and the layout measurement (measureNode.ts)
+export const CODE_NODE_STYLES = {
+    container: "rounded-xl overflow-hidden bg-[#1e1e1e] border border-stone-800 shadow-xl min-w-[300px] transition-shadow duration-200",
+    header: "flex items-center justify-between px-4 py-2 bg-[#252526] border-b border-stone-800",
+    contentWrapper: "relative group",
+    pre: "text-xs font-mono overflow-x-auto max-w-[400px] max-h-[300px] overflow-y-auto p-4 custom-scrollbar"
+};
