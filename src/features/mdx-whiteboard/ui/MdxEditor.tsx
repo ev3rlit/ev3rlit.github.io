@@ -1,22 +1,87 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
 import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { parseMdxToGraph } from '../lib/parser';
 import { MonacoEditor } from './MonacoEditor';
+import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
+
+// Validate MDX syntax before parsing
+const isValidMdx = (mdxContent: string): boolean => {
+    // Allow empty content
+    if (!mdxContent.trim()) return true;
+
+    // Check for unclosed code blocks
+    const codeBlockMatches = mdxContent.match(/```/g);
+    if (codeBlockMatches && codeBlockMatches.length % 2 !== 0) {
+        return false;
+    }
+
+    // Check for unclosed JSX tags (simple heuristic)
+    const jsxOpenTags = mdxContent.match(/<[A-Z][a-zA-Z0-9]*(?:\s[^>]*)?(?<!\/)\s*>/g) || [];
+    const jsxCloseTags = mdxContent.match(/<\/[A-Z][a-zA-Z0-9]*>/g) || [];
+    const selfClosingTags = mdxContent.match(/<[A-Z][a-zA-Z0-9]*(?:\s[^>]*)?\s*\/>/g) || [];
+
+    if (jsxOpenTags.length - selfClosingTags.length > jsxCloseTags.length) {
+        return false;
+    }
+
+    // Try parsing with unified to catch syntax errors
+    try {
+        const processor = unified()
+            .use(remarkParse)
+            .use(remarkGfm)
+            .use(remarkMdx);
+
+        const parsed = matter(mdxContent);
+        processor.parse(parsed.content);
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+const DEBOUNCE_DELAY = 300;
 
 export function MdxEditor() {
     const { mdxSource, setMdxSource, isEditorOpen, toggleEditor, setNodes, setEdges } = useWhiteboardStore();
+    const parseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Parse MDX to graph when mdxSource changes
+    // Debounced parsing with validation
     useEffect(() => {
-        const result = parseMdxToGraph(mdxSource);
-        if (result) {
-            setNodes(result.nodes);
-            setEdges(result.edges);
+        // Clear previous timeout
+        if (parseTimeoutRef.current) {
+            clearTimeout(parseTimeoutRef.current);
         }
+
+        // Set new timeout (debounced)
+        parseTimeoutRef.current = setTimeout(() => {
+            // Validate MDX first - if invalid, keep current graph state
+            if (!isValidMdx(mdxSource)) {
+                return;
+            }
+
+            // Try parsing
+            const result = parseMdxToGraph(mdxSource);
+            if (result) {
+                setNodes(result.nodes);
+                setEdges(result.edges);
+            }
+            // If parsing fails (returns null), keep current state
+        }, DEBOUNCE_DELAY);
+
+        // Cleanup on unmount or re-run
+        return () => {
+            if (parseTimeoutRef.current) {
+                clearTimeout(parseTimeoutRef.current);
+            }
+        };
     }, [mdxSource, setNodes, setEdges]);
 
     return (

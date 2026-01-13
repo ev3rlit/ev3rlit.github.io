@@ -53,7 +53,7 @@ export function registerMdxLanguage(monaco: typeof import('monaco-editor')) {
         ],
     });
 
-    // Set tokenizer (extend markdown)
+    // Set tokenizer (extend markdown with embedded languages for code blocks)
     monaco.languages.setMonarchTokensProvider('mdx', {
         defaultToken: '',
         tokenizer: {
@@ -67,10 +67,26 @@ export function registerMdxLanguage(monaco: typeof import('monaco-editor')) {
                 [/\*\*[^*]+\*\*/, 'strong'],
                 // Italic
                 [/\*[^*]+\*/, 'emphasis'],
-                // Code blocks
-                [/```[\s\S]*?```/, 'string'],
+                // Code blocks with language - embedded highlighting
+                [/^```(typescript|ts)$/, { token: 'string.code.fence', next: '@codeblockTypescript', nextEmbedded: 'typescript' }],
+                [/^```(javascript|js)$/, { token: 'string.code.fence', next: '@codeblockJavascript', nextEmbedded: 'javascript' }],
+                [/^```(python|py)$/, { token: 'string.code.fence', next: '@codeblockPython', nextEmbedded: 'python' }],
+                [/^```sql$/, { token: 'string.code.fence', next: '@codeblockSql', nextEmbedded: 'sql' }],
+                [/^```(css|scss|less)$/, { token: 'string.code.fence', next: '@codeblockCss', nextEmbedded: 'css' }],
+                [/^```html$/, { token: 'string.code.fence', next: '@codeblockHtml', nextEmbedded: 'html' }],
+                [/^```json$/, { token: 'string.code.fence', next: '@codeblockJson', nextEmbedded: 'json' }],
+                [/^```(go|golang)$/, { token: 'string.code.fence', next: '@codeblockGo', nextEmbedded: 'go' }],
+                [/^```rust$/, { token: 'string.code.fence', next: '@codeblockRust', nextEmbedded: 'rust' }],
+                [/^```java$/, { token: 'string.code.fence', next: '@codeblockJava', nextEmbedded: 'java' }],
+                [/^```(bash|sh|shell|zsh)$/, { token: 'string.code.fence', next: '@codeblockShell', nextEmbedded: 'shell' }],
+                [/^```yaml$/, { token: 'string.code.fence', next: '@codeblockYaml', nextEmbedded: 'yaml' }],
+                [/^```(c|cpp|c\+\+)$/, { token: 'string.code.fence', next: '@codeblockCpp', nextEmbedded: 'cpp' }],
+                [/^```(jsx|tsx)$/, { token: 'string.code.fence', next: '@codeblockTypescript', nextEmbedded: 'typescript' }],
+                [/^```(md|markdown)$/, { token: 'string.code.fence', next: '@codeblockMarkdown', nextEmbedded: 'markdown' }],
+                // Generic code block (no language or unknown language)
+                [/^```\w*$/, { token: 'string.code.fence', next: '@codeblockGeneric' }],
                 // Inline code
-                [/`[^`]+`/, 'string'],
+                [/`[^`]+`/, 'string.code.inline'],
                 // Links
                 [/\[([^\]]+)\]\([^)]+\)/, 'string.link'],
                 // Lists
@@ -86,6 +102,54 @@ export function registerMdxLanguage(monaco: typeof import('monaco-editor')) {
                 [/\{[^}]*\}/, 'variable'],
                 [/\/>/, { token: 'tag', next: '@pop' }],
                 [/>/, { token: 'tag', next: '@pop' }],
+            ],
+            // Embedded language code blocks
+            codeblockTypescript: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockJavascript: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockPython: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockSql: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockCss: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockHtml: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockJson: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockGo: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockRust: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockJava: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockShell: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockYaml: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockCpp: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            codeblockMarkdown: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop', nextEmbedded: '@pop' }],
+            ],
+            // Generic code block without syntax highlighting
+            codeblockGeneric: [
+                [/^```$/, { token: 'string.code.fence', next: '@pop' }],
+                [/.*$/, 'string.code'],
             ],
         },
     });
