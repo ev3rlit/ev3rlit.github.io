@@ -122,17 +122,66 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
             currentId = nodeId;
 
         } else if (node.type === 'listItem') {
-            nodeId = `list-${node.position?.start.line}`;
-
-            // Intelligent Label Extraction:
-            // ListItems usually contain a Paragraph as the first child. 
-            // We want to "hoist" that text to be the ListItem's label and avoid creating a separate Paragraph node.
+            // Check if this listItem ONLY contains a SINGLE block element (code or component)
+            // with NO text. If so, skip the listItem node and process child directly under parent.
+            // IMPORTANT: Keep listItem for:
+            //   - Multiple children (table + list, etc.)
+            //   - Nested lists (keep hierarchy)
+            //   - Text content
             const firstParagraph = node.children?.find((c: any) => c.type === 'paragraph');
+            const singleBlockTypes = ['code', 'mdxJsxFlowElement', 'image', 'blockquote', 'table'];
+
+            const blockChild = node.children?.find((c: any) => singleBlockTypes.includes(c.type));
+            const listChild = node.children?.find((c: any) => c.type === 'list');
+
+            const otherChildren = node.children?.filter((c: any) => c !== blockChild && c !== listChild);
+            const isPromotable = !firstParagraph && blockChild && otherChildren?.length === 0;
+
+            if (isPromotable) {
+                // SKIP listItem node
+
+                // 1. Create the Block Node first (attaching to current parent)
+                const blockNodeId = traverse(blockChild, lexicalParentId);
+
+                // 2. If there is a nested list, attach it to the Block Node we just created
+                if (listChild && blockNodeId) {
+                    processChildren([listChild], blockNodeId); // Process list as children of the block
+                }
+
+                return null; // No "listItem" node created
+            }
+
+            // Normal listItem processing
+            nodeId = `list-${node.position?.start.line}`;
 
             if (firstParagraph) {
                 label = extractCurrentNodeText(firstParagraph);
             } else {
-                label = extractCurrentNodeText(node);
+                // No paragraph - check what children we have
+                // Don't extract text from block content (code, table, etc.)
+                const blockTypes = ['code', 'table', 'mdxJsxFlowElement', 'image', 'blockquote'];
+                const hasBlockContent = node.children?.some((c: any) => blockTypes.includes(c.type));
+
+                if (hasBlockContent) {
+                    // Use the first block content type as label placeholder
+                    const firstBlock = node.children?.find((c: any) => blockTypes.includes(c.type));
+                    if (firstBlock?.type === 'code') {
+                        label = `📝 Code`;
+                    } else if (firstBlock?.type === 'table') {
+                        label = `📊 Table`;
+                    } else if (firstBlock?.type === 'mdxJsxFlowElement') {
+                        label = `🔧 ${firstBlock.name || 'Component'}`;
+                    } else if (firstBlock?.type === 'image') {
+                        label = `🖼️ Image`;
+                    } else if (firstBlock?.type === 'blockquote') {
+                        label = `💬 Quote`;
+                    } else {
+                        label = '';
+                    }
+                } else {
+                    // No block content, extract text normally
+                    label = extractCurrentNodeText(node);
+                }
             }
 
             type = 'list';
@@ -438,12 +487,22 @@ const getAstNodeId = (node: any): string => {
 // Shallow text extraction: Only gets text from the current block's direct inline children.
 // Does NOT dive into other blocks like Lists, Blockquotes, etc.
 const extractCurrentNodeText = (node: any): string => {
+    if (!node) return '';
+    // Explicitly ignore block types even if passed inadvertently
+    if (['code', 'table', 'blockquote', 'list'].includes(node.type)) return '';
+
     if (node.type === 'text' || node.type === 'inlineCode') return node.value;
     if (node.children) {
         return node.children
             .map((startChild: any) => {
                 // Allow recusion only for Inline elements
                 const inlineTypes = ['text', 'strong', 'emphasis', 'delete', 'link', 'inlineCode', 'image'];
+
+                // DEBUG: Check if we are accidentally processing code blocks
+                if (startChild.type === 'code') {
+                    // console.log('[DEBUG-EXTRACT] Skipping code block value inside text extraction');
+                }
+
                 if (inlineTypes.includes(startChild.type) || !startChild.type /* root/unknown inline */) {
                     return extractCurrentNodeText(startChild);
                 }
