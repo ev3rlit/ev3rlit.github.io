@@ -6,6 +6,8 @@ import { Card } from '@/shared/ui/Card';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
 import { cn } from '@/shared/lib/cn';
 
+import { useNodeMeasurement } from '../../lib/useNodeMeasurement';
+
 // Component Imports
 import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
 import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
@@ -32,6 +34,7 @@ const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
 };
 
 export const ComponentNode = memo(({ data, selected, id }: NodeProps) => {
+    const { measureRef } = useNodeMeasurement(id);
     const setEditingNodeId = useWhiteboardStore(state => state.setEditingNodeId);
 
     const Component = useMemo(() => {
@@ -102,9 +105,13 @@ export const ComponentNode = memo(({ data, selected, id }: NodeProps) => {
         if (!validation.valid) {
             return (
                 <div
+                    ref={measureRef}
                     className={cn(
                         "group relative min-w-[300px] rounded-xl border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900/50 p-6 flex flex-col items-center justify-center gap-2 transition-all",
-                        selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950 border-blue-400"
+                        selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950 border-blue-400",
+                        data.isLayoutReady
+                            ? "opacity-100 transition-opacity duration-300"
+                            : "opacity-0"
                     )}
                     onClick={() => setEditingNodeId(id)}
                 >
@@ -128,9 +135,13 @@ export const ComponentNode = memo(({ data, selected, id }: NodeProps) => {
 
         return (
             <div
+                ref={measureRef}
                 className={cn(
                     "group relative min-w-[400px] rounded-xl transition-all duration-200",
-                    selected ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950 shadow-xl" : "hover:shadow-lg border border-transparent"
+                    selected ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950 shadow-xl" : "hover:shadow-lg border border-transparent",
+                    data.isLayoutReady
+                        ? "opacity-100 transition-opacity duration-300"
+                        : "opacity-0"
                 )}
                 onClick={(e) => {
                     e.stopPropagation();
@@ -158,9 +169,13 @@ export const ComponentNode = memo(({ data, selected, id }: NodeProps) => {
     // Fallback for unknown components (Original Generic Card)
     return (
         <div
+            ref={measureRef}
             className={cn(
                 "group relative p-1 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-sm",
-                selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950"
+                selected && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-stone-950",
+                data.isLayoutReady
+                    ? "opacity-100 transition-opacity duration-300"
+                    : "opacity-0"
             )}
             onClick={() => setEditingNodeId(id)}
         >
