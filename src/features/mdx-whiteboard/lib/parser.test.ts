@@ -309,4 +309,43 @@ const code = "long content";
         const counts = [leftSections.length, rightSections.length].sort();
         expect(counts).toEqual([1, 3]);
     });
+
+    // ============================================================
+    // Multi-line Paragraph Tests (TDD)
+    // ============================================================
+
+    it('should create individual nodes for each line in multi-line paragraph', () => {
+        const mdx = `첫번째라인
+두번째라인
+세번째라인`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        // Multi-line text should create 3 separate nodes
+        const textNodes = result.nodes.filter(n => n.type === 'list');
+        expect(textNodes).toHaveLength(3);
+        expect(textNodes.map(n => n.data.label)).toEqual(['첫번째라인', '두번째라인', '세번째라인']);
+    });
+
+    it('should handle mixed multi-line and single-line paragraphs', () => {
+        const mdx = `# Title
+
+Line A
+Line B
+
+Single Line
+
+Line C
+Line D
+`;
+        const result = parseMdxToGraph(mdx);
+        if (!result) return;
+
+        const textNodes = result.nodes.filter(n => n.type === 'list');
+        // Line A, Line B (from first paragraph)
+        // Single Line (from second paragraph)
+        // Line C, Line D (from third paragraph)
+        expect(textNodes).toHaveLength(5);
+    });
 });
+

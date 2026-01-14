@@ -363,26 +363,52 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
         } else if (node.type === 'paragraph') {
             const text = extractCurrentNodeText(node);
             if (text && text.trim()) {
-                nodeId = `text-${node.position?.start.line}`;
-                label = text;
-                type = 'list'; // Visual style
+                // Check for multi-line text (soft line breaks within a paragraph)
+                const lines = text.split('\n').map(l => l.trim()).filter(l => l);
 
-                nodes.push({
-                    id: nodeId,
-                    type,
-                    data: { label, depth: 0, props, mdxNode: node },
-                    position: { x: 0, y: 0 }
-                });
+                if (lines.length > 1) {
+                    // Multi-line: create individual nodes per line
+                    lines.forEach((line, index) => {
+                        const lineNodeId = `text-${node.position?.start.line}-${index}`;
+                        nodes.push({
+                            id: lineNodeId,
+                            type: 'list',
+                            data: { label: line, depth: 0, props: {}, mdxNode: null },
+                            position: { x: 0, y: 0 }
+                        });
+                        edges.push({
+                            id: `e-${lexicalParentId}-${lineNodeId}`,
+                            source: lexicalParentId,
+                            target: lineNodeId,
+                            type: 'smoothstep',
+                            style: { stroke: '#94a3b8' }
+                        });
+                    });
+                    // Return first line's ID for sibling tracking
+                    createdNodeId = `text-${node.position?.start.line}-0`;
+                } else {
+                    // Single line: existing logic
+                    nodeId = `text-${node.position?.start.line}`;
+                    label = text;
+                    type = 'list'; // Visual style
 
-                edges.push({
-                    id: `e-${lexicalParentId}-${nodeId}`,
-                    source: lexicalParentId,
-                    target: nodeId,
-                    type: 'smoothstep',
-                    style: { stroke: '#94a3b8' }
-                });
+                    nodes.push({
+                        id: nodeId,
+                        type,
+                        data: { label, depth: 0, props, mdxNode: node },
+                        position: { x: 0, y: 0 }
+                    });
 
-                createdNodeId = nodeId;
+                    edges.push({
+                        id: `e-${lexicalParentId}-${nodeId}`,
+                        source: lexicalParentId,
+                        target: nodeId,
+                        type: 'smoothstep',
+                        style: { stroke: '#94a3b8' }
+                    });
+
+                    createdNodeId = nodeId;
+                }
             }
 
         } else if (node.type === 'list') {

@@ -1,6 +1,6 @@
 export const NODE_STYLES = {
     section: "px-4 py-2 rounded-lg border-2 bg-white dark:bg-stone-900 border-slate-200 dark:border-stone-800 w-fit whitespace-nowrap font-bold text-sm text-slate-700 dark:text-stone-300",
-    list: "px-3 py-1.5 rounded-md bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700/50 w-fit whitespace-nowrap text-xs text-stone-600 dark:text-stone-400",
+    list: "px-3 py-1.5 rounded-md bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700/50 w-fit max-w-[400px] whitespace-pre-wrap text-xs text-stone-600 dark:text-stone-400",
     component: "min-w-[200px] p-2 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-900/20",
     root: "px-4 py-2 rounded-lg border-2 transition-all duration-200 bg-stone-900 border-stone-700 text-stone-100 min-w-[200px] text-center font-bold text-lg",
     code: "font-mono text-sm bg-stone-900 text-stone-50 p-3 rounded-md w-fit",
