@@ -57,6 +57,14 @@ interface WhiteboardState {
     setFrontmatter: (fm: Record<string, any>) => void;
     syncToMdx: () => void;
 
+    // Layout: Node Sizing
+    nodeSizes: Record<string, { w: number; h: number }>;
+    updateNodeSize: (id: string, width: number, height: number) => void;
+
+    // Layout: Structure Tracking (for optimization)
+    structureHash: string;
+    setStructureHash: (hash: string) => void;
+
     // Command pattern (Undo/Redo)
     history: History;
     executeCommand: (command: Command) => boolean;
@@ -80,6 +88,19 @@ tags: []
     edges: [],
     isEditorOpen: true,
     editingNodeId: null,
+
+    // Layout: Node Sizing
+    nodeSizes: {},
+    updateNodeSize: (id, width, height) => set((state) => ({
+        nodeSizes: {
+            ...state.nodeSizes,
+            [id]: { w: width, h: height }
+        }
+    })),
+
+    // Layout: Structure Tracking
+    structureHash: '',
+    setStructureHash: (hash) => set({ structureHash: hash }),
 
     setMdxSource: (source) => set({ mdxSource: source }),
     setNodes: (nodes) => set({ nodes }),
