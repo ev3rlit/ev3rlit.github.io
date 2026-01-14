@@ -51,6 +51,7 @@ export function registerMdxLanguage(monaco: typeof import('monaco-editor')) {
             { open: "'", close: "'" },
             { open: '`', close: '`' },
         ],
+        onEnterRules: [],
     });
 
     // Set tokenizer (extend markdown with embedded languages for code blocks)
