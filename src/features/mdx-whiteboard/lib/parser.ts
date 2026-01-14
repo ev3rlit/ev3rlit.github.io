@@ -4,11 +4,12 @@ import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import remarkGfm from 'remark-gfm';
 import { Node, Edge } from 'reactflow';
-import { applyLayout } from './layoutEngine';
+
 
 interface ParsedResult {
     nodes: Node[];
     edges: Edge[];
+    structureHash: string;
 }
 
 export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }): ParsedResult | null => {
@@ -36,10 +37,11 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
             nodes: [{
                 id: 'root',
                 type: 'root',
-                data: { label: rootTitle, depth: 0, frontmatter },
+                data: { label: rootTitle, depth: 0, frontmatter, isLayoutReady: false },
                 position: { x: 0, y: 0 }
             }],
-            edges: []
+            edges: [],
+            structureHash: 'root'
         };
     }
 
@@ -102,7 +104,7 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
             nodes.push({
                 id: nodeId,
                 type,
-                data: { label, depth, props, mdxNode: node },
+                data: { label, depth, props, mdxNode: node, isLayoutReady: false },
                 position: { x: 0, y: 0 }
             });
 
@@ -475,7 +477,14 @@ export const parseMdxToGraph = (mdxContent: string, options?: { title?: string }
         });
     }
 
-    return applyLayout(nodes, edges);
+    // parser.ts refactor: layout logic moved to LayoutManager.tsx
+    // We return the raw topological graph.
+    // LayoutManager will measure nodes (via useNodeMeasurement) and position them.
+
+    // Compute structure hash for optimization (only re-layout when topology changes)
+    const structureHash = nodes.map(n => n.id).sort().join(',');
+
+    return { nodes, edges, structureHash };
 };
 
 // ... keep helpers ...
