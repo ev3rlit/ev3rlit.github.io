@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
-import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { clsx } from 'clsx';
 import { parseMdxToGraph } from '../lib/parser';
 import { MonacoEditor } from './MonacoEditor';
@@ -86,8 +86,13 @@ export function MdxEditor() {
 
     return (
         <div className={clsx(
-            "relative h-full transition-all duration-300 ease-in-out bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl group overflow-hidden border border-slate-200 dark:border-stone-800 shadow-2xl rounded-2xl flex flex-col",
-            isEditorOpen ? "w-[500px]" : "w-0 border-0 pointer-events-none"
+            "relative transition-all duration-300 ease-in-out bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl group overflow-hidden border border-slate-200 dark:border-stone-800 shadow-2xl rounded-2xl flex flex-col",
+            // Desktop: 사이드 패널
+            "md:h-full",
+            isEditorOpen ? "md:w-[500px]" : "md:w-0 md:border-0 md:pointer-events-none",
+            // Mobile: 하단 고정 패널 (툴바 공간 확보)
+            "max-md:fixed max-md:bottom-20 max-md:left-0 max-md:right-0 max-md:z-50 max-md:rounded-2xl",
+            isEditorOpen ? "max-md:h-[45vh]" : "max-md:h-0 max-md:border-0 max-md:pointer-events-none"
         )}>
             {/* Header */}
             <div className={clsx(
@@ -95,11 +100,15 @@ export function MdxEditor() {
                 !isEditorOpen && "opacity-0"
             )}>
                 <h2 className="text-xs font-bold text-slate-500 dark:text-stone-400 uppercase tracking-widest font-mono">MDX Editor</h2>
-                <div className="flex gap-2">
-                    <button className="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-stone-800 text-stone-500 transition-colors">
-                        <Maximize2 size={14} />
-                    </button>
-                </div>
+                <button
+                    onClick={toggleEditor}
+                    className="p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-stone-800 text-stone-500 hover:text-blue-500 transition-colors"
+                    aria-label="에디터 접기"
+                >
+                    {/* Desktop: 좌우 화살표, Mobile: 상하 화살표 */}
+                    <span className="hidden md:block"><ChevronLeft size={14} /></span>
+                    <span className="block md:hidden"><ChevronDown size={14} /></span>
+                </button>
             </div>
 
             {/* Editor Content */}
@@ -113,17 +122,6 @@ export function MdxEditor() {
                     className="h-full"
                 />
             </div>
-
-            {/* Toggle Button */}
-            <button
-                onClick={toggleEditor}
-                className={clsx(
-                    "absolute top-6 right-0 translate-x-1/2 z-50 w-8 h-8 rounded-full bg-white dark:bg-stone-900 border border-slate-200 dark:border-stone-800 shadow-md flex items-center justify-center text-slate-500 dark:text-stone-400 hover:text-blue-500 transition-all",
-                    !isEditorOpen && "translate-x-12 opacity-0 pointer-events-none"
-                )}
-            >
-                {isEditorOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-            </button>
-        </div >
+        </div>
     );
 }

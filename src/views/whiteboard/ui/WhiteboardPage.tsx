@@ -8,7 +8,7 @@ import { useSidebarStore } from '@/features/layout/model/useSidebarStore';
 import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
 import { useEffect } from 'react';
 import { ReactFlowProvider } from 'reactflow';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronUp } from 'lucide-react';
 import { cn } from '@/shared/lib/cn';
 
 export function WhiteboardPage() {
@@ -38,14 +38,26 @@ export function WhiteboardPage() {
 
             {/* Editor Toggle Trigger (Visible when closed) */}
             {!isEditorOpen && (
-                <div className="absolute left-[100px] top-6 z-40">
-                    <button
-                        onClick={() => useWhiteboardStore.getState().toggleEditor()}
-                        className="w-10 h-10 rounded-full bg-white dark:bg-stone-900 border border-slate-200 dark:border-stone-800 shadow-lg flex items-center justify-center text-slate-500 dark:text-stone-400 hover:text-indigo-500 transition-all"
-                    >
-                        <ChevronRight size={18} />
-                    </button>
-                </div>
+                <>
+                    {/* Desktop: 왼쪽 사이드 버튼 */}
+                    <div className="hidden md:block absolute left-[100px] top-6 z-40">
+                        <button
+                            onClick={() => useWhiteboardStore.getState().toggleEditor()}
+                            className="w-10 h-10 rounded-full bg-white dark:bg-stone-900 border border-slate-200 dark:border-stone-800 shadow-lg flex items-center justify-center text-slate-500 dark:text-stone-400 hover:text-indigo-500 transition-all"
+                        >
+                            <ChevronRight size={18} />
+                        </button>
+                    </div>
+                    {/* Mobile: 하단 중앙 버튼 */}
+                    <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+                        <button
+                            onClick={() => useWhiteboardStore.getState().toggleEditor()}
+                            className="w-12 h-12 rounded-full bg-white dark:bg-stone-900 border border-slate-200 dark:border-stone-800 shadow-lg flex items-center justify-center text-slate-500 dark:text-stone-400 hover:text-indigo-500 transition-all"
+                        >
+                            <ChevronUp size={20} />
+                        </button>
+                    </div>
+                </>
             )}
 
             {/* Property Editor Overlay (Right, Z-Index 10) */}
