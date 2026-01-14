@@ -37,9 +37,9 @@ export function WhiteboardLayout({ sidebarContent, children, posts }: Whiteboard
                         transition={layoutTransition}
                         className={cn(
                             "fixed z-50 flex pointer-events-none",
-                            // Mobile: Bottom horizontal bar
+                            // Mobile: Bottom horizontal bar (항상 하단 고정)
                             "bottom-6 left-0 right-0 flex-row justify-center items-end",
-                            // Desktop: Left vertical bar, top-aligned (reset mobile overrides)
+                            // Desktop: Left vertical bar, top-aligned
                             "md:bottom-auto md:right-auto md:left-6 md:top-0 md:bottom-0 md:flex-col md:justify-start md:items-start md:pt-12"
                         )}
                     >
@@ -66,9 +66,9 @@ export function WhiteboardLayout({ sidebarContent, children, posts }: Whiteboard
                         onClick={toggleSidebar}
                         className={cn(
                             "fixed z-50 flex items-center justify-center bg-white dark:bg-stone-900 shadow-md border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors",
-                            // Mobile: Floating button bottom-left
+                            // Mobile: Floating button bottom-left (항상 하단 고정)
                             "bottom-6 left-4 h-12 w-12 rounded-full",
-                            // Desktop: Left tab (reset mobile overrides)
+                            // Desktop: Left tab
                             "md:bottom-auto md:left-0 md:top-1/2 md:h-24 md:w-6 md:-translate-y-1/2 md:rounded-none md:rounded-r-xl md:border-l-0"
                         )}
                     >
