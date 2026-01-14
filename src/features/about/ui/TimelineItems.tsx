@@ -4,10 +4,11 @@ interface ExperienceProps {
     company: string;
     period: string;
     role: string;
+    stack?: string;
     children: React.ReactNode;
 }
 
-export function Experience({ company, period, role, children }: ExperienceProps) {
+export function Experience({ company, period, role, stack, children }: ExperienceProps) {
     return (
         <div className="group mb-16 last:mb-0">
             {/* Minimal Header */}
@@ -16,7 +17,20 @@ export function Experience({ company, period, role, children }: ExperienceProps)
                     <h3 className="text-2xl font-black text-slate-900 dark:text-stone-100 tracking-tight leading-none">{company}</h3>
                     <time className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-500/80">{period}</time>
                 </div>
-                <div className="text-[13px] font-bold text-slate-400 dark:text-stone-500 uppercase tracking-widest mt-3 border-b border-slate-50 dark:border-stone-800/50 pb-2">{role}</div>
+                <div className="text-[13px] font-bold text-slate-400 dark:text-stone-500 uppercase tracking-widest mt-3">{role}</div>
+
+                {stack && (
+                    <div className="flex flex-wrap gap-1.5 mt-3 pb-4 border-b border-slate-50 dark:border-stone-800/50">
+                        {stack.split(',').map((tech) => (
+                            <span
+                                key={tech}
+                                className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-stone-800/80 text-[11px] font-semibold text-slate-500 dark:text-stone-400 border border-slate-200 dark:border-stone-700/50"
+                            >
+                                {tech.trim()}
+                            </span>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Content Area without Vertical Line */}
