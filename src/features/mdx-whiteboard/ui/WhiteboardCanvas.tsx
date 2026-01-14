@@ -24,6 +24,7 @@ import {
     ImageNode
 } from './nodes';
 import { useTheme } from 'next-themes';
+import { LayoutManager } from './LayoutManager';
 
 const nodeTypes = {
     root: RootNode,
@@ -98,6 +99,7 @@ export function WhiteboardCanvas() {
 
     return (
         <div className="h-full w-full bg-transparent relative overflow-hidden">
+            <LayoutManager />
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
