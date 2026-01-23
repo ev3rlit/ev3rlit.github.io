@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@/model/whiteboardStore';
 
 /**
  * Hook to measure the real DOM size of a node and report it to the store.

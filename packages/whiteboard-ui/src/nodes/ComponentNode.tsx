@@ -3,33 +3,20 @@
 import React, { memo, useMemo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import { Card } from '@/shared/ui/Card';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@/model/whiteboardStore';
 import { cn } from '@/shared/lib/cn';
 
-import { useNodeMeasurement } from '../../lib/useNodeMeasurement';
+import { useNodeMeasurement } from '@/lib/useNodeMeasurement';
 
 // Component Imports
-import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
-import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
-import { StatCard } from '@/features/mdx-viewer/ui/StatCard';
-// Wait, MdxContent imports Callout? No, MdxContent imports components locally or from features. 
-// Looking at descriptors.tsx, 'Callout' is defined. 
-// Let's assume standard components for now. If path is wrong I will fix.
-// Actually, let's look at MdxContent.tsx imports again in previous turns.
-// MdxContent imports: SqlPlayground, SchemaDiagram (LogArchitectureDiagrams), StatCard, CodeComparison, etc.
-// Callout might be just mapped or I need to find it. I'll omit Callout specific import if unsure, or map it to a generic alert.
-
-// Let's use the ones I'm sure of from previous `view_file`.
-// SqlPlayground: @/features/sql-playground/ui/SqlPlayground
-// CodeComparison: @/features/mdx-viewer/ui/CodeComparison
-// StatCard: @/features/mdx-viewer/ui/StatCard
-
-// SchemaDiagram is also big, might need special handling.
+// import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
+// import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
+// import { StatCard } from '@/features/mdx-viewer/ui/StatCard';
 
 const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
-    'SqlPlayground': SqlPlayground,
-    'CodeComparison': CodeComparison,
-    'StatCard': StatCard,
+    // 'SqlPlayground': SqlPlayground,
+    // 'CodeComparison': CodeComparison,
+    // 'StatCard': StatCard,
     // Add others as needed
 };
 

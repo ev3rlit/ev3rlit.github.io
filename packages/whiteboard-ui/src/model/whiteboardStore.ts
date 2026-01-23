@@ -13,9 +13,9 @@ import {
     applyEdgeChanges,
     ReactFlowInstance
 } from 'reactflow';
-import { applyLayout as engineApplyLayout } from '@/features/mdx-whiteboard/lib/layoutEngine';
-import { nodesToMdx } from '@/features/mdx-whiteboard/lib/nodesToMdx';
-import { History, Command, CommandContext } from '@/features/mdx-whiteboard/lib/commands';
+import { applyLayout as engineApplyLayout } from '@repo/mdx-logic';
+import { nodesToMdx } from '@repo/mdx-logic';
+import { History, Command, CommandContext } from '@repo/mdx-logic';
 
 interface WhiteboardState {
     mdxSource: string;
