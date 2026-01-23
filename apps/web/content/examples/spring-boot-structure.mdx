@@ -1,0 +1,52 @@
+---
+title: "Spring Boot 아키텍처"
+description: "Mindmap 모드 테스트용 예제"
+date: "2026-01-07"
+tags: ["spring-boot", "architecture"]
+defaultView: mindmap
+---
+
+# Spring Boot Application 구조
+
+이 문서는 Mindmap 모드를 테스트하기 위한 간단한 예제입니다.
+
+## Controller Layer
+
+HTTP 요청을 받아 적절한 Service로 라우팅합니다.
+
+- `@RestController` 어노테이션 사용
+- 요청 매핑 및 응답 처리
+
+## Service Layer
+
+비즈니스 로직을 처리합니다.
+
+- 트랜잭션 관리
+- 유효성 검증
+- 도메인 로직 실행
+
+### 의존성
+
+- Repository Layer
+- External APIs
+- Event Publisher
+
+## Repository Layer
+
+데이터 액세스를 담당합니다.
+
+- JPA/Hibernate 사용
+- 쿼리 최적화
+- 캐싱 전략
+
+## Configuration
+
+설정 파일 관리
+
+- application.yml
+- 프로파일별 환경 설정
+
+```go
+hello world
+```
+
