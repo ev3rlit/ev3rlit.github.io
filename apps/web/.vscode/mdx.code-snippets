@@ -1,0 +1,160 @@
+{
+    "SqlPlayground": {
+        "prefix": "SqlPlayground",
+        "body": [
+            "<SqlPlayground",
+            "  setup={`CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT);`}",
+            "  initialQuery=\"SELECT * FROM users;\"",
+            "/>"
+        ],
+        "description": "Interactive SQL Playground using PGlite",
+        "scope": "markdown,mdx"
+    },
+    "SchemaDiagram": {
+        "prefix": "SchemaDiagram",
+        "body": [
+            "<SchemaDiagram",
+            "  nodes={[",
+            "    { id: '1', data: { label: 'Node 1' }, position: { x: 0, y: 0 } },",
+            "    { id: '2', data: { label: 'Node 2' }, position: { x: 100, y: 100 } }",
+            "  ]}",
+            "  edges={[",
+            "    { id: 'e1-2', source: '1', target: '2' }",
+            "  ]}",
+            "  height={300}",
+            "/>"
+        ],
+        "description": "React Flow Schema Diagram",
+        "scope": "markdown,mdx"
+    },
+    "StatCard": {
+        "prefix": "StatCard",
+        "body": [
+            "<StatCard",
+            "  label=\"${1:Label}\"",
+            "  value=\"${2:Value}\"",
+            "  trend=\"${3:Trend}\"",
+            "/>"
+        ],
+        "description": "Statistic Card for Dashboard-like layout",
+        "scope": "markdown,mdx"
+    },
+    "CodeComparison": {
+        "prefix": "CodeComparison",
+        "body": [
+            "<CodeComparison",
+            "  items={[",
+            "    {",
+            "      title: '${1:Option A}',",
+            "      code: `${2:codeA}`",
+            "    },",
+            "    {",
+            "      title: '${3:Option B}',",
+            "      code: `${4:codeB}`",
+            "    }",
+            "  ]}",
+            "/>"
+        ],
+        "description": "Side-by-side Code Comparison",
+        "scope": "markdown,mdx"
+    },
+    "BenchmarkSimulator": {
+        "prefix": "BenchmarkSimulator",
+        "body": [
+            "<BenchmarkSimulator />"
+        ],
+        "description": "Interactive Benchmark Simulator Component",
+        "scope": "markdown,mdx"
+    },
+    "ContextRaceDemo": {
+        "prefix": "ContextRaceDemo",
+        "body": [
+            "<ContextRaceDemo />"
+        ],
+        "description": "Context Switching Race Condition Demo",
+        "scope": "markdown,mdx"
+    },
+    "CareerTimeline": {
+        "prefix": "CareerTimeline",
+        "body": [
+            "<CareerTimeline>",
+            "  $0",
+            "</CareerTimeline>"
+        ],
+        "description": "Career Timeline Container",
+        "scope": "markdown,mdx"
+    },
+    "Experience": {
+        "prefix": "Experience",
+        "body": [
+            "<Experience",
+            "  period=\"${1:YYYY.MM - Present}\"",
+            "  role=\"${2:Role}\"",
+            "  company=\"${3:Company}\"",
+            ">",
+            "  $0",
+            "</Experience>"
+        ],
+        "description": "Experience Item for Timeline",
+        "scope": "markdown,mdx"
+    },
+    "Project": {
+        "prefix": "Project",
+        "body": [
+            "<Project",
+            "  title=\"${1:Project Name}\"",
+            "  role=\"${2:Role}\"",
+            "  tech=\"${3:Tech Stack}\"",
+            ">",
+            "  $0",
+            "</Project>"
+        ],
+        "description": "Project Item for Timeline",
+        "scope": "markdown,mdx"
+    },
+    "Feature": {
+        "prefix": "Feature",
+        "body": [
+            "<Feature title=\"${1:Feature Title}\">",
+            "  <FeatureItem status=\"${2|done,doing,todo|}\">${3:Item Description}</FeatureItem>",
+            "</Feature>"
+        ],
+        "description": "Feature List for Project",
+        "scope": "markdown,mdx"
+    },
+    "Switch": {
+        "prefix": "Switch",
+        "body": [
+            "<Switch value={${1:condition}}>",
+            "  <Case when={${2:value}}>",
+            "    $3",
+            "  </Case>",
+            "  <Default>",
+            "    $4",
+            "  </Default>",
+            "</Switch>"
+        ],
+        "description": "Logic: Switch Case",
+        "scope": "markdown,mdx"
+    },
+    "Map": {
+        "prefix": "Map",
+        "body": [
+            "<Map data={${1:array}}>",
+            "  {(item) => (",
+            "    $0",
+            "  )}",
+            "</Map>"
+        ],
+        "description": "Logic: Map Array",
+        "scope": "markdown,mdx"
+    },
+    "MindmapViewer": {
+        "prefix": "MindmapViewer",
+        "body": [
+            "<MindmapViewer source={`$0`} />"
+        ],
+        "description": "Embedded Mindmap Viewer",
+        "scope": "markdown,mdx"
+    }
+}
