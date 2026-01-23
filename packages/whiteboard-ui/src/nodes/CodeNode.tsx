@@ -5,7 +5,7 @@ import { Handle, Position, NodeProps } from 'reactflow';
 import { cn } from '@/shared/lib/cn';
 import { Highlight, themes } from 'prism-react-renderer';
 import { Copy, Check, Terminal } from 'lucide-react';
-import { CODE_NODE_STYLES } from '../../lib/nodeStyles';
+import { CODE_NODE_STYLES } from '@repo/mdx-logic';
 
 export const CodeNode = memo(({ data, selected }: NodeProps) => {
     const codeData = data.codeData as { lang: string; value: string } | undefined;

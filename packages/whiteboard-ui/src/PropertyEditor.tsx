@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@/model/whiteboardStore';
 import { Card } from '@/shared/ui/Card';
 import { Button } from '@/shared/ui/Button';
 import { X, Save, Trash2, Info } from 'lucide-react';

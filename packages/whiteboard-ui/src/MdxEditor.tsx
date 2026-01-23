@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@/model/whiteboardStore';
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { clsx } from 'clsx';
-import { parseMdxToGraph } from '../lib/parser';
-import { EditorBridge } from '../bridge/EditorBridge';
+import { parseMdxToGraph } from '@repo/mdx-logic';
+import { EditorBridge } from '@repo/whiteboard-bridge';
 import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';

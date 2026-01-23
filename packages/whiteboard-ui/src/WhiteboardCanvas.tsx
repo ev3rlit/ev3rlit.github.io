@@ -8,7 +8,7 @@ import ReactFlow, {
     ConnectionMode,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@/model/whiteboardStore';
 import {
     SectionNode,
     ListNode,
@@ -23,7 +23,7 @@ import {
     LinkNode,
     ImageNode
 } from './nodes';
-import { useThemeBridge } from '../bridge/useThemeBridge';
+import { useThemeBridge } from '@repo/whiteboard-bridge';
 import { LayoutManager } from './LayoutManager';
 
 const nodeTypes = {
