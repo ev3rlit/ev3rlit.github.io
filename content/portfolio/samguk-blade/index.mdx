@@ -1,0 +1,48 @@
+---
+title: "삼국 블레이드 키우기"
+description: "모바일 방치형 RPG 게임의 서버 개발부터 라이브 서비스 운영까지"
+period: "2023.04 - 2025.10"
+company: "넥써쓰 / 원유니버스"
+role: "게임 서버 개발"
+stack: ["Golang", "MongoDB", "Redis", "AWS Kinesis", "Jenkins"]
+order: 1
+experiences:
+  - slug: "error-handling"
+    title: "에러 핸들링 체계 도입"
+    summary: "핫픽스 대응 시간 8배 단축 (1일 → 1~2시간)"
+    tags: ["Architecture", "Error Handling", "Observability"]
+  - slug: "db-latency"
+    title: "DB 레이턴시 최적화"
+    summary: "요청 응답 시간 10배 개선 (50ms → 5ms)"
+    tags: ["Performance", "Database", "Caching"]
+  - slug: "log-pipeline"
+    title: "로그 파이프라인 재설계"
+    summary: "로그 작업 생산성 4배 향상 (0.5일 → 1시간)"
+    tags: ["Architecture", "Logging", "DX"]
+---
+
+## 프로젝트 소개
+
+삼국 블레이드 키우기는 방치형 RPG 모바일 게임입니다. 서버 개발 초기 단계부터 정식 런칭, 그리고 라이브 서비스 운영까지 전 과정을 담당했습니다.
+
+팀 내 유일한 서버 개발자로서 핵심 시스템 설계와 운영 효율화에 집중했습니다.
+
+## 주요 성과
+
+- 에러 핸들링 체계 도입으로 **핫픽스 대응 시간 8배 단축**
+- 인메모리 트랜잭션 구조로 **DB 레이턴시 10배 개선**
+- 스키마리스 로그 파이프라인으로 **작업 생산성 4배 향상**
+- CS 대응 로그 구조로 **개발자 병목 제거**
+
+## 기타 개발 내용
+
+- 일 1천만 건 로그 안정 발송 체계 (AWS Kinesis)
+- 150개+ API 전역 미들웨어 (에러 핸들링, 트랜잭션, 로깅)
+- WebSocket + RPC 기반 실시간 양방향 통신
+- Jenkins CI/CD 파이프라인
+
+## 라이브 서비스 (원유니버스)
+
+- CQRS 패턴 기반 실시간 길드 컨텐츠
+- Google/Apple/Galaxy 통합 매출 조회 시스템
+- 퍼블리셔 이관 작업 (마켓, Apple 계정)
