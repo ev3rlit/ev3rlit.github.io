@@ -5,7 +5,7 @@ import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore'
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { clsx } from 'clsx';
 import { parseMdxToGraph } from '../lib/parser';
-import { MonacoEditor } from './MonacoEditor';
+import { EditorBridge } from '../bridge/EditorBridge';
 import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -116,7 +116,7 @@ export function MdxEditor() {
                 "flex-1 overflow-hidden",
                 !isEditorOpen && "opacity-0"
             )}>
-                <MonacoEditor
+                <EditorBridge
                     value={mdxSource}
                     onChange={setMdxSource}
                     className="h-full"

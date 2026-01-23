@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Editor, { OnMount, BeforeMount } from '@monaco-editor/react';
-import { useTheme } from 'next-themes';
+import { useThemeBridge } from '../bridge/useThemeBridge';
 import { registerMdxLanguage, registerMarkdownSnippets } from '../lib/monacoAutocomplete';
 
 interface MonacoEditorProps {
@@ -12,7 +12,7 @@ interface MonacoEditorProps {
 }
 
 export function MonacoEditor({ value, onChange, className = '' }: MonacoEditorProps) {
-    const { resolvedTheme } = useTheme();
+    const { resolvedTheme } = useThemeBridge();
     const monacoRef = useRef<typeof import('monaco-editor') | null>(null);
 
     // Register MDX language before mount

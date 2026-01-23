@@ -23,7 +23,7 @@ import {
     LinkNode,
     ImageNode
 } from './nodes';
-import { useTheme } from 'next-themes';
+import { useThemeBridge } from '../bridge/useThemeBridge';
 import { LayoutManager } from './LayoutManager';
 
 const nodeTypes = {
@@ -43,7 +43,7 @@ const nodeTypes = {
 
 export function WhiteboardCanvas() {
     const [mounted, setMounted] = React.useState(false);
-    const { resolvedTheme } = useTheme();
+    const { resolvedTheme } = useThemeBridge();
     const isDark = resolvedTheme === 'dark';
 
     useEffect(() => {
