@@ -20,6 +20,9 @@ import { Switch, Case, Default } from "@/features/mdx-operators/ui/Switch";
 import { Map } from "@/features/mdx-operators/ui/Map";
 import { MindmapViewer } from "@/features/mdx-viewer/ui/MindmapViewer";
 
+// Portfolio Components
+import { ProblemSolution, Problem, Solution, Result, TechDetail, Lesson } from "@/features/portfolio/ui/PortfolioComponents";
+
 const components = {
     SqlPlayground,
     SchemaDiagram,
@@ -46,6 +49,13 @@ const components = {
     Map,
     MindmapViewer,
     Network,
+    // Portfolio Components
+    ProblemSolution,
+    Problem,
+    Solution,
+    Result,
+    TechDetail,
+    Lesson,
 };
 
 interface MdxContentProps {
