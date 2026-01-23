@@ -15,6 +15,21 @@ description: "안녕하세요, 백엔드 개발자 최범휘입니다."
 
 앞으로는 지표를 기반으로 개선점을 찾고, 그 결과를 측정하며 반복적으로 개선하는 환경에서 일하고 싶습니다. 안정적인 서버 인프라 위에서 팀 전체가 빠르게 실험하고 검증할 수 있는 기반을 만드는 것이 목표입니다.
 
+<div className="my-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 ring-1 ring-indigo-200/60 dark:ring-indigo-500/20">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h3 className="text-lg font-bold text-slate-800 dark:text-stone-200 mb-1">프로젝트 상세 보기</h3>
+            <p className="text-sm text-slate-600 dark:text-stone-400">문제 정의부터 해결, 결과까지 자세한 내용을 확인해보세요.</p>
+        </div>
+        <a href="/portfolio" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold transition-colors">
+            Portfolio 보기
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+        </a>
+    </div>
+</div>
+
 ## Contact
 - **Email**: bum4496@naver.com
 - **GitHub**: [github.com/ev3rlit](https://github.com/ev3rlit)
@@ -68,19 +83,19 @@ description: "안녕하세요, 백엔드 개발자 최범휘입니다."
             <Feature title="일 1천만 건 로그 안정 발송 체계 구축">
                 <FeatureItem>AWS Kinesis Producer 연동, 분산 환경에서 메시지 유실 방지를 위한 재시도 로직 및 배치 처리 직접 구현</FeatureItem>
             </Feature>
-            <Feature title="에러 핸들링 체계 도입으로 핫픽스 대응 시간 8배 단축">
+            <Feature title="에러 핸들링 체계 도입으로 핫픽스 대응 시간 8배 단축" link="/portfolio/samguk-blade/error-handling">
                 <FeatureItem><strong>배경:</strong> 이전 프로젝트(BladeX)에서 에러 추적 부재로 문제 발생 시 DB 수동 수정, 운영 담당자 직접 대응 등 높은 비용 발생</FeatureItem>
                 <FeatureItem><strong>문제:</strong> 에러 발생 시 추측으로 코드를 확인해야 해서 원인 파악까지 하루 이상 소요</FeatureItem>
                 <FeatureItem><strong>해결:</strong> 프로젝트 초기부터 error as value 패턴 + 에러 컨텍스트 자동 수집 체계 설계 (요청 인자, 코드 위치, 스택 트레이스, 사용자 ID, 실행 중인 함수, 시간)</FeatureItem>
                 <FeatureItem><strong>결과:</strong> 에러 발생 지점과 당시 상황을 즉시 파악 → 핫픽스 대응 시간 1일 → 1~2시간으로 단축</FeatureItem>
             </Feature>
-            <Feature title="DB 레이턴시 10배 개선">
+            <Feature title="DB 레이턴시 10배 개선" link="/portfolio/samguk-blade/db-latency">
                 <FeatureItem><strong>배경:</strong> 서버 구조 확립 후 컨텐츠 추가 과정에서 API 응답 지연 징후 발견. 클라이언트에서 렉이 발생한 것처럼 보여 사용자 경험 저하 우려</FeatureItem>
                 <FeatureItem><strong>문제:</strong> 매 요청마다 DB 접근으로 인한 응답 지연 (요청당 50ms)</FeatureItem>
                 <FeatureItem><strong>해결:</strong> 인메모리 트랜잭션 데이터 구조 설계, Write-back 방식으로 일정 주기마다 DB 동기화</FeatureItem>
                 <FeatureItem><strong>결과:</strong> 라이브 전 선제적 개선, 요청 응답 시간 5ms 이내로 단축</FeatureItem>
             </Feature>
-            <Feature title="로그 파이프라인 개선으로 작업 생산성 4배 향상">
+            <Feature title="로그 파이프라인 개선으로 작업 생산성 4배 향상" link="/portfolio/samguk-blade/log-pipeline">
                 <FeatureItem><strong>배경:</strong> 이전 프로젝트에서 로그 추가 시 SQL 테이블 정의 → C++ 코드 연동 → 비즈니스 로직 작성으로 0.5일 소요되는 비효율 경험</FeatureItem>
                 <FeatureItem><strong>문제:</strong> 실제 로그를 남기는 비즈니스 로직 작업보다 스키마/연동 작업에 시간이 더 소요</FeatureItem>
                 <FeatureItem><strong>해결:</strong> 스키마리스 구조로 전환. 애플리케이션 레벨에서 구조체 정의만으로 로그 발송 가능하도록 파이프라인 재설계</FeatureItem>
