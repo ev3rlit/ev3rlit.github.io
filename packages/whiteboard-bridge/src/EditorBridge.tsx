@@ -1,4 +1,4 @@
-import { MonacoEditor } from '../ui/MonacoEditor';
+import { MonacoEditor } from './MonacoEditor';
 import { EditorProps } from './types';
 
 /**
