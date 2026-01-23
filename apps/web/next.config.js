@@ -6,6 +6,7 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
+    transpilePackages: ['@repo/whiteboard-ui', '@repo/whiteboard-bridge', '@repo/mdx-logic'],
 };
 
 module.exports = nextConfig;

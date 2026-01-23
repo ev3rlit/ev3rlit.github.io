@@ -97,7 +97,7 @@ Prep (Current Repo) -> Monorepo Setup -> Logic Extraction -> UI Extraction -> Ap
 
 ### Phase 3: Core Extraction (packages/mdx-logic)
 
-- [ ] 4. Extract Pure Logic (`parser.ts`, `layoutEngine.ts`)
+- [x] 4. Extract Pure Logic (`parser.ts`, `layoutEngine.ts`)
   **Why**: These must be platform-agnostic.
   **Constraint**: **STRATEGY A (Move Fast)** - Copy `reactflow` types if needed, or install `reactflow` as peer dependency.
   **Action**:
@@ -105,7 +105,7 @@ Prep (Current Repo) -> Monorepo Setup -> Logic Extraction -> UI Extraction -> Ap
   - Move related tests.
   - **CRITICAL**: Do NOT refactor parser logic. Copy as-is.
 
-- [ ] 5. Extract Adapters (`whiteboard-bridge`)
+- [x] 5. Extract Adapters (`whiteboard-bridge`)
   **Action**:
   - Implement `ReactFlowAdapter` (if sticking with ReactFlow types).
   - Implement `ThemeBridge`.

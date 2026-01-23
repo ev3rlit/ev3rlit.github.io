@@ -12,5 +12,9 @@
   },
   "devDependencies": {
     "turbo": "^2.3.0"
+  },
+  "dependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
   }
 }

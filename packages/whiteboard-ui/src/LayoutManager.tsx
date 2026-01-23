@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from 'react';
-import { useWhiteboardStore } from '@/model/whiteboardStore';
+import { useWhiteboardStore } from './model/whiteboardStore';
 import { runFlextree } from '@repo/mdx-logic';
 import { Position } from 'reactflow';
 

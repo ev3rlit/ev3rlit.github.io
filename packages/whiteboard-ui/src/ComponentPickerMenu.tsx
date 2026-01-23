@@ -3,8 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { X, Search, Database, Activity, Type, Component } from 'lucide-react';
-import { useWhiteboardStore } from '@/model/whiteboardStore';
-import { Card } from '@/shared/ui/Card';
+import { useWhiteboardStore } from './model/whiteboardStore';
+import { Card } from './shared/ui/Card';
 
 export function ComponentPickerMenu() {
     const { insertContent, setComponentPickerOpen } = useWhiteboardStore();

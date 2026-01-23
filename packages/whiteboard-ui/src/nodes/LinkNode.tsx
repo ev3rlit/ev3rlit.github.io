@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../shared/lib/cn';
 import { ExternalLink } from 'lucide-react';
 
 interface LinkNodeData {

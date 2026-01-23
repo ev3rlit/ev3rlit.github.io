@@ -2,7 +2,7 @@
 
 import React, { memo, useState } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../shared/lib/cn';
 import { Highlight, themes } from 'prism-react-renderer';
 import { Copy, Check, Terminal } from 'lucide-react';
 import { CODE_NODE_STYLES } from '@repo/mdx-logic';

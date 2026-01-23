@@ -2,10 +2,10 @@
 
 import React, { memo, useMemo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { renderInlineContent } from '@/lib/renderInlineContent';
+import { renderInlineContent } from '../lib/renderInlineContent';
 import { NODE_STYLES } from '@repo/mdx-logic';
-import { cn } from '@/shared/lib/cn';
-import { useNodeMeasurement } from '@/lib/useNodeMeasurement';
+import { cn } from '../shared/lib/cn';
+import { useNodeMeasurement } from '../lib/useNodeMeasurement';
 
 export const ListNode = memo(({ id, data, selected }: NodeProps) => {
     const { measureRef } = useNodeMeasurement(id);
