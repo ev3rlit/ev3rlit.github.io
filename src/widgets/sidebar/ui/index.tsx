@@ -16,6 +16,7 @@ import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 import { useViewModeOptional } from '@/shared/context/ViewContext';
 import { usePathname } from 'next/navigation';
+import { ExportButton } from '@/features/content-export';
 
 // ============================================
 // Context Detection Hook
@@ -53,11 +54,12 @@ function ViewModeToggleButton() {
 // Context-Specific Sidebar Groups
 // ============================================
 
-/** PostDetail 전용 그룹 - View Mode Toggle 포함 */
+/** PostDetail 전용 그룹 - View Mode Toggle + Export 포함 */
 function PostDetailGroup() {
     return (
         <GenericSidebar.Group id="post-detail" defaultOpen>
             <ViewModeToggleButton />
+            <ExportButton />
         </GenericSidebar.Group>
     );
 }
