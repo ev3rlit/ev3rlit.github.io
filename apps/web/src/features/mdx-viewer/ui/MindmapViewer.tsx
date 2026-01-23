@@ -10,7 +10,7 @@ import ReactFlow, {
     Edge,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { parseMdxToGraph } from '@/features/mdx-whiteboard/lib/parser';
+import { parseMdxToGraph } from '@repo/mdx-logic';
 import {
     SectionNode,
     ListNode,
@@ -22,7 +22,7 @@ import {
     ChartNode,
     MathNode,
     StatsNode
-} from '@/features/mdx-whiteboard/ui/nodes';
+} from '@repo/whiteboard-ui';
 import { useTheme } from 'next-themes';
 import { ReactFlowProvider } from 'reactflow';
 

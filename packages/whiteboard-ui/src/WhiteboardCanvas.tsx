@@ -8,7 +8,7 @@ import ReactFlow, {
     ConnectionMode,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { useWhiteboardStore } from '@/model/whiteboardStore';
+import { useWhiteboardStore } from './model/whiteboardStore';
 import {
     SectionNode,
     ListNode,
@@ -25,6 +25,7 @@ import {
 } from './nodes';
 import { useThemeBridge } from '@repo/whiteboard-bridge';
 import { LayoutManager } from './LayoutManager';
+import { ComponentRegistryProvider, ComponentRegistry } from './context/ComponentRegistryContext';
 
 const nodeTypes = {
     root: RootNode,
@@ -41,7 +42,11 @@ const nodeTypes = {
     image: ImageNode,
 };
 
-export function WhiteboardCanvas() {
+export interface WhiteboardCanvasProps {
+    components?: ComponentRegistry;
+}
+
+export function WhiteboardCanvas({ components }: WhiteboardCanvasProps = {}) {
     const [mounted, setMounted] = React.useState(false);
     const { resolvedTheme } = useThemeBridge();
     const isDark = resolvedTheme === 'dark';
@@ -98,36 +103,38 @@ export function WhiteboardCanvas() {
     if (!mounted) return null;
 
     return (
-        <div className="h-full w-full bg-transparent relative overflow-hidden">
-            <LayoutManager />
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                onPaneClick={() => setEditingNodeId(null)}
-                connectionMode={ConnectionMode.Loose}
-                onInit={setReactFlowInstance}
-                fitView
-                className="bg-transparent"
-                // Disable space key for panning to allow Monaco Editor to use it
-                selectionKeyCode={null}
-                panActivationKeyCode={null}
-            >
-                <Background
-                    key={resolvedTheme}
-                    color={isDark ? "#57534e" : "#cbd5e1"}
-                    gap={20}
-                    size={1}
-                    variant={BackgroundVariant.Dots}
-                />
-                <Controls
-                    className="!bg-white dark:!bg-stone-900 !border-slate-200 dark:!border-stone-800 !shadow-lg"
-                    showInteractive={false}
-                />
-            </ReactFlow>
-        </div>
+        <ComponentRegistryProvider components={components}>
+            <div className="h-full w-full bg-transparent relative overflow-hidden">
+                <LayoutManager />
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    onPaneClick={() => setEditingNodeId(null)}
+                    connectionMode={ConnectionMode.Loose}
+                    onInit={setReactFlowInstance}
+                    fitView
+                    className="bg-transparent"
+                    // Disable space key for panning to allow Monaco Editor to use it
+                    selectionKeyCode={null}
+                    panActivationKeyCode={null}
+                >
+                    <Background
+                        key={resolvedTheme}
+                        color={isDark ? "#57534e" : "#cbd5e1"}
+                        gap={20}
+                        size={1}
+                        variant={BackgroundVariant.Dots}
+                    />
+                    <Controls
+                        className="!bg-white dark:!bg-stone-900 !border-slate-200 dark:!border-stone-800 !shadow-lg"
+                        showInteractive={false}
+                    />
+                </ReactFlow>
+            </div>
+        </ComponentRegistryProvider>
     );
 }

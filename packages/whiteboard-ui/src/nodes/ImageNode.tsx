@@ -2,7 +2,7 @@
 
 import { memo, useState } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../shared/lib/cn';
 import { Image as ImageIcon, ExternalLink } from 'lucide-react';
 
 interface ImageNodeData {

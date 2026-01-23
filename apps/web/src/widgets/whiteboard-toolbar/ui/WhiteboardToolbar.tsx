@@ -10,7 +10,7 @@ import {
     FolderOpen,
     Save,
 } from 'lucide-react';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
+import { useWhiteboardStore } from '@repo/whiteboard-ui';
 import { Sidebar } from '@/shared/ui/sidebar/Sidebar';
 
 export function WhiteboardToolbar() {

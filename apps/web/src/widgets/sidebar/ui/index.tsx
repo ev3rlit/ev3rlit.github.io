@@ -7,8 +7,8 @@ import { PlaygroundToolbar } from "@/features/playground-toolbar/ui/PlaygroundTo
 import { AnimatePresence } from "framer-motion";
 import { useSearchStore } from "@/features/search-menu/model/useSearchStore";
 import { SearchMenu } from "@/features/search-menu/ui/SearchMenu";
-import { useWhiteboardStore } from "@/entities/whiteboard/model/whiteboardStore";
-import { ComponentPickerMenu } from "@/features/mdx-whiteboard/ui/ComponentPickerMenu";
+import { useWhiteboardStore } from "@repo/whiteboard-ui";
+import { ComponentPickerMenu } from "@repo/whiteboard-ui";
 import { WhiteboardToolbar } from "@/widgets/whiteboard-toolbar/ui/WhiteboardToolbar";
 import { Sidebar as GenericSidebar } from "@/shared/ui/sidebar/Sidebar";
 import Link from 'next/link';

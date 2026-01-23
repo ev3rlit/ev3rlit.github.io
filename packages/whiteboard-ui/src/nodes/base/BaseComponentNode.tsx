@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../../shared/lib/cn';
 import { LucideIcon } from 'lucide-react';
 
 interface BaseComponentNodeProps {

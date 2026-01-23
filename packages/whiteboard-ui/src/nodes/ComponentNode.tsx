@@ -2,37 +2,21 @@
 
 import React, { memo, useMemo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { Card } from '@/shared/ui/Card';
-import { useWhiteboardStore } from '@/model/whiteboardStore';
-import { cn } from '@/shared/lib/cn';
-
-import { useNodeMeasurement } from '@/lib/useNodeMeasurement';
-
-// Component Imports
-// import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
-// import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
-// import { StatCard } from '@/features/mdx-viewer/ui/StatCard';
-
-const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
-    // 'SqlPlayground': SqlPlayground,
-    // 'CodeComparison': CodeComparison,
-    // 'StatCard': StatCard,
-    // Add others as needed
-};
+import { Card } from '../shared/ui/Card';
+import { useWhiteboardStore } from '../model/whiteboardStore';
+import { cn } from '../shared/lib/cn';
+import { useNodeMeasurement } from '../lib/useNodeMeasurement';
+import { useComponentRegistry } from '../context/ComponentRegistryContext';
 
 export const ComponentNode = memo(({ data, selected, id }: NodeProps) => {
     const { measureRef } = useNodeMeasurement(id);
     const setEditingNodeId = useWhiteboardStore(state => state.setEditingNodeId);
+    const componentRegistry = useComponentRegistry();
 
     const Component = useMemo(() => {
-        // data.label comes from parser, usually "CodeComparison" etc.
-        // It might be uppercased in the UI for display, but parser.ts usually stores exact name or we normalize.
-        // The screenshot showed "CODECOMPARISON" which implies the *visualization* uppercased it, strictly check data.label.
-        // If parser stores "CodeComparison", we match that.
-        // Let's try direct match first, then case-insensitive.
         const name = data.label;
-        return COMPONENT_MAP[name] || Object.entries(COMPONENT_MAP).find(([k]) => k.toLowerCase() === name.toLowerCase())?.[1];
-    }, [data.label]);
+        return componentRegistry[name] || Object.entries(componentRegistry).find(([k]) => k.toLowerCase() === name.toLowerCase())?.[1];
+    }, [data.label, componentRegistry]);
 
     // Parse props if they are strings that look like JSON (common in MDX attributes passing complex data)
     const activeProps = useMemo(() => {

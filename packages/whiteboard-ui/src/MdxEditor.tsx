@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
-import { useWhiteboardStore } from '@/model/whiteboardStore';
+import { useWhiteboardStore } from './model/whiteboardStore';
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { clsx } from 'clsx';
 import { parseMdxToGraph } from '@repo/mdx-logic';

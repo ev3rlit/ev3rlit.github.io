@@ -2,7 +2,7 @@
 
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../shared/lib/cn';
 
 export const BlockquoteNode = memo(({ data, selected }: NodeProps) => {
     return (

@@ -1,15 +1,15 @@
 "use client";
 
 import React from 'react';
-import { MdxEditor } from '@/features/mdx-whiteboard/ui/MdxEditor';
-import { WhiteboardCanvas } from '@/features/mdx-whiteboard/ui/WhiteboardCanvas';
-import { PropertyEditor } from '@/features/mdx-whiteboard/ui/PropertyEditor';
+import { MdxEditor, WhiteboardCanvas, PropertyEditor, useWhiteboardStore } from '@repo/whiteboard-ui';
 import { useSidebarStore } from '@/features/layout/model/useSidebarStore';
-import { useWhiteboardStore } from '@/entities/whiteboard/model/whiteboardStore';
 import { useEffect } from 'react';
 import { ReactFlowProvider } from 'reactflow';
 import { ChevronRight, ChevronUp } from 'lucide-react';
 import { cn } from '@/shared/lib/cn';
+import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
+import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
+import { StatCard } from '@/features/mdx-viewer/ui/StatCard';
 
 export function WhiteboardPage() {
     const isEditorOpen = useWhiteboardStore(state => state.isEditorOpen);
@@ -20,12 +20,18 @@ export function WhiteboardPage() {
         return () => setWhiteboardMode(false);
     }, [setWhiteboardMode]);
 
+    const components = {
+        SqlPlayground,
+        CodeComparison,
+        StatCard,
+    };
+
     return (
         <div className="relative h-screen w-full overflow-hidden bg-stone-50 dark:bg-[#0a0a0a]">
             <ReactFlowProvider>
                 {/* Fullscreen Canvas (Z-Index 0) */}
                 <div className="absolute inset-0 z-0">
-                    <WhiteboardCanvas />
+                    <WhiteboardCanvas components={components} />
                 </div>
             </ReactFlowProvider>
 

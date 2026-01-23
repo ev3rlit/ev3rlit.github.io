@@ -3,8 +3,8 @@
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import { NODE_STYLES } from '@repo/mdx-logic';
-import { cn } from '@/shared/lib/cn';
-import { useNodeMeasurement } from '@/lib/useNodeMeasurement';
+import { cn } from '../shared/lib/cn';
+import { useNodeMeasurement } from '../lib/useNodeMeasurement';
 
 export const SectionNode = memo(({ id, data, selected }: NodeProps) => {
     const { measureRef } = useNodeMeasurement(id);

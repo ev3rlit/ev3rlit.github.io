@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import { NodeProps } from 'reactflow';
 import { BaseComponentNode } from '../../base/BaseComponentNode';
 import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
-import { cn } from '@/shared/lib/cn';
+import { cn } from '../../../shared/lib/cn';
 
 export const StatsNode = memo(({ data, selected }: NodeProps) => {
     const title = data.props?.title || 'Metric';
