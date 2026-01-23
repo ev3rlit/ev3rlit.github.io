@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface ExperienceProps {
     company: string;
@@ -65,13 +66,27 @@ export function Project({ title, period, children }: ProjectProps) {
 
 interface FeatureProps {
     title: string;
+    link?: string;
     children?: React.ReactNode;
 }
 
-export function Feature({ title, children }: FeatureProps) {
+export function Feature({ title, link, children }: FeatureProps) {
     return (
         <div className="relative">
-            <p className="text-[15px] font-bold text-slate-700 dark:text-stone-300 leading-snug mb-3">{title}</p>
+            <div className="flex items-center gap-2 mb-3">
+                <p className="text-[15px] font-bold text-slate-700 dark:text-stone-300 leading-snug">{title}</p>
+                {link && (
+                    <Link
+                        href={link}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-500/10 text-[10px] font-bold text-indigo-500 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-colors"
+                    >
+                        상세
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </Link>
+                )}
+            </div>
             {children && (
                 <ul className="space-y-2.5">
                     {children}
