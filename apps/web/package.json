@@ -17,6 +17,7 @@
     "@repo/mdx-logic": "workspace:*",
     "@repo/whiteboard-bridge": "workspace:*",
     "@repo/whiteboard-ui": "workspace:*",
+    "@supabase/supabase-js": "^2.91.1",
     "@types/dagre": "^0.7.53",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
