@@ -112,7 +112,7 @@ Prep (Current Repo) -> Monorepo Setup -> Logic Extraction -> UI Extraction -> Ap
 
 ### Phase 4: UI Extraction (packages/whiteboard-ui)
 
-- [ ] 6. Extract React Components
+- [x] 6. Extract React Components
   **Action**:
   - Move `ui/nodes/*`, `ui/edges/*`.
   - Move `ui/WhiteboardCanvas.tsx`.
@@ -120,34 +120,26 @@ Prep (Current Repo) -> Monorepo Setup -> Logic Extraction -> UI Extraction -> Ap
 
 ### Phase 5: Web App Migration (apps/web)
 
-- [ ] 7. Setup Next.js App
+- [x] 7. Setup Next.js App
   **Action**:
   - Create `apps/web`.
   - Install dependencies (`mdx-logic`, `whiteboard-ui`).
   - Implement `ThemeAdapter` (using `next-themes`).
   - Implement `EditorAdapter` (using `@monaco-editor/react`).
 
-- [ ] 8. Implement Sync Layer
+- [x] 7.5 Cleanup Legacy Code
+  **Action**:
+  - Remove `apps/web/src/features/mdx-whiteboard`.
+  - Remove `apps/web/src/entities/whiteboard`.
+  - Verify no import errors remain.
+
+- [x] 8. Implement Sync Layer
   **Action**:
   - Setup basic Supabase/Neon client.
   - Implement `useSync` hook.
 
-### Phase 6: VSCode Extension (apps/vscode-ext)
-
-- [ ] 9. Setup VSCode Extension
-  **Action**:
-  - `yo code` equivalent structure.
-  - Configure Webview provider.
-  - Bundle `whiteboard-ui` for Webview.
-
-- [ ] 10. Implement Native Bridge
-  **Action**:
-  - Message passing (VSCode <-> Webview).
-  - Text document listener -> Parser -> Update Graph.
-
 ---
 
 ## Success Criteria
-- [ ] All 3 packages (`mdx-logic`, `whiteboard-ui`, `whiteboard-bridge`) build independent of Next.js.
-- [ ] Web App functions identically to current implementation.
-- [ ] VSCode Extension displays the whiteboard.
+- [x] All 3 packages (`mdx-logic`, `whiteboard-ui`, `whiteboard-bridge`) build independent of Next.js.
+- [x] Web App functions identically to current implementation.
