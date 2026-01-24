@@ -10,10 +10,31 @@ import { cn } from '@/shared/lib/cn';
 import { SqlPlayground } from '@/features/sql-playground/ui/SqlPlayground';
 import { CodeComparison } from '@/features/mdx-viewer/ui/CodeComparison';
 import { StatCard } from '@/features/mdx-viewer/ui/StatCard';
+import { useSync } from '@/features/sync/model/useSync';
 
 export function WhiteboardPage() {
     const isEditorOpen = useWhiteboardStore(state => state.isEditorOpen);
+    const mdxSource = useWhiteboardStore(state => state.mdxSource);
+    const setMdxSource = useWhiteboardStore(state => state.setMdxSource);
     const setWhiteboardMode = useSidebarStore(state => state.setWhiteboardMode);
+
+    // Initialize useSync with onChange callback to update store
+    const { save, load, status, error, lastSaved } = useSync(
+        mdxSource,
+        (content) => setMdxSource(content)
+    );
+
+    // Load default document on mount
+    useEffect(() => {
+        load('demo-doc');
+    }, [load]);
+
+    // Sync mdxSource changes to save
+    useEffect(() => {
+        if (mdxSource) {
+            save(mdxSource);
+        }
+    }, [mdxSource, save]);
 
     useEffect(() => {
         setWhiteboardMode(true);
@@ -68,6 +89,25 @@ export function WhiteboardPage() {
 
             {/* Property Editor Overlay (Right, Z-Index 10) */}
             <PropertyEditor />
+
+            {/* Save Status Indicator */}
+            <div className="absolute top-4 right-4 z-30 px-3 py-2 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md rounded-full shadow-lg border border-slate-200 dark:border-stone-800 pointer-events-none">
+                <div className="flex items-center gap-2">
+                    <div className={cn(
+                        "w-2 h-2 rounded-full transition-colors",
+                        status === 'saving' && 'bg-yellow-500 animate-pulse',
+                        status === 'success' && 'bg-green-500',
+                        status === 'error' && 'bg-red-500',
+                        (status === 'idle' || status === 'loading') && 'bg-slate-300 dark:bg-stone-600'
+                    )} />
+                    <span className="text-[10px] font-semibold text-slate-600 dark:text-stone-400 uppercase tracking-widest">
+                        {status === 'saving' && 'Saving...'}
+                        {status === 'success' && 'Saved'}
+                        {status === 'error' && 'Error'}
+                        {(status === 'idle' || status === 'loading') && 'Ready'}
+                    </span>
+                </div>
+            </div>
 
             {/* Focus Hint */}
             {!isEditorOpen && (
