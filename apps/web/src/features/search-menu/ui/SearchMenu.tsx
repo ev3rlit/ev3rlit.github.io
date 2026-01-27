@@ -4,6 +4,8 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search, FileText } from 'lucide-react';
 import { useSearchStore } from '../model/useSearchStore';
+import { useFuzzySearch } from '../model/useFuzzySearch';
+
 import { Card } from '@/shared/ui/Card';
 import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';
@@ -14,10 +16,28 @@ interface SearchMenuProps {
     posts: Post[];
 }
 
+
+
 export function SearchMenu({ posts = [] }: SearchMenuProps) {
     const { isOpen, close, searchQuery, setSearchQuery } = useSearchStore();
 
-    // Get top tags with frequency
+    // Clean query for fuzzy search (remove # if present to support tag-like typing)
+    const cleanQuery = useMemo(() => searchQuery.replace(/^#/, ''), [searchQuery]);
+
+    // Get search results
+    const { results: searchResults, suggestions: searchSuggestions } = useFuzzySearch(posts, cleanQuery);
+
+    // Determine posts to display:
+    // If query is empty -> Show 5 most recent posts
+    // If query exists -> Show search results
+    const filteredPosts = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return posts.slice(0, 5);
+        }
+        return searchResults;
+    }, [searchQuery, posts, searchResults]);
+
+    // Get top tags with frequency (Fallback when no query)
     const topTags = useMemo(() => {
         const tagCount: Record<string, number> = {};
         posts.forEach(post => {
@@ -31,24 +51,8 @@ export function SearchMenu({ posts = [] }: SearchMenuProps) {
             .map(([tag]) => tag);
     }, [posts]);
 
-    // Filter tags based on search query
-    const suggestedTags = useMemo(() => {
-        const query = searchQuery.toLowerCase().replace('#', '');
-        if (!query.trim()) return topTags;
-        return topTags.filter(tag => tag.toLowerCase().includes(query));
-    }, [searchQuery, topTags]);
-
-    // Filter posts
-    const filteredPosts = useMemo(() => {
-        if (!searchQuery.trim()) return posts.slice(0, 5); // Show recent 5 initially
-        const lowerQuery = searchQuery.toLowerCase().replace('#', ''); // Remove # if user typed it
-        return posts.filter(post =>
-            post.meta?.title?.toLowerCase().includes(lowerQuery) ||
-            post.meta?.description?.toLowerCase().includes(lowerQuery) ||
-            post.slug?.toLowerCase().includes(lowerQuery) ||
-            post.meta?.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))
-        ).slice(0, 10);
-    }, [posts, searchQuery]);
+    // Use suggestions from hook if query exists, else show top tags
+    const displaySuggestions = searchQuery.trim() ? searchSuggestions : topTags;
 
     // Format date helper
     const formatDate = (dateString: string) => {
@@ -94,23 +98,30 @@ export function SearchMenu({ posts = [] }: SearchMenuProps) {
                             className="w-full h-10 pl-10 pr-4 rounded-xl bg-stone-100/50 dark:bg-stone-800/50 border-none focus:bg-white dark:focus:bg-stone-800 focus:ring-2 focus:ring-indigo-500/20 text-stone-700 dark:text-stone-200 placeholder:text-stone-400 dark:placeholder:text-stone-500 text-sm transition-all shadow-inner"
                         />
                     </div>
-                    {/* Tag Badges */}
-                    {suggestedTags.length > 0 && (
+                    {/* Suggestions / Tags */}
+                    {displaySuggestions.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-3">
-                            {suggestedTags.map(tag => (
-                                <button
-                                    key={tag}
-                                    onClick={() => setSearchQuery(`#${tag}`)}
-                                    className={cn(
-                                        "text-xs px-2 py-1 rounded-full border transition-all",
-                                        searchQuery.toLowerCase().replace('#', '') === tag.toLowerCase()
-                                            ? "bg-indigo-500 text-white border-indigo-500"
-                                            : "bg-stone-50 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border-stone-200 dark:border-stone-700 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800"
-                                    )}
-                                >
-                                    #{tag}
-                                </button>
-                            ))}
+                            {displaySuggestions.map(item => {
+                                // Simple heuristic: if it's in topTags or query starts with #, treat as tag style?
+                                // Actually, purely visual. Currently suggestions are just strings.
+                                // If it matches a tag in topTags, render as tag? 
+                                // Or we can just render everything as "searchable pill".
+                                const isTag = topTags.includes(item);
+                                return (
+                                    <button
+                                        key={item}
+                                        onClick={() => setSearchQuery(isTag ? `#${item}` : item)}
+                                        className={cn(
+                                            "text-xs px-2 py-1 rounded-full border transition-all",
+                                            searchQuery.toLowerCase().replace('#', '') === item.toLowerCase()
+                                                ? "bg-indigo-500 text-white border-indigo-500"
+                                                : "bg-stone-50 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border-stone-200 dark:border-stone-700 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800"
+                                        )}
+                                    >
+                                        {isTag ? '#' : ''}{item}
+                                    </button>
+                                );
+                            })}
                         </div>
                     )}
                 </div>
