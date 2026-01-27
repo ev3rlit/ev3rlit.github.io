@@ -14,11 +14,11 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
         // However, user specifically asked for 'draft' folder and 'portfolio' to be excluded from *this* list (blog posts).
         if (file === 'draft' || file === 'portfolio') return;
 
-        if (fs.statSync(dirPath + '/' + file).isDirectory()) {
-            arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles);
+        if (fs.statSync(path.join(dirPath, file)).isDirectory()) {
+            arrayOfFiles = getAllFiles(path.join(dirPath, file), arrayOfFiles);
         } else {
             if (file.endsWith('.md') || file.endsWith('.mdx')) {
-                arrayOfFiles.push(path.join(dirPath, '/', file));
+                arrayOfFiles.push(path.join(dirPath, file));
             }
         }
     });

@@ -38,11 +38,24 @@ const config: Config = {
                 "dot-pattern": "radial-gradient(circle, #94a3b8 1.5px, transparent 1.5px)",
                 "dot-pattern-dark": "radial-gradient(circle, #475569 1.5px, transparent 1.5px)",
             },
+            boxShadow: {
+                'prism': '0 8px 30px rgb(0 0 0 / 0.12)',
+                'prism-dark': '0 8px 30px rgb(0 0 0 / 0.5)',
+            },
             backgroundSize: {
                 "dot": "32px 32px",
             }
         },
     },
-    plugins: [require("@tailwindcss/typography")],
+    plugins: [
+        require("@tailwindcss/typography"),
+        function ({ addComponents }: { addComponents: any }) {
+            addComponents({
+                '.glass-prism': {
+                    '@apply bg-gradient-to-br from-white/95 to-white/80 dark:from-stone-900/95 dark:to-stone-900/80 backdrop-blur-xl border border-white/40 dark:border-stone-800/40 shadow-prism dark:shadow-prism-dark ring-1 ring-white/40 dark:ring-white/5': {},
+                },
+            })
+        }
+    ],
 };
 export default config;
