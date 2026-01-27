@@ -9,6 +9,11 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
     const files = fs.readdirSync(dirPath);
 
     files.forEach((file) => {
+        // Skip 'draft' and 'portfolio' directories at the top level or nested if needed
+        // Since we start from 'content', 'draft' and 'portfolio' are likely clear candidates to skip.
+        // However, user specifically asked for 'draft' folder and 'portfolio' to be excluded from *this* list (blog posts).
+        if (file === 'draft' || file === 'portfolio') return;
+
         if (fs.statSync(dirPath + '/' + file).isDirectory()) {
             arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles);
         } else {
@@ -54,18 +59,24 @@ export async function getPostList(): Promise<Post[]> {
         const source = fs.readFileSync(filePath, 'utf8');
         const { data, content } = matter(source);
 
+        // Filter out posts without frontmatter or title
+        if (!data || Object.keys(data).length === 0 || !data.title) {
+            return null;
+        }
+
         return {
             slug,
             meta: data as PostMeta,
             content,
         };
-    });
+    }).filter((post): post is Post => post !== null);
 
     const isProd = process.env.NODE_ENV === 'production';
 
     // Filter out drafts in production
+    // Default is draft: true, so only show if draft is explicitly false.
     const filteredPosts = isProd
-        ? posts.filter(post => !post.meta.draft)
+        ? posts.filter(post => post.meta.draft === false)
         : posts;
 
     // Filter out excluded posts
