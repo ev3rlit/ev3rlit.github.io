@@ -35,6 +35,7 @@ Core stack: React 18, Tailwind, Vitest, Zustand, ReactFlow (implied by whiteboar
 - **Architecture**: Feature-Sliced Design (FSD). Strict dependencies: `app -> pages -> widgets -> features -> entities -> shared`.
 - **Testing**: Co-located `.test.ts`. BDD style (`describe`, `it`).
 - **Styling**: Tailwind CSS + `clsx`/`tailwind-merge`.
+- **Visual Design**: Use the `.glass-prism` class for floating panels (TOC, Modals) to ensure consistent depth and lighting effects.
 - **State**: Zustand for global state.
 
 ## ANTI-PATTERNS (THIS PROJECT)

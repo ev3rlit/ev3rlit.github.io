@@ -40,6 +40,16 @@ The project is organized into layers, from most generic to most specific:
 *   Use the `cn()` utility (combining `clsx` and `tailwind-merge`) for conditional class application.
 *   Follow the **CVA** pattern for complex component variants.
 
+### Design System
+*   **Glass Prism**: A standardized style for floating UI elements (TOC, Menus).
+    *   **Class**: `.glass-prism` (defined in `tailwind.config.ts`)
+    *   **Characteristics**:
+        *   **Background**: Gradient from 95% to 80% opacity (`from-white/95 to-white/80`).
+        *   **Blur**: Heavy blur (`backdrop-blur-xl`).
+        *   **Border**: Subtle "prism edge" highlight (`border-white/40`, `ring-1 ring-white/40`).
+        *   **Shadow**: Deep, soft shadow (`shadow-prism`).
+    *   **Usage**: Apply to `Card` or container elements that float above the content.
+
 ### State Management
 *   Use **Zustand** for global client-side state (e.g., `useSidebarStore`, `useWhiteboardStore`).
 *   Keep server state management simple (React Server Components data fetching).

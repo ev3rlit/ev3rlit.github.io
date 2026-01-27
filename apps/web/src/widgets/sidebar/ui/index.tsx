@@ -55,10 +55,21 @@ function ViewModeToggleButton() {
 // ============================================
 
 /** PostDetail 전용 그룹 - View Mode Toggle + Export 포함 */
+import { useTocStore } from '@/features/toc/model/useTocStore';
+import { List } from 'lucide-react';
+
 function PostDetailGroup() {
+    const toggleMobileToc = useTocStore(s => s.toggleMobileOpen);
+
     return (
         <GenericSidebar.Group id="post-detail" defaultOpen>
             <ViewModeToggleButton />
+            {/* Mobile TOC Toggle (Only visible on small screens usually, but Sidebar handles responsive layout) */}
+            <GenericSidebar.Item
+                icon={<List size={18} />}
+                title="Table of Contents"
+                onClick={toggleMobileToc}
+            />
             <ExportButton />
         </GenericSidebar.Group>
     );

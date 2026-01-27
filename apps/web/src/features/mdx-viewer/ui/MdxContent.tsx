@@ -1,4 +1,5 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypeSlug from 'rehype-slug';
 import { Network } from "lucide-react";
 import { SqlPlayground } from "@/features/sql-playground/ui/SqlPlayground";
 import { SchemaDiagram } from "@/features/schema-diagram/ui/SchemaDiagram";
@@ -64,10 +65,15 @@ interface MdxContentProps {
 
 export function MdxContent({ source }: MdxContentProps) {
     return (
-        <article className="prose dark:prose-invert max-w-none break-words prose-strong:font-bold prose-strong:text-foreground">
+        <article className="prose dark:prose-invert max-w-none break-words prose-strong:font-bold prose-strong:text-foreground prose-headings:scroll-mt-28">
             <MDXRemote
                 source={source}
                 components={components}
+                options={{
+                    mdxOptions: {
+                        rehypePlugins: [rehypeSlug]
+                    }
+                }}
             />
         </article>
     );
