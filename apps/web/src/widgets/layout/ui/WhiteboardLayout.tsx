@@ -15,8 +15,8 @@ interface WhiteboardLayoutProps {
 }
 
 export function WhiteboardLayout({ sidebarContent, children, posts }: WhiteboardLayoutProps) {
-    const { isSidebarOpen, toggleSidebar, isPlaygroundMode, isWhiteboardMode } = useSidebarStore();
-    const isFullscreenMode = isPlaygroundMode || isWhiteboardMode;
+    const { isSidebarOpen, toggleSidebar, isPlaygroundMode, isWhiteboardMode, isPortfolioMode } = useSidebarStore();
+    const isFullscreenMode = isPlaygroundMode || isWhiteboardMode || isPortfolioMode;
 
     return (
         <div className="relative h-screen w-screen overflow-hidden bg-slate-50 dark:bg-stone-950">

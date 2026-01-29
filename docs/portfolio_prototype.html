@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Prototype - Swiss Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+KR:wght@300;400;700;900&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                            950: '#1e1b4b',
+                        },
+                        pink: {
+                            400: '#f472b6',
+                        }
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 16:9 Aspect Ratio Container for Presentation Mode */
+        .slide-container {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Grid Overlay for debugging (optional) */
+        .grid-debug {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            background-image: linear-gradient(to right, #000 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased text-gray-900">
+
+    <!-- PAGE 1: COVER -->
+    <div class="min-h-screen flex items-center justify-center p-8">
+        <div class="slide-container shadow-2xl flex flex-col justify-between p-16 md:p-24 relative">
+
+            <!-- Top Grid Line -->
+            <div class="border-t-4 border-black w-full absolute top-0 left-0"></div>
+
+            <!-- Content -->
+            <div class="flex-1 flex flex-col justify-center">
+                <span class="text-indigo-600 font-bold text-lg tracking-widest mb-4 uppercase">Server Developer
+                    Portfolio</span>
+
+                <!-- Massive Typography -->
+                <h1 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.9] text-black mb-8">
+                    RISK<br>
+                    ASSESSMENT<br>
+                    <span class="opacity-30">ARCHITECT.</span>
+                </h1>
+
+                <!-- Sub-text aligned to grid -->
+                <div class="grid grid-cols-12 gap-4 mt-8">
+                    <div class="col-span-12 md:col-span-8 lg:col-span-6">
+                        <p
+                            class="text-xl md:text-2xl font-medium leading-relaxed text-gray-800 border-l-4 border-indigo-600 pl-6">
+                            "동료들이 <span class="font-bold text-black">'범들갑'</span>이라 부르는 꼼꼼함으로,<br>
+                            아직 일어나지 않은 문제까지 대비하여<br>
+                            시스템의 <span class="text-indigo-600 font-bold">절대적 안정성</span>을 책임집니다."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Meta -->
+            <div class="flex justify-between items-end border-b-2 border-black pb-4">
+                <div class="flex flex-col">
+                    <span class="font-bold text-sm text-gray-400 uppercase">Candidate</span>
+                    <span class="text-2xl font-bold">Choi BeomHwi</span>
+                </div>
+                <div class="flex space-x-6 text-sm font-bold tracking-tight">
+                    <span>#System_Stability</span>
+                    <span>#Golang</span>
+                    <span>#Risk_Management</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PAGE 4: EXPERIENCE (Story 01) -->
+    <div class="min-h-screen flex items-center justify-center p-8 bg-gray-200">
+        <div class="slide-container shadow-2xl bg-white p-12 md:p-16 flex flex-col relative text-gray-800">
+
+            <!-- Header -->
+            <div class="flex justify-between items-start mb-16 border-b border-gray-200 pb-6">
+                <div>
+                    <h2 class="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-2">Work Experience 01</h2>
+                    <h3 class="text-4xl font-black text-black">ERROR HANDLING SYSTEM</h3>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold text-gray-900">NEXUS / ONE UNIVERSE</p>
+                    <p class="text-sm text-gray-500">2023.04 - 2025.10</p>
+                </div>
+            </div>
+
+            <!-- 7-Step Grid Layout -->
+            <div class="grid grid-cols-12 gap-8 h-full">
+
+                <!-- Left Column: Context (Steps 1-2) -->
+                <div class="col-span-4 flex flex-col space-y-8 pr-8 border-r border-gray-100">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase mb-2 block">01 Introduction</span>
+                        <p class="text-2xl font-bold leading-tight text-black">
+                            "핫픽스 시간을<br>
+                            <span class="text-indigo-600">1/8로 단축한</span><br>
+                            안정성 확보 프로젝트"
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase mb-2 block">02 Overview</span>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">
+                            이전 프로젝트의 "에러 원인 추적 불가" 고통을 반복하지 않기 위해,
+                            초기부터 <strong>추적 가능한 시스템(Traceability)</strong>을
+                            최우선 목표로 설계했습니다.
+                        </p>
+                    </div>
+                    <div class="mt-auto pt-8">
+                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                            <span class="text-xs font-bold text-gray-400 uppercase block mb-1">Impact</span>
+                            <div class="text-3xl font-black text-black">1 Day <span class="text-gray-300">→</span> 2 Hrs
+                            </div>
+                            <div class="text-xs text-indigo-600 font-bold mt-1">RESPONSE TIME REDUCED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details (Steps 3-7) -->
+                <div class="col-span-8 flex flex-col space-y-10 pl-4">
+
+                    <!-- Problem & Solution -->
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase mb-2 block">03 Problem</span>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                Go 언어의 기본 에러 처리만으로는 <strong>스택 트레이스</strong>와 <strong>Context</strong> 부재로
+                                로그만 보고 원인을 찾기가 불가능했습니다.
+                            </p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase mb-2 block">03 Solution</span>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                <strong>Error as Value 패턴</strong>을 응용하여,
+                                에러 발생 시점의 모든 문맥 정보를 수집하는 미들웨어와 래퍼를 구현했습니다.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Process -->
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase mb-2 block">04 Process</span>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1 ml-1 marker:text-indigo-600">
+                            <li><strong>Context Middleware:</strong> UserID, Request Params, Code Line 자동 캡처</li>
+                            <li><strong>Onboarding:</strong> 팀원 코드 컨벤션 통일 및 가이드 작성</li>
+                        </ul>
+                    </div>
+
+                    <!-- Growth & Competence -->
+                    <div class="grid grid-cols-2 gap-8 mt-auto bg-gray-900 text-white p-6 rounded-none">
+                        <div>
+                            <span class="text-xs font-bold text-gray-500 uppercase mb-2 block">06 Growth</span>
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                막연한 추측이 아닌 <strong>데이터 기반 디버깅</strong>이 가능해졌습니다.
+                                "추적 불가능한 에러는 없다"는 확신을 얻었습니다.
+                            </p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-500 uppercase mb-2 block">07 Capability</span>
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                장애 발생 시 <strong>당황하지 않고 빠르게 복구</strong>할 수 있는
+                                견고한 백엔드 환경을 약속드립니다.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
