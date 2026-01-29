@@ -27,7 +27,11 @@
     "react-katex": "^3.0.1",
     "reactflow": "^11.10.4",
     "recharts": "^2.12.0",
+    "remark-gfm": "^4.0.0",
+    "remark-mdx": "^3.0.0",
+    "remark-parse": "^11.0.0",
     "tailwind-merge": "^2.2.1",
+    "unified": "^11.0.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
