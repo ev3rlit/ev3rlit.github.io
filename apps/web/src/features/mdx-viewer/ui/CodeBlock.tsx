@@ -5,6 +5,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import { useTheme } from "next-themes";
 import { cn } from "@/shared/lib/cn";
 import { Check, Copy } from "lucide-react";
+import { MacWindow } from "@/shared/ui/MacWindow";
 
 interface CodeBlockProps {
     children: string;
@@ -48,39 +49,30 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
 
     const displayLanguage = languageLabels[language] || language.toUpperCase();
 
-    return (
-        <div className="my-6 rounded-xl overflow-hidden border border-stone-200 dark:border-stone-800 shadow-sm">
-            {/* Header with language label and copy button */}
-            <div className="flex items-center justify-between px-4 py-2 bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
-                <span className="text-xs font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wider">
-                    {displayLanguage}
-                </span>
-                <button
-                    onClick={handleCopy}
-                    className={cn(
-                        "flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-all",
-                        copied
-                            ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950"
-                            : "text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-800"
-                    )}
-                >
-                    {copied ? (
-                        <>
-                            <Check className="w-3.5 h-3.5" />
-                            Copied!
-                        </>
-                    ) : (
-                        <>
-                            <Copy className="w-3.5 h-3.5" />
-                            Copy
-                        </>
-                    )}
-                </button>
-            </div>
+    // Copy Button Component
+    const CopyButton = (
+        <button
+            onClick={handleCopy}
+            className={cn(
+                "flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-all",
+                copied
+                    ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
+                    : "text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-800"
+            )}
+            title="Copy code"
+        >
+            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+        </button>
+    );
 
-            {/* Code content */}
+    return (
+        <MacWindow
+            title={displayLanguage}
+            headerRight={CopyButton}
+            containerClassName="my-6 shadow-sm"
+        >
             <Highlight
-                theme={resolvedTheme === "dark" ? themes.oneDark : themes.oneLight}
+                theme={resolvedTheme === "dark" ? themes.dracula : themes.github}
                 code={code}
                 language={language}
             >
@@ -89,9 +81,12 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
                         className={cn(
                             highlightClassName,
                             "overflow-x-auto text-sm leading-relaxed",
-                            "p-4 m-0"
+                            "p-4 m-0 bg-transparent!"
                         )}
-                        style={style}
+                        style={{
+                            ...style,
+                            backgroundColor: 'transparent', // Let parent container handle bg
+                        }}
                     >
                         <code>
                             {tokens.map((line, i) => (
@@ -108,6 +103,6 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
                     </pre>
                 )}
             </Highlight>
-        </div>
+        </MacWindow>
     );
 }
