@@ -63,6 +63,11 @@
   .react-flow__connection-active .nodegroup-content {
     pointer-events: none !important;
   }
+
+  /* Brand Highlight - <mark> tag styling */
+  .prose mark {
+    @apply bg-transparent text-indigo-600 dark:text-indigo-400 font-bold;
+  }
 }
 
 /* ==========================================================================
