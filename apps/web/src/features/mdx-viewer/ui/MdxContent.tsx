@@ -12,6 +12,8 @@ import { CodeComparison } from "./CodeComparison";
 import { BenchmarkSimulator } from "./BenchmarkSimulator";
 import { ContextRaceDemo } from "./ContextRaceDemo";
 import { StatCard } from "./StatCard";
+import { GraphwriteDemo } from "./GraphwriteDemo";
+import { CodeBlock } from "./CodeBlock";
 
 // MDX Operators (Polymorphic Components)
 import { Head } from "@/features/mdx-operators/ui/Head";
@@ -23,6 +25,20 @@ import { MindmapViewer } from "@/features/mdx-viewer/ui/MindmapViewer";
 
 // Portfolio Components
 import { ProblemSolution, Problem, Solution, Result, TechDetail, Lesson } from "@/features/portfolio/ui/PortfolioComponents";
+
+// Custom component for code blocks with syntax highlighting
+const Pre = ({ children }: { children?: React.ReactNode }) => {
+    return <>{children}</>;
+};
+
+const Code = ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+    // If it has a language class (e.g., language-typescript), render with syntax highlighting
+    if (className && typeof children === 'string') {
+        return <CodeBlock className={className}>{children}</CodeBlock>;
+    }
+    // Inline code (no language class)
+    return <code className="bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>;
+};
 
 const components = {
     SqlPlayground,
@@ -40,6 +56,7 @@ const components = {
     BenchmarkSimulator,
     ContextRaceDemo,
     StatCard,
+    GraphwriteDemo,
     // MDX Operators
     Head,
     Branch,
@@ -57,6 +74,9 @@ const components = {
     Result,
     TechDetail,
     Lesson,
+    // Code block with syntax highlighting
+    pre: Pre,
+    code: Code,
 };
 
 interface MdxContentProps {
