@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Highlight, themes } from "prism-react-renderer";
 import { useTheme } from "next-themes";
 import { cn } from "@/shared/lib/cn";
@@ -15,6 +15,12 @@ interface CodeBlockProps {
 export function CodeBlock({ children, className }: CodeBlockProps) {
     const { resolvedTheme } = useTheme();
     const [copied, setCopied] = useState(false);
+    const [mounted, setMounted] = useState(false); // Add mounted state
+
+    // Helper to ensure theme is loaded
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Extract language from className (e.g., "language-typescript" -> "typescript")
     const language = className?.replace(/language-/, "") || "text";
@@ -72,7 +78,9 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
             containerClassName="my-6 shadow-sm"
         >
             <Highlight
-                theme={resolvedTheme === "dark" ? themes.dracula : themes.github}
+                // Force re-render when theme or mounted state changes
+                key={mounted ? resolvedTheme : 'loading'}
+                theme={mounted && resolvedTheme === "dark" ? themes.dracula : themes.github}
                 code={code}
                 language={language}
             >
