@@ -68,6 +68,11 @@
   .prose mark {
     @apply bg-transparent text-indigo-600 dark:text-indigo-400 font-bold;
   }
+
+  /* Brand Link - <a> tag styling */
+  .prose a {
+    @apply text-indigo-600 dark:text-indigo-400 font-medium no-underline hover:underline transition-colors;
+  }
 }
 
 /* ==========================================================================
