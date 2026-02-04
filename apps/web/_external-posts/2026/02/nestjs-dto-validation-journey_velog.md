@@ -17,7 +17,7 @@ API를 배포하고 나면 여러 가지 질문이 생깁니다.
 
 ### 왜 Zod인가?
 
-NestJS 공식 문서는 `class-validator`를 권장하지만, 저는 Zod를 선택했습니다.
+NestJS 공식 문서는 `class-validator`를 권장하지만, 저는 Zod를 선택했습니다. golang [ozzo-validation](https://github.com/go-ozzo/ozzo-validation) 패키지를 사용해본 경험이 있어 익숙했습니다.
 
 ```typescript
 // class-validator: 데코레이터 기반
