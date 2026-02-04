@@ -71,8 +71,9 @@ GET /posts/abc
 
 # 응답 (400 Bad Request)
 {
-  "statusCode": 400,
-  "message": "Validation failed (numeric string is expected)"
+    "message": "Validation failed (numeric string is expected)",
+    "error": "Bad Request",
+    "statusCode": 400
 }
 ```
 
@@ -105,8 +106,18 @@ export const UpdatePostSchema = CreatePostSchema.partial().strict();
 ```bash
 # 응답 (400 Bad Request)
 {
-  "statusCode": 400,
-  "message": "Unrecognized key(s) in object: 'hackerField'"
+    "statusCode": 400,
+    "message": "Validation failed",
+    "errors": [
+        {
+            "code": "unrecognized_keys",
+            "keys": [
+                "hackerField"
+            ],
+            "path": [],
+            "message": "Unrecognized key: \"hackerField\""
+        }
+    ]
 }
 ```
 
@@ -133,15 +144,22 @@ export const UpdatePostSchema = CreatePostSchema
   .strict()
   .refine(
     (data) => Object.keys(data).length > 0,
-    { message: '최소 하나의 필드가 필요합니다.' }
+    { message: 'Please provide at least one field to update.' }
   );
 ```
 
-```bash
+```json
 # 응답 (400 Bad Request)
 {
-  "statusCode": 400,
-  "message": "최소 하나의 필드가 필요합니다."
+    "statusCode": 400,
+    "message": "Validation failed",
+    "errors": [
+        {
+            "code": "custom",
+            "path": [],
+            "message": "Please provide at least one field to update."
+        }
+    ]
 }
 ```
 
@@ -204,10 +222,20 @@ POST /posts
 
 # 응답 (400 Bad Request)
 {
-  "statusCode": 400,
-  "message": {
-    "title": { "_errors": ["제목은 1자 이상이어야 합니다."] }
-  }
+    "statusCode": 400,
+    "message": "Validation failed",
+    "errors": [
+        {
+            "origin": "string",
+            "code": "too_small",
+            "minimum": 1,
+            "inclusive": true,
+            "path": [
+                "title"
+            ],
+            "message": "Too small: expected string to have >=1 characters"
+        }
+    ]
 }
 ```
 
@@ -218,58 +246,124 @@ POST /posts
 모든 질문의 해결책을 종합한 전체 코드입니다.
 
 ```typescript
-// schemas/post.schema.ts
+// posts/post.controller.ts
+import { createZodDto } from 'class-validator-zod';
 import { z } from 'zod';
 
-// 생성 스키마 - 한글 에러 메시지로 사용자에게 친절하게
-export const CreatePostSchema = z.object({
-  title: z
-    .string({ required_error: '제목은 필수입니다.' })
-    .min(1, '제목은 1자 이상이어야 합니다.')
-    .max(100, '제목은 100자 이하여야 합니다.'),
-  content: z
-    .string({ required_error: '내용은 필수입니다.' })
-    .min(1, '내용은 1자 이상이어야 합니다.'),
-});
+const UpdatePostSchema = z.object({
+  author: z.string().optional(),
+  title: z.string().min(1).optional(),
+  content: z.string().optional(),
+})
+  .strict()
+  .refine((data) => Object.keys(data).length > 0, {
+    // 2. 데이터가 비어있으면(키가 0개면) 에러 발생
+    message: "Please provide at least one field to update.",
+  });
 
-// 수정 스키마 - 모든 엣지케이스 처리
-export const UpdatePostSchema = CreatePostSchema
-  .partial()           // 부분 업데이트 허용
-  .strict()            // 정의되지 않은 필드 → 에러
-  .refine(
-    (data) => Object.keys(data).length > 0,
-    { message: '최소 하나의 필드가 필요합니다.' }  // 빈 요청 → 에러
-  );
-
-// 타입 자동 추출
-export type CreatePostDto = z.infer<typeof CreatePostSchema>;
-export type UpdatePostDto = z.infer<typeof UpdatePostSchema>;
+class UpdatePost extends createZodDto(UpdatePostSchema) { }
 ```
 
 ```typescript
 // posts.controller.ts
+
+@Injectable()
+export class ForbidBodyPipe implements PipeTransform {
+  transform(value: any) {
+    // 값이 존재하고, 키 개수가 0보다 크면 (빈 객체가 아니면) 에러
+    if (value && Object.keys(value).length > 0) {
+      throw new BadRequestException(
+        'This API does not accept body data. Please use query parameters.'
+      );
+    }
+    return value;
+  }
+}
+
 @Controller('posts')
 export class PostsController {
+  constructor(private readonly postsService: PostsService) { }
 
-  // URL 파라미터 → 숫자로 변환
+  // getPosts 모든 포스트 조회
+  // getPost/:id 특정 포스트 조회
+  // POST /posts 포스트 작성
+  // PUT /posts/:id 포스트 수정
+  // DELETE /posts/:id 포스트 삭제
+
+  @Get()
+  getPosts(): Post[] {
+    return Array.from(posts.values());
+  }
+
+  // 입력에 구조체를 받아서 하는 방법은?
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.findOne(id);
+  getPost(@Param('id', ParseIntPipe) id: number): Post | {} {
+    const post = posts.get(id)
+    // if (!post) {
+    //   throw new NotFoundException(`Post with ID "${params.id}" not found`);
+    // }
+    return post ?? {};
   }
 
-  // Body → 검증된 구조체로 변환
   @Post()
-  create(@Body(new ZodValidationPipe(CreatePostSchema)) dto: CreatePostDto) {
-    return this.postsService.create(dto);
+  create(
+    @Body('author') author: string,
+    @Body('title') title: string,
+    @Body('content') content: string,
+  ): number {
+    let nextid = 0
+
+    for (const [id, post] of posts) {
+      if (id > nextid) {
+        nextid = id
+      }
+    }
+
+    const post: Post = {
+      id: nextid + 1,
+      author: author,
+      title: title,
+      content: content,
+      likes: 0,
+      comments: 0
+    }
+
+    posts.set(nextid + 1, post)
+    return nextid + 1
   }
 
-  // 부분 업데이트 + 모든 검증
+
   @Put(':id')
+  @UsePipes(ZodValidationPipe) // <--- 여기에 파이프 명시
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body(new ZodValidationPipe(UpdatePostSchema)) dto: UpdatePostDto,
-  ) {
-    return this.postsService.update(id, dto);
+    @Query() updatePost: UpdatePost,
+    @Body(new ForbidBodyPipe()) bodyForbidden: any
+  ): Post | {} {
+    const post = posts.get(id)
+    if (!post) {
+      throw new NotFoundException(`Post with ID "${id}" not found`);
+    }
+
+    const updatedPost: Post = {
+      ...post,
+      ...updatePost,
+    }
+
+    console.log(updatedPost)
+
+    posts.set(id, updatedPost)
+    return updatedPost
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number): { id: number } {
+    const post = posts.get(id)
+    if (!post) {
+      throw new NotFoundException(`Post with ID "${id}" not found`);
+    }
+    posts.delete(id)
+    return { id }
   }
 }
 ```
@@ -282,6 +376,8 @@ export class PostsController {
 | `PUT /posts/1` + `{}` | `"최소 하나의 필드가 필요합니다."` |
 | `PUT /posts/1` + `{"unknown": "값"}` | `"Unrecognized key(s) in object: 'unknown'"` |
 | `POST /posts` + `{"title": ""}` | `"제목은 1자 이상이어야 합니다."` |
+| `PUT /posts/1` + `{"title": "값"}` | `"This API does not accept body data. Please use query parameters."` |
+
 
 모든 에러 메시지가 **무엇이 잘못됐는지 명확하게** 알려줍니다.
 
