@@ -1,5 +1,6 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 import { Network } from "lucide-react";
 import { SqlPlayground } from "@/features/sql-playground/ui/SqlPlayground";
 import { SchemaDiagram } from "@/features/schema-diagram/ui/SchemaDiagram";
@@ -7,7 +8,7 @@ import { ContextArchitectureFlow, FinalArchitectureFlow } from "@/features/schem
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { CareerTimeline } from "@/features/about/ui/CareerTimeline";
-import { Experience, Project, Feature, FeatureItem } from "@/features/about/ui/TimelineItems";
+import { Experience, Project, Feature, FeatureItem, TechStack } from "@/features/about/ui/TimelineItems";
 import { CodeComparison } from "./CodeComparison";
 import { BenchmarkSimulator } from "./BenchmarkSimulator";
 import { ContextRaceDemo } from "./ContextRaceDemo";
@@ -52,6 +53,7 @@ const components = {
     Project,
     Feature,
     FeatureItem,
+    TechStack,
     CodeComparison,
     BenchmarkSimulator,
     ContextRaceDemo,
@@ -91,6 +93,7 @@ export function MdxContent({ source }: MdxContentProps) {
                 components={components}
                 options={{
                     mdxOptions: {
+                        remarkPlugins: [remarkGfm],
                         rehypePlugins: [rehypeSlug]
                     }
                 }}
