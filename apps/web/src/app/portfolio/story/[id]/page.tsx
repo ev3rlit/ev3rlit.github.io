@@ -4,13 +4,15 @@ import { Detail_Sample } from '@/views/portfolio/story-detail/Detail_Sample';
 import { Detail_ServiceTransfer } from '@/views/portfolio/story-detail/Detail_ServiceTransfer';
 import { Detail_PaymentMigration } from '@/views/portfolio/story-detail/Detail_PaymentMigration';
 import { Detail_RevenueApi } from '@/views/portfolio/story-detail/Detail_RevenueApi';
+import { Detail_LogPipeline } from '@/views/portfolio/story-detail/Detail_LogPipeline';
 
 // Map story IDs to their detail components
 const storyMap: Record<string, React.ComponentType> = {
     'sample': Detail_Sample,
     'service-transfer': Detail_ServiceTransfer,
     'payment-migration': Detail_PaymentMigration,
-    'revenue-api': Detail_RevenueApi
+    'revenue-api': Detail_RevenueApi,
+    'log-pipeline': Detail_LogPipeline
 };
 
 interface PageProps {

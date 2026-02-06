@@ -170,7 +170,7 @@ export const SwissProjectDetail = ({
                     {/* Back to List */}
                     <Link
                         href="/portfolio/features"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors mb-12"
+                        className="inline-flex items-center gap-2 text-lg font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors mb-12"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span>목록으로</span>
@@ -240,7 +240,7 @@ export const SwissProjectDetail = ({
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">01 / 개요</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">01 / 개요</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="max-w-3xl">
@@ -249,14 +249,14 @@ export const SwissProjectDetail = ({
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
                                         <div>
-                                            <h3 className="text-sm font-bold uppercase tracking-widest mb-4 border-b border-stone-900 dark:border-white pb-2 inline-block text-stone-900 dark:text-white">목표</h3>
-                                            <p className="text-stone-600 dark:text-stone-400 leading-relaxed break-keep whitespace-pre-line">
+                                            <h3 className="text-lg font-bold uppercase tracking-widest mb-4 border-b border-stone-900 dark:border-white pb-2 inline-block text-stone-900 dark:text-white">목표</h3>
+                                            <p className="text-lg text-stone-600 dark:text-stone-400 leading-relaxed break-keep whitespace-pre-line">
                                                 {overview.goals}
                                             </p>
                                         </div>
                                         <div>
-                                            <h3 className="text-sm font-bold uppercase tracking-widest mb-4 border-b border-stone-900 dark:border-white pb-2 inline-block text-stone-900 dark:text-white">전략</h3>
-                                            <p className="text-stone-600 dark:text-stone-400 leading-relaxed break-keep whitespace-pre-line">
+                                            <h3 className="text-lg font-bold uppercase tracking-widest mb-4 border-b border-stone-900 dark:border-white pb-2 inline-block text-stone-900 dark:text-white">전략</h3>
+                                            <p className="text-lg text-stone-600 dark:text-stone-400 leading-relaxed break-keep whitespace-pre-line">
                                                 {overview.strategy}
                                             </p>
                                         </div>
@@ -270,18 +270,18 @@ export const SwissProjectDetail = ({
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">02 / 키워드 & 기술</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">02 / 키워드 & 기술</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="max-w-3xl space-y-6">
                                     {keywords.map((group) => (
                                         <div key={group.category} className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-stone-400 w-20 shrink-0 font-mono">{group.category}</span>
+                                            <span className="text-base font-bold uppercase tracking-widest text-stone-400 w-24 shrink-0 font-mono">{group.category}</span>
                                             <span className="w-px h-4 bg-stone-200 dark:bg-stone-700 shrink-0" />
                                             {group.items.map((item) => (
                                                 <span
                                                     key={`${group.category}-${item}`}
-                                                    className="px-3 py-1 text-sm font-medium border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-white hover:border-stone-900 dark:hover:border-white hover:bg-stone-900 hover:text-white dark:hover:bg-white dark:hover:text-stone-900 transition-colors cursor-default"
+                                                    className="px-3 py-1 text-lg font-medium border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-white hover:border-stone-900 dark:hover:border-white hover:bg-stone-900 hover:text-white dark:hover:bg-white dark:hover:text-stone-900 transition-colors cursor-default"
                                                 >
                                                     {item}
                                                 </span>
@@ -298,7 +298,7 @@ export const SwissProjectDetail = ({
                         <section className="border-b border-stone-200 dark:border-stone-800">
                             <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                    <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">03 / 아키텍처</h2>
+                                    <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">03 / 아키텍처</h2>
                                 </div>
                                 <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                     <div className="relative w-full border border-stone-900 dark:border-white p-2">
@@ -318,14 +318,14 @@ export const SwissProjectDetail = ({
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">04 / 주요 작업</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">04 / 주요 작업</h2>
                             </div>
                             <div className="md:col-span-9">
                                 <div className="flex flex-col">
                                     {mainTasks.map((task) => (
                                         <div key={task.title} className="group flex flex-col md:flex-row md:items-baseline justify-between py-10 px-0 md:pl-12 border-b border-stone-100 dark:border-stone-900 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors last:border-0">
                                             <h3 className="text-xl font-bold text-stone-900 dark:text-white mb-2 md:mb-0 w-1/3">{task.title}</h3>
-                                            <p className="text-sm text-stone-600 dark:text-stone-400 w-full md:w-2/3 font-mono break-keep leading-relaxed">{task.description}</p>
+                                            <p className="text-lg text-stone-600 dark:text-stone-400 w-full md:w-2/3 font-mono break-keep leading-relaxed">{task.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -337,7 +337,7 @@ export const SwissProjectDetail = ({
                     <section>
                          <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">05 / 문제 해결</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">05 / 문제 해결</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="space-y-12">
@@ -346,20 +346,20 @@ export const SwissProjectDetail = ({
                                             <div className="p-8 border-b md:border-b-0 md:border-r border-stone-900 dark:border-white bg-stone-50 dark:bg-stone-900">
                                                 <div className="flex items-center gap-2 mb-4 text-amber-600 dark:text-amber-400">
                                                     <AlertTriangle className="w-4 h-4" />
-                                                    <span className="text-xs font-bold uppercase tracking-wider">문제 상황</span>
+                                                    <span className="text-base font-bold uppercase tracking-wider">문제 상황</span>
                                                 </div>
                                                 <h4 className="text-2xl font-bold text-stone-900 dark:text-white mb-4">{challenge.problem.split(':')[0]}</h4>
-                                                <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed break-keep">
+                                                <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed break-keep">
                                                      {challenge.problem.split(':').slice(1).join(':') || challenge.problem}
                                                 </p>
                                             </div>
                                             <div className="p-8">
                                                 <div className="flex items-center gap-2 mb-4 text-indigo-600 dark:text-indigo-400">
                                                     <CheckCircle className="w-4 h-4" />
-                                                    <span className="text-xs font-bold uppercase tracking-wider">해결 방안</span>
+                                                    <span className="text-base font-bold uppercase tracking-wider">해결 방안</span>
                                                 </div>
                                                 <h4 className="text-2xl font-bold text-stone-900 dark:text-white mb-4">{challenge.solution.split(':')[0]}</h4>
-                                                <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed break-keep">
+                                                <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed break-keep">
                                                     {challenge.solution.split(':').slice(1).join(':') || challenge.solution}
                                                 </p>
                                             </div>
