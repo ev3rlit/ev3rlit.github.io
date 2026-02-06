@@ -12,60 +12,74 @@ export const SwissHeroSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950">
-            <div className="swiss-grid items-center h-full">
-                {/* Left Column - Main Title */}
-                <div className="col-span-12 md:col-span-8 flex flex-col justify-center">
-                    <div
+        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 flex flex-col justify-center min-h-screen">
+            <div className="swiss-grid items-center w-full px-6 md:px-12 lg:px-24">
+                {/* Left Column - Main Content */}
+                <div className="col-span-12 lg:col-span-8 flex flex-col pt-20 lg:pt-0">
+
+
+                    <h1
                         className={cn(
-                            "transition-all duration-1000",
+                            "heading-lg text-stone-900 dark:text-white transition-all duration-1000 delay-200 leading-tight mb-8",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
-                        <span className="label-text text-stone-500 mb-4 block">
-                            서버 개발자
+                        <span className="block mb-2 text-stone-400 dark:text-stone-600 heading-md">
+                            &quot;
                         </span>
-                    </div>
-
-                    <h1
-                        className={cn(
-                            "heading-massive text-stone-900 dark:text-white transition-all duration-1000 delay-200",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        호들갑으로
-                    </h1>
-                    <h1
-                        className={cn(
-                            "heading-massive text-stone-900 dark:text-white transition-all duration-1000 delay-300",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        완벽을 기하는
+                        새로운 기술을 빠르게 습득하여 <br className="hidden md:block" />
+                        <span className="text-indigo-600 dark:text-indigo-400">비즈니스 가치</span>를 만들어내고,<br />
+                        신규 런칭부터 라이브 운영까지 <br className="hidden md:block" />
+                        <span className="text-indigo-600 dark:text-indigo-400">전체 과정</span>을 책임지는 백엔드 개발자
+                        <span className="block mt-2 text-stone-400 dark:text-stone-600 heading-md text-right">
+                            &quot;
+                        </span>
                     </h1>
 
+                    {/* Key Impacts */}
                     <div
                         className={cn(
-                            "mt-8 max-w-xl transition-all duration-1000 delay-500",
+                            "mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-1000 delay-500",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
-                        <p className="body-text text-stone-600 dark:text-stone-400">
-                            아직 일어나지 않은 문제까지 미리 대비하는 꼼꼼함으로, 시스템의 안정성을 책임집니다.
-                        </p>
+                        <div className="border-l-2 border-stone-200 dark:border-stone-800 pl-4">
+                            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-1">
+                                6개월
+                            </h3>
+                            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                                Go & MongoDB 기반<br />상용 서비스 런칭
+                            </p>
+                        </div>
+                        <div className="border-l-2 border-stone-200 dark:border-stone-800 pl-4">
+                            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-1">
+                                2개월
+                            </h3>
+                            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                                앱 서비스 및 인프라<br />(AWS→NCP) 이관 완료
+                            </p>
+                        </div>
+                        <div className="border-l-2 border-stone-200 dark:border-stone-800 pl-4">
+                            <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-1">
+                                10만 건
+                            </h3>
+                            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                                결제/재화 데이터<br />무중단 마이그레이션
+                            </p>
+                        </div>
                     </div>
 
                     {/* Keywords */}
                     <div
                         className={cn(
-                            "mt-8 flex flex-wrap gap-3 transition-all duration-1000 delay-600",
+                            "mt-10 flex flex-wrap gap-2 transition-all duration-1000 delay-600",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
-                        {['#Server_Developer', '#Risk_Management', '#System_Stability', '#Golang'].map((tag) => (
+                        {['Go', 'MongoDB', 'Redis', 'Naver Cloud', 'Event-Driven'].map((tag) => (
                             <span
                                 key={tag}
-                                className="label-text px-3 py-1 border border-stone-300 dark:border-stone-700 text-stone-500"
+                                className="px-3 py-1.5 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 text-xs font-medium tracking-wide"
                             >
                                 {tag}
                             </span>
@@ -73,48 +87,66 @@ export const SwissHeroSection = () => {
                     </div>
                 </div>
 
-                {/* Right Column - Name & Info */}
-                <div className="col-span-12 md:col-span-4 flex flex-col justify-center items-start md:items-end mt-8 md:mt-0">
-                    <div
-                        className={cn(
-                            "transition-all duration-1000 delay-400",
-                            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-                        )}
-                    >
-                        <span className="heading-xl accent-indigo">범들갑</span>
-                    </div>
+                {/* Right Column - Profile Info */}
+                <div className="col-span-12 lg:col-span-4 flex flex-col items-start lg:items-end mt-12 lg:mt-0">
+                    
+                    {/* Content Wrapper for internal left alignment */}
+                    <div className="flex flex-col items-start text-left">
+                        {/* Profile Image Area */}
+                        <div 
+                            className={cn(
+                                "w-32 h-32 md:w-40 md:h-40 bg-stone-200 dark:bg-stone-800 mb-8 overflow-hidden relative shadow-xl transition-all duration-1000 delay-400",
+                                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+                            )}
+                        >
+                             {/* Placeholder for image */}
+                            <div className="w-full h-full bg-stone-300 dark:bg-stone-700 flex items-center justify-center text-stone-500 dark:text-stone-400" >
+                                <span className="text-4xl filter grayscale opacity-50 font-serif italic">img</span> 
+                            </div>
+                        </div>
 
-                    <div
-                        className={cn(
-                            "mt-8 text-right transition-all duration-1000 delay-600",
-                            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-                        )}
-                    >
-                        <div className="label-text text-stone-500 mb-2">이름</div>
-                        <div className="heading-md">최범휘 (BeomHwi Choi)</div>
-                    </div>
+                        <div
+                            className={cn(
+                                "text-left transition-all duration-1000 delay-600",
+                                isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+                            )}
+                        >
+                            <h2 className="heading-md mb-1">최범휘</h2>
+                            <p className="text-lg text-stone-500 font-light mb-6">백엔드 개발자</p>
+                            
+                            <div className="w-12 h-px bg-stone-900 dark:bg-stone-100 mb-6"></div>
 
-                    <div
-                        className={cn(
-                            "mt-6 text-right transition-all duration-1000 delay-700",
-                            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-                        )}
-                    >
-                        <div className="label-text text-stone-500 mb-2">주력 분야</div>
-                        <div className="heading-md">Backend / Server</div>
+                            <ul className="space-y-2 text-sm text-stone-500 dark:text-stone-400 font-mono">
+                                <li className="flex flex-col">
+                                    <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">이메일</span>
+                                    <a href="mailto:bum4496@naver.com" className="hover:text-indigo-600 transition-colors">bum4496@naver.com</a>
+                                </li>
+                                <li className="flex flex-col">
+                                    <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">깃허브</span>
+                                    <a href="https://github.com/ev3rlit" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">github.com/ev3rlit</a>
+                                </li>
+                                <li className="flex flex-col">
+                                    <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">블로그</span>
+                                    <a href="https://homveloper.github.io" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">homveloper.github.io</a>
+                                </li>
+                                <li className="flex flex-col">
+                                    <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">활동 지역</span>
+                                    <span>Seoul, South Korea</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Scroll Indicator */}
-            <div className="scroll-indicator">
-                <span className="label-text text-stone-400">스크롤</span>
-                <div className="scroll-line bg-stone-900 dark:bg-white"></div>
+            <div className="scroll-indicator absolute bottom-8 left-12 lg:left-24 hidden md:flex flex-col gap-2">
+                <span className="label-text text-stone-400 writing-mode-vertical">스크롤</span>
+                <div className="h-12 w-[1px] bg-stone-300 dark:bg-stone-700 mx-auto"></div>
             </div>
-
-            {/* Corner Decoration */}
-            <div className="absolute top-8 right-8 w-4 h-4 bg-stone-900 dark:bg-white"></div>
-            <div className="absolute bottom-8 left-8 w-4 h-4 bg-indigo-600 dark:bg-indigo-400"></div>
+            
+            {/* Background Decorations */}
+             <div className="absolute top-0 right-0 w-[40vw] h-[60vh] bg-gradient-to-br from-indigo-50/50 to-transparent dark:from-indigo-950/20 dark:to-transparent pointer-events-none -z-10 blur-3xl"></div>
         </section>
     );
 };
