@@ -152,17 +152,14 @@
     @apply bg-indigo-600 dark:bg-indigo-400;
   }
 
-  /* Section Snap Scroll Helper */
+  /* Section Layout Helper */
   .snap-section {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    overflow: hidden;
   }
 
   /* Animation Utilities */
