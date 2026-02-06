@@ -59,6 +59,39 @@ export const SwissMinimalPage = () => {
         };
     }, [setPortfolioMode, setSidebarOpen]);
 
+    // Keyboard Navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!mainRef.current) return;
+            const container = mainRef.current;
+            const scrollAmount = window.innerHeight;
+
+            switch (e.key) {
+                case 'ArrowDown':
+                case 'PageDown':
+                    e.preventDefault();
+                    container.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                    break;
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    container.scrollTo({ top: 0, behavior: 'smooth' });
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+                    break;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     const [activeStory, setActiveStory] = useState<string | null>(null);
 
     // Detail View Map
