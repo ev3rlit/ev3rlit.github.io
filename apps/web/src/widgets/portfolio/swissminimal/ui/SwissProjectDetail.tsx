@@ -1,6 +1,109 @@
+"use client";
+
 import type React from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUp, Github, ExternalLink, AlertTriangle, CheckCircle } from 'lucide-react';
+import { SwissNavigation } from './SwissNavigation';
+import { useSidebarStore } from '@/features/layout/model/useSidebarStore';
+
+const SimpleMarkdown = ({ content }: { content: string }) => {
+    const lines = content.split('\n');
+    const elements: React.ReactNode[] = [];
+    let i = 0;
+
+    while (i < lines.length) {
+        const line = lines[i];
+
+        // Code block
+        if (line.startsWith('```')) {
+            const lang = line.slice(3).trim();
+            const codeLines: string[] = [];
+            i++;
+            while (i < lines.length && !lines[i].startsWith('```')) {
+                codeLines.push(lines[i]);
+                i++;
+            }
+            i++; // skip closing ```
+            elements.push(
+                <div key={`code-${elements.length}`} className="my-4">
+                    {lang && <div className="text-[10px] uppercase tracking-widest text-stone-400 mb-1 font-mono">{lang}</div>}
+                    <pre className="bg-stone-900 dark:bg-stone-950 text-stone-100 p-4 overflow-x-auto text-xs leading-relaxed border border-stone-700">
+                        <code>{codeLines.join('\n')}</code>
+                    </pre>
+                </div>
+            );
+            continue;
+        }
+
+        // H2
+        if (line.startsWith('## ')) {
+            elements.push(<h3 key={`h2-${elements.length}`} className="text-xl font-bold text-stone-900 dark:text-white mt-8 mb-3">{line.slice(3)}</h3>);
+            i++;
+            continue;
+        }
+
+        // H3
+        if (line.startsWith('### ')) {
+            elements.push(<h4 key={`h3-${elements.length}`} className="text-base font-bold text-stone-900 dark:text-white mt-6 mb-2">{line.slice(4)}</h4>);
+            i++;
+            continue;
+        }
+
+        // Ordered list
+        if (/^\d+\.\s/.test(line)) {
+            const listItems: string[] = [];
+            while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+                listItems.push(lines[i].replace(/^\d+\.\s/, ''));
+                i++;
+            }
+            elements.push(
+                <ol key={`ol-${elements.length}`} className="list-decimal list-inside space-y-1 my-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                    {listItems.map((item, idx) => (
+                        <li key={idx} className="break-keep">
+                            <InlineMarkdown text={item} />
+                        </li>
+                    ))}
+                </ol>
+            );
+            continue;
+        }
+
+        // Empty line
+        if (line.trim() === '') {
+            i++;
+            continue;
+        }
+
+        // Paragraph
+        elements.push(
+            <p key={`p-${elements.length}`} className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed my-2 break-keep">
+                <InlineMarkdown text={line} />
+            </p>
+        );
+        i++;
+    }
+
+    return <div className="max-w-3xl">{elements}</div>;
+};
+
+const InlineMarkdown = ({ text }: { text: string }) => {
+    // Split by **bold** and `code` patterns
+    const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+    return (
+        <>
+            {parts.map((part, idx) => {
+                if (part.startsWith('**') && part.endsWith('**')) {
+                    return <strong key={idx} className="font-bold text-stone-900 dark:text-white">{part.slice(2, -2)}</strong>;
+                }
+                if (part.startsWith('`') && part.endsWith('`')) {
+                    return <code key={idx} className="px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-mono border border-stone-200 dark:border-stone-700">{part.slice(1, -1)}</code>;
+                }
+                return <span key={idx}>{part}</span>;
+            })}
+        </>
+    );
+};
 
 interface SwissProjectDetailProps {
     projectInfo: {
@@ -25,6 +128,7 @@ interface SwissProjectDetailProps {
         items: string[];
     }[];
     architecture?: React.ReactNode; // Flexible: Image or Component
+    architectureDescription?: string; // Markdown-like description below architecture diagram
     mainTasks: {
         title: string;
         description: string;
@@ -40,31 +144,40 @@ export const SwissProjectDetail = ({
     overview,
     keywords,
     architecture,
+    architectureDescription,
     mainTasks,
     challenges
 }: SwissProjectDetailProps) => {
+    const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
+
+    useEffect(() => {
+        setPortfolioMode(true);
+        setSidebarOpen(false);
+        return () => {
+            setPortfolioMode(false);
+            setSidebarOpen(true);
+        };
+    }, [setPortfolioMode, setSidebarOpen]);
+
     return (
-        <div className="min-h-screen w-full flex flex-col bg-white text-stone-900 font-sans selection:bg-stone-900 selection:text-white dark:bg-stone-950 dark:text-white dark:selection:bg-white dark:selection:text-stone-900 border-t-8 border-stone-900 dark:border-white">
-            
-            {/* Navigation */}
-            <nav className="w-full px-6 py-8 md:px-12 border-b border-stone-200 dark:border-stone-800">
-                <div className="max-w-7xl mx-auto flex items-baseline justify-between">
-                    <Link href="/" className="group flex items-center gap-3 text-base font-bold tracking-tight uppercase hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                        <span className="w-3 h-3 bg-stone-900 dark:bg-white group-hover:bg-indigo-600 dark:group-hover:bg-indigo-400 transition-colors duration-300"></span>
-                        J.Doe / Portfolio
-                    </Link>
-                    <Link href="/" className="flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors">
+        <div className="h-full w-full overflow-y-auto bg-white dark:bg-stone-950 text-stone-900 dark:text-white font-sans selection:bg-stone-900 selection:text-white dark:selection:bg-white dark:selection:text-stone-900">
+
+            <SwissNavigation />
+
+            <main className="w-full flex-grow pt-32 pb-24 px-6 md:px-12">
+                <div className="max-w-7xl mx-auto">
+
+                    {/* Back to List */}
+                    <Link
+                        href="/portfolio/features"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors mb-12"
+                    >
                         <ArrowLeft className="w-4 h-4" />
                         <span>목록으로</span>
                     </Link>
-                </div>
-            </nav>
 
-            <main className="flex-grow w-full px-6 md:px-12 pb-24">
-                <div className="max-w-7xl mx-auto">
-                    
                     {/* Header */}
-                    <header className="pt-24 pb-16 border-b border-stone-900 dark:border-white">
+                    <header className="pt-0 pb-16 border-b border-stone-900 dark:border-white">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-12">
                             <div className="lg:col-span-8">
                                 <div className="flex items-center gap-4 mb-6">
@@ -159,22 +272,22 @@ export const SwissProjectDetail = ({
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
                                 <h2 className="text-xs font-bold uppercase tracking-widest text-stone-400 sticky top-8">02 / 키워드 & 기술</h2>
                             </div>
-                            <div className="md:col-span-9">
-                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 border-l border-stone-200 dark:border-stone-800">
-                                    {keywords.flatMap((group) =>
-                                        group.items.map((item) => (
-                                            <div key={`${group.category}-${item}`} className="aspect-square flex flex-col justify-between p-6 border-r border-b border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors group">
-                                                <div className="text-stone-300 group-hover:text-stone-900 dark:group-hover:text-white transition-colors">
-                                                    {/* Default Icon based on Category could act here if needed, keeping it simple text or simple visual indicator */}
-                                                    <span className="text-xl font-bold opacity-30">#</span>
-                                                </div>
-                                                <div>
-                                                    <span className="block font-bold text-sm text-stone-900 dark:text-white">{item}</span>
-                                                    <span className="text-xs text-stone-500 font-mono mt-1 block">{group.category}</span>
-                                                </div>
-                                            </div>
-                                        ))
-                                    )}
+                            <div className="md:col-span-9 py-16 pl-0 md:pl-12">
+                                <div className="max-w-3xl space-y-6">
+                                    {keywords.map((group) => (
+                                        <div key={group.category} className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                                            <span className="text-xs font-bold uppercase tracking-widest text-stone-400 w-20 shrink-0 font-mono">{group.category}</span>
+                                            <span className="w-px h-4 bg-stone-200 dark:bg-stone-700 shrink-0" />
+                                            {group.items.map((item) => (
+                                                <span
+                                                    key={`${group.category}-${item}`}
+                                                    className="px-3 py-1 text-sm font-medium border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-white hover:border-stone-900 dark:hover:border-white hover:bg-stone-900 hover:text-white dark:hover:bg-white dark:hover:text-stone-900 transition-colors cursor-default"
+                                                >
+                                                    {item}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -191,6 +304,11 @@ export const SwissProjectDetail = ({
                                     <div className="relative w-full border border-stone-900 dark:border-white p-2">
                                         {architecture}
                                     </div>
+                                    {architectureDescription && (
+                                        <div className="mt-12">
+                                            <SimpleMarkdown content={architectureDescription} />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </section>

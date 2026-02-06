@@ -53,6 +53,24 @@ export const SwissFeatureIndex = () => {
             title: "멀티 인증 통합 (Multi-Auth Identity Linking)",
             description: "다수의 소셜 계정과 자체 계정을 하나의 유저 아이덴티티로 통합 관리하는 인증 시스템.",
             storyId: "migration"
+        },
+        {
+            id: "F.07",
+            title: "앱 서비스 이관 (Self-Publishing Migration)",
+            description: "퍼블리셔 계약 종료 위기에서 2개월 내 인프라/DB/인증을 자체 플랫폼으로 긴급 이관하고, Apple Transfer API로 무중단 계정 마이그레이션을 달성한 사례.",
+            storyId: "service-transfer"
+        },
+        {
+            id: "F.08",
+            title: "무중단 결제 스키마 마이그레이션 (Zero-Downtime Dual-Write Migration)",
+            description: "초기 설계 결함으로 누락된 구매일자를 Store API 역추적으로 복원하고, 이중 기록 전략으로 10만 건을 무중단 마이그레이션한 사례.",
+            storyId: "payment-migration"
+        },
+        {
+            id: "F.09",
+            title: "통합 매출 조회 API (Unified Revenue API)",
+            description: "3-Tier 환율 캐싱과 big.Int 정밀 환산으로 글로벌 다통화 결제를 원화 매출로 집계하는 운영툴 API.",
+            storyId: "revenue-api"
         }
     ];
 
