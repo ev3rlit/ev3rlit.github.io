@@ -49,12 +49,6 @@ export const SwissFeatureIndex = () => {
             storyId: "log-pipeline"
         },
         {
-            id: "F.06",
-            title: "멀티 인증 통합 (Multi-Auth Identity Linking)",
-            description: "다수의 소셜 계정과 자체 계정을 하나의 유저 아이덴티티로 통합 관리하는 인증 시스템.",
-            storyId: "migration"
-        },
-        {
             id: "F.07",
             title: "앱 서비스 이관 (Self-Publishing Migration)",
             description: "퍼블리셔 계약 종료 위기에서 2개월 내 인프라/DB/인증을 자체 플랫폼으로 긴급 이관하고, Apple Transfer API로 무중단 계정 마이그레이션을 달성한 사례.",
@@ -71,6 +65,12 @@ export const SwissFeatureIndex = () => {
             title: "통합 매출 조회 API (Unified Revenue API)",
             description: "3-Tier 환율 캐싱과 big.Int 정밀 환산으로 글로벌 다통화 결제를 원화 매출로 집계하는 운영툴 API.",
             storyId: "revenue-api"
+        },
+        {
+            id: "F.10",
+            title: "Apple 계정 이관 장애 복구 (Apple Transfer Recovery)",
+            description: "Apple 앱 이관 완료 시 기존 유저가 신규 계정으로 생성되는 장애를 Transfer API와 Account Linking으로 12시간 내 전체 복구한 위기 대응 사례.",
+            storyId: "apple-transfer"
         }
     ];
 

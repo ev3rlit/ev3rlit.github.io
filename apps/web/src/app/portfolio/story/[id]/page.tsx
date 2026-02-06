@@ -5,6 +5,7 @@ import { Detail_ServiceTransfer } from '@/views/portfolio/story-detail/Detail_Se
 import { Detail_PaymentMigration } from '@/views/portfolio/story-detail/Detail_PaymentMigration';
 import { Detail_RevenueApi } from '@/views/portfolio/story-detail/Detail_RevenueApi';
 import { Detail_LogPipeline } from '@/views/portfolio/story-detail/Detail_LogPipeline';
+import { Detail_AppleTransfer } from '@/views/portfolio/story-detail/Detail_AppleTransfer';
 
 // Map story IDs to their detail components
 const storyMap: Record<string, React.ComponentType> = {
@@ -12,7 +13,8 @@ const storyMap: Record<string, React.ComponentType> = {
     'service-transfer': Detail_ServiceTransfer,
     'payment-migration': Detail_PaymentMigration,
     'revenue-api': Detail_RevenueApi,
-    'log-pipeline': Detail_LogPipeline
+    'log-pipeline': Detail_LogPipeline,
+    'apple-transfer': Detail_AppleTransfer
 };
 
 interface PageProps {
