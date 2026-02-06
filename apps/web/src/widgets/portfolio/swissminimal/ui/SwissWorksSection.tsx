@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
 import Link from 'next/link';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 const projects = [
     {
@@ -50,7 +51,9 @@ const ArrowUpRight = ({ className }: { className?: string }) => (
         strokeLinecap="round"
         strokeLinejoin="round"
         className={className}
+        aria-hidden="true"
     >
+        <title>화살표 아이콘</title>
         <line x1="7" y1="17" x2="17" y2="7"></line>
         <polyline points="7 7 17 7 17 17"></polyline>
     </svg>
@@ -81,7 +84,7 @@ export const SwissWorksSection = () => {
 
     return (
         <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950">
-            <div className="swiss-grid h-full py-16">
+            <SwissSectionContainer className="grid grid-cols-12 gap-6 h-full py-16">
                 {/* Header */}
                 <div className="col-span-12 flex justify-between items-end mb-12">
                     <div
@@ -108,10 +111,11 @@ export const SwissWorksSection = () => {
                 <div className="col-span-12">
                     <div className="space-y-0">
                         {projects.map((project, index) => (
-                            <div
+                            <button
+                                type="button"
                                 key={project.id}
                                 className={cn(
-                                    "group border-t border-stone-200 dark:border-stone-800 py-8 cursor-pointer transition-all duration-700",
+                                    "group border-t border-stone-200 dark:border-stone-800 py-8 cursor-pointer transition-all duration-700 w-full text-left",
                                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                                 )}
                                 style={{ transitionDelay: `${200 + index * 100}ms` }}
@@ -170,7 +174,7 @@ export const SwissWorksSection = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </button>
                         ))}
 
                         {/* Bottom Border */}
@@ -191,7 +195,7 @@ export const SwissWorksSection = () => {
                         <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </Link>
                 </div>
-            </div>
+            </SwissSectionContainer>
 
             {/* Decorative Element */}
             <div className="absolute top-1/2 right-0 w-px h-32 bg-stone-200 dark:bg-stone-800 -translate-y-1/2 hidden md:block"></div>

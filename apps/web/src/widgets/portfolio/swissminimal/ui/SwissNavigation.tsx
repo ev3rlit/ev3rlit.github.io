@@ -7,6 +7,7 @@ import { ThemeToggle } from '@/features/theme-toggle/ui/ThemeToggle';
 const navItems = [
     { label: '홈', href: '#hero' },
     { label: '소개', href: '#about' },
+    { label: '기능들', href: '/portfolio/features' },
     { label: '프로젝트', href: '#works' },
     { label: '연락처', href: '#contact' },
 ];
@@ -42,6 +43,11 @@ export const SwissNavigation = () => {
     }, []);
 
     const scrollToSection = (href: string) => {
+        if (!href.startsWith('#')) {
+            window.location.href = href;
+            return;
+        }
+        
         const element = document.querySelector(href);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -60,13 +66,13 @@ export const SwissNavigation = () => {
             <div className="swiss-grid items-center h-auto">
                 {/* Logo */}
                 <div className="col-span-6 md:col-span-2">
-                    <a
-                        href="#hero"
-                        onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
+                    <button
+                        type="button"
+                        onClick={() => scrollToSection('#hero')}
                         className="heading-md text-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                     >
                         HOMVELOPER.
-                    </a>
+                    </button>
                 </div>
 
                 {/* Navigation Links - Desktop */}
@@ -75,7 +81,12 @@ export const SwissNavigation = () => {
                         <a
                             key={item.href}
                             href={item.href}
-                            onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
+                            onClick={(e) => { 
+                                if (item.href.startsWith('#')) {
+                                    e.preventDefault(); 
+                                    scrollToSection(item.href); 
+                                }
+                            }}
                             className={cn(
                                 "label-text transition-all duration-300 relative",
                                 activeSection === item.href.slice(1)
@@ -94,19 +105,20 @@ export const SwissNavigation = () => {
                 {/* CTA - Desktop */}
                 <div className="hidden md:flex col-span-2 justify-end items-center gap-4">
                     <ThemeToggle />
-                    <a
-                        href="#contact"
-                        onClick={(e) => { e.preventDefault(); scrollToSection('#contact'); }}
+                    <button
+                        type="button"
+                        onClick={() => scrollToSection('#contact')}
                         className="label-text px-4 py-2 bg-stone-900 text-white dark:bg-white dark:text-stone-900 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white dark:hover:text-white transition-colors"
                     >
                         제안하기
-                    </a>
+                    </button>
                 </div>
 
                 {/* Mobile Menu Button + Toggle */}
                 <div className="col-span-6 md:hidden flex justify-end items-center gap-4">
                     <ThemeToggle />
                     <button
+                        type="button"
                         className="label-text text-stone-500"
                         onClick={() => scrollToSection('#contact')}
                     >

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 // Data derived from docs/portfolio_drafts/00_career_tech.md
 const resumeData = {
@@ -55,7 +56,7 @@ const resumeData = {
         { category: '언어', items: 'Golang, C++' },
         { category: '프레임워크', items: 'Unreal Engine 5' },
         { category: '데이터베이스', items: 'MongoDB, MySQL, Redis, AWS DocumentDB' },
-        { category: '인프라', items: 'AWS (EC2, Lambda), Naver Cloud, Jenkins, Docker' },
+        { category: '인프라', items: 'AWS (EC2), Naver Cloud, Jenkins' },
         { category: '도구', items: 'Git, Jira, Confluence, Slack' }
     ]
 };
@@ -77,14 +78,14 @@ export const SwissResumeSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 transition-colors duration-500 flex items-center justify-center min-h-[90vh]">
-            <div className="w-full max-w-[1280px] mx-auto px-6 md:px-12 lg:px-24">
+        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800 transition-colors duration-500 group">
+            <SwissSectionContainer>
                 
                 {/* 
                     Grid Layout: 9 Columns (Main) + 3 Columns (Side)
                     The Label is now INTEGRATED into the Main Column at the top.
                 */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-16">
 
                     {/* 1. LEFT: Main Content (Span 8 - leaving 1 col gap before side) */}
                     <div className="col-span-12 lg:col-span-8 flex flex-col gap-12">
@@ -113,8 +114,8 @@ export const SwissResumeSection = () => {
                             </div>
                             
                             <div className="space-y-12">
-                                {resumeData.careers.map((career, idx) => (
-                                    <div key={idx} className="group relative">
+                                {resumeData.careers.map((career) => (
+                                    <div key={career.company} className="group relative">
                                         <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-3">
                                             <h4 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
                                                 {career.company}
@@ -128,8 +129,8 @@ export const SwissResumeSection = () => {
                                         </div>
                                         
                                         <ul className="space-y-2">
-                                            {career.details.map((detail, dIdx) => (
-                                                <li key={dIdx} className="flex items-start gap-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed group-hover:text-stone-900 dark:group-hover:text-stone-200 transition-colors duration-200">
+                                            {career.details.map((detail) => (
+                                                <li key={detail} className="flex items-start gap-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed group-hover:text-stone-900 dark:group-hover:text-stone-200 transition-colors duration-200">
                                                     <span className="mt-2 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0 group-hover:bg-indigo-500 transition-colors duration-200"></span>
                                                     <span>{detail}</span>
                                                 </li>
@@ -152,8 +153,8 @@ export const SwissResumeSection = () => {
                                 <span className="h-px bg-stone-200 dark:bg-stone-800 w-8"></span>
                             </div>
                             <div className="space-y-4">
-                                {resumeData.education.map((edu, idx) => (
-                                    <div key={idx} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 pl-4 border-l-2 border-stone-200 dark:border-stone-800">
+                                {resumeData.education.map((edu) => (
+                                    <div key={edu.school} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 pl-4 border-l-2 border-stone-200 dark:border-stone-800">
                                         <h4 className="text-base font-bold text-stone-900 dark:text-white">{edu.school}</h4>
                                         <p className="text-sm text-stone-600 dark:text-stone-400">{edu.major}</p>
                                         <p className="text-xs text-stone-400">{edu.desc}</p>
@@ -178,8 +179,8 @@ export const SwissResumeSection = () => {
                             </h3>
 
                             <div className="space-y-8">
-                                {resumeData.techStack.map((stack, idx) => (
-                                    <div key={idx}>
+                                {resumeData.techStack.map((stack) => (
+                                    <div key={stack.category}>
                                         <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">{stack.category}</h4>
                                         <p className="text-sm font-medium text-stone-800 dark:text-stone-300 leading-relaxed border-b border-stone-100 dark:border-stone-900 pb-2">
                                             {stack.items}
@@ -201,8 +202,8 @@ export const SwissResumeSection = () => {
                                 <span className="w-full h-px bg-stone-200 dark:bg-stone-800 flex-grow"></span>
                             </div>
                             <div className="space-y-6">
-                                {resumeData.awards.map((award, idx) => (
-                                    <div key={idx}>
+                                {resumeData.awards.map((award) => (
+                                    <div key={award.title}>
                                         <div className="font-mono text-[10px] font-bold text-stone-300 mb-1">{award.year}</div>
                                         <h4 className="text-sm font-bold text-stone-900 dark:text-white leading-tight">{award.title}</h4>
                                         <p className="text-xs text-stone-600 dark:text-stone-400 mt-1">{award.award}</p>
@@ -221,7 +222,7 @@ export const SwissResumeSection = () => {
 
                 </div>
 
-            </div>
+            </SwissSectionContainer>
         </section>
     );
 };

@@ -41,7 +41,6 @@ export const SwissStorySection = ({
     storyNumber,
     keyword,
     title,
-    subtitle,
     step01_intro,
     step02_background,
     step03_problem,

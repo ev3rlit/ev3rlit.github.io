@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 const lessons = [
     {
@@ -46,7 +47,7 @@ export const SwissBladeXRetrospectiveSection = () => {
 
     return (
         <section ref={sectionRef} className="snap-section bg-stone-900 text-white dark:bg-stone-950">
-            <div className="swiss-grid items-center h-full">
+            <SwissSectionContainer className="grid grid-cols-12 gap-6 items-center h-full">
                 {/* Section Label */}
                 <div className="col-span-12 md:col-span-2">
                     <div
@@ -101,7 +102,7 @@ export const SwissBladeXRetrospectiveSection = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {lessons.map((l, i) => (
                                 <div
-                                    key={i}
+                                    key={l.learned}
                                     className="p-4 border border-stone-700 bg-stone-800/50 hover:bg-stone-800 transition-colors"
                                 >
                                     <div className="label-text text-stone-500 mb-2">배움 {String(i + 1).padStart(2, '0')}</div>
@@ -112,7 +113,7 @@ export const SwissBladeXRetrospectiveSection = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </SwissSectionContainer>
 
             {/* Corner Decoration */}
             <div className="absolute top-8 right-8 w-4 h-4 bg-indigo-600 dark:bg-indigo-500"></div>

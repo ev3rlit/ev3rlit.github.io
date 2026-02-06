@@ -1,5 +1,5 @@
 import { cn } from '@/shared/lib/cn';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface SwissSectionContainerProps {
     children: ReactNode;

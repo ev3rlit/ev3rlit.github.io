@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 interface ListItem {
     title: string;
@@ -50,110 +51,114 @@ export const SwissRetrospectiveSection = ({
 
     return (
         <section ref={sectionRef} className="snap-section bg-stone-900 text-white dark:bg-stone-950">
-            <div className="swiss-grid items-center h-full">
-                {/* Section Label */}
-                <div className="col-span-12 md:col-span-2">
-                    <div
-                        className={cn(
-                            "transition-all duration-700",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        <span className="label-text accent-indigo">{sectionLabel}</span>
-                        <span className="label-text text-stone-500 ml-2">회고</span>
+            <SwissSectionContainer>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center h-full">
+                    {/* Section Label */}
+                    <div className="col-span-12 md:col-span-2">
+                        <div
+                            className={cn(
+                                "transition-all duration-700",
+                                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                            )}
+                        >
+                            <span className="label-text accent-indigo">{sectionLabel}</span>
+                            <span className="label-text text-stone-500 ml-2">회고</span>
+                        </div>
                     </div>
-                </div>
 
-                {/* Main Content */}
-                <div className="col-span-12 md:col-span-10 mt-8 md:mt-0">
-                    <h2
-                        className={cn(
-                            "heading-lg mb-2 transition-all duration-700 delay-100",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        {title}
-                    </h2>
-                    <p
-                        className={cn(
-                            "body-text text-stone-400 mb-8 transition-all duration-700 delay-200",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        {subtitle}
-                    </p>
-
-                    {/* Quote */}
-                    <blockquote
-                        className={cn(
-                            "border-l-4 border-indigo-600 dark:border-indigo-400 pl-4 mb-10 transition-all duration-700 delay-300",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        <p className="heading-md text-sm italic text-stone-300">"{quote}"</p>
-                    </blockquote>
-
-                    {/* Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Evolution */}
-                        <div
+                    {/* Main Content */}
+                    <div className="col-span-12 md:col-span-10 mt-8 md:mt-0">
+                        <h2
                             className={cn(
-                                "transition-all duration-700 delay-400",
+                                "heading-lg mb-2 transition-all duration-700 delay-100",
                                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                             )}
                         >
-                            <div className="label-text accent-indigo mb-4">{evolution.title}</div>
-                            <ul className="space-y-3">
-                                {evolution.items.map((item, i) => (
-                                    <li key={i} className="flex items-start gap-2">
-                                        <span className="w-1.5 h-1.5 bg-indigo-500 mt-2 flex-shrink-0"></span>
-                                        <span className="body-text text-stone-300 text-sm" dangerouslySetInnerHTML={{ __html: item }}></span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Tech Debt */}
-                        <div
+                            {title}
+                        </h2>
+                        <p
                             className={cn(
-                                "transition-all duration-700 delay-500",
+                                "body-text text-stone-400 mb-8 transition-all duration-700 delay-200",
                                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                             )}
                         >
-                            <div className="label-text text-yellow-500 mb-4">{techDebt.title}</div>
-                            <ul className="space-y-3">
-                                {techDebt.items.map((item, i) => (
-                                    <li key={i} className="flex items-start gap-2">
-                                        <span className="w-1.5 h-1.5 bg-yellow-500 mt-2 flex-shrink-0"></span>
-                                        <span className="body-text text-stone-400 text-sm" dangerouslySetInnerHTML={{ __html: item }}></span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                            {subtitle}
+                        </p>
 
-                        {/* Lesson */}
-                        {lesson && (
+                        {/* Quote */}
+                        <blockquote
+                            className={cn(
+                                "border-l-4 border-indigo-600 dark:border-indigo-400 pl-4 mb-10 transition-all duration-700 delay-300",
+                                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                            )}
+                        >
+                            <p className="heading-md text-sm italic text-stone-300">"{quote}"</p>
+                        </blockquote>
+
+                        {/* Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {/* Evolution */}
                             <div
                                 className={cn(
-                                    "transition-all duration-700 delay-600",
+                                    "transition-all duration-700 delay-400",
                                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                                 )}
                             >
-                                <div className="label-text text-stone-500 mb-4">{lesson.title}</div>
+                                <div className="label-text accent-indigo mb-4">{evolution.title}</div>
                                 <ul className="space-y-3">
-                                    {lesson.items.map((item, i) => (
-                                        <li key={i} className="flex items-start gap-2">
-                                            <span className="w-1.5 h-1.5 bg-stone-500 mt-2 flex-shrink-0"></span>
+                                    {evolution.items.map((item) => (
+                                        <li key={item} className="flex items-start gap-2">
+                                            <span className="w-1.5 h-1.5 bg-indigo-500 mt-2 flex-shrink-0"></span>
+                                            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: statically defined content */}
+                                            <span className="body-text text-stone-300 text-sm" dangerouslySetInnerHTML={{ __html: item }}></span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Tech Debt */}
+                            <div
+                                className={cn(
+                                    "transition-all duration-700 delay-500",
+                                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                                )}
+                            >
+                                <div className="label-text text-yellow-500 mb-4">{techDebt.title}</div>
+                                <ul className="space-y-3">
+                                    {techDebt.items.map((item) => (
+                                        <li key={item} className="flex items-start gap-2">
+                                            <span className="w-1.5 h-1.5 bg-yellow-500 mt-2 flex-shrink-0"></span>
+                                            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: statically defined content */}
                                             <span className="body-text text-stone-400 text-sm" dangerouslySetInnerHTML={{ __html: item }}></span>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-                        )}
+
+                            {/* Lesson */}
+                            {lesson && (
+                                <div
+                                    className={cn(
+                                        "transition-all duration-700 delay-600",
+                                        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                                    )}
+                                >
+                                    <div className="label-text text-stone-500 mb-4">{lesson.title}</div>
+                                    <ul className="space-y-3">
+                                        {lesson.items.map((item) => (
+                                            <li key={item} className="flex items-start gap-2">
+                                                <span className="w-1.5 h-1.5 bg-stone-500 mt-2 flex-shrink-0"></span>
+                                                {/* biome-ignore lint/security/noDangerouslySetInnerHtml: statically defined content */}
+                                                <span className="body-text text-stone-400 text-sm" dangerouslySetInnerHTML={{ __html: item }}></span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            </SwissSectionContainer>
             {/* Corner Decoration */}
             <div className="absolute top-8 right-8 w-4 h-4 bg-indigo-600 dark:bg-indigo-500"></div>
         </section>

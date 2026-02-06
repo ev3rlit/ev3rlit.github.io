@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import { SwissSectionContainer } from './SwissSectionContainer';
+
 import { cn } from '@/shared/lib/cn';
 
 interface Metric {
@@ -18,6 +20,7 @@ interface SwissProjectIntroSectionProps {
     metrics?: Metric[];
     description: string;
     contribution: string;
+    onDetailClick?: () => void;
 }
 
 export const SwissProjectIntroSection = ({
@@ -29,7 +32,8 @@ export const SwissProjectIntroSection = ({
     engine,
     metrics,
     description,
-    contribution
+    contribution,
+    onDetailClick
 }: SwissProjectIntroSectionProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
@@ -54,7 +58,7 @@ export const SwissProjectIntroSection = ({
 
     return (
         <section ref={sectionRef} className="snap-section bg-stone-50 dark:bg-stone-900">
-            <div className="swiss-grid items-center h-full">
+            <SwissSectionContainer className="grid grid-cols-12 gap-6 items-center h-full">
                 {/* Section Label */}
                 <div className="col-span-12 md:col-span-2">
                     <div
@@ -135,8 +139,8 @@ export const SwissProjectIntroSection = ({
                         >
                             <div className="label-text text-stone-500 mb-4">주요 성과</div>
                             <div className="space-y-4">
-                                {metrics.map((m, i) => (
-                                    <div key={i} className="flex justify-between items-center border-b border-stone-200 dark:border-stone-700 pb-2">
+                                {metrics.map((m) => (
+                                    <div key={m.label} className="flex justify-between items-center border-b border-stone-200 dark:border-stone-700 pb-2">
                                         <span className="label-text text-stone-400">{m.label}</span>
                                         <span className="heading-md accent-indigo">{m.value}</span>
                                     </div>
@@ -153,12 +157,27 @@ export const SwissProjectIntroSection = ({
                         )}
                     >
                         <div className="label-text text-stone-500 mb-4">나의 기여</div>
-                        <p className="body-text text-stone-600 dark:text-stone-300">
+                        <p className="body-text text-stone-600 dark:text-stone-300 mb-8">
                             {contribution}
                         </p>
+
+                        {onDetailClick && (
+                            <button
+                                type="button"
+                                onClick={onDetailClick}
+                                className="group flex items-center gap-3 px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 transition-colors rounded-full"
+                            >
+                                <span className="text-sm font-bold uppercase tracking-wider">기술 상세보기</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform" aria-hidden="true">
+                                    <title>상세보기 화살표</title>
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 </div>
-            </div>
+            </SwissSectionContainer>
 
             {/* Decorative Line */}
             <div className="absolute bottom-0 left-0 right-0 h-px bg-stone-200 dark:bg-stone-800"></div>
