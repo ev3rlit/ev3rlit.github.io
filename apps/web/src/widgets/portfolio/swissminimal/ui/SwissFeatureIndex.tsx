@@ -19,56 +19,32 @@ export const SwissFeatureIndex = () => {
 
     const features = [
         {
-            id: "F.01",
-            title: "문맥 인식 에러 로깅 (Context-aware Error Logging)",
-            description: "모든 에러 발생 시 유저, 요청 값, 스택 트레이스를 자동 캡처하여 디버깅 시간을 단축한 미들웨어.",
-            storyId: "error-handling"
-        },
-        {
-            id: "F.02",
-            title: "인메모리 변경 추적 (In-Memory Change Tracking)",
-            description: "DB 쓰기 부하를 줄이기 위해 객체의 상태 변경을 메모리에서 추적하고 Diff만 반영하는 엔진.",
-            storyId: "tracking-container"
-        },
-        {
-            id: "F.03",
-            title: "무중단 이중 쓰기 (Dual Write Migration)",
-            description: "운영 중인 라이브 서비스의 데이터를 중단 없이 신규 스키마로 안전하게 이관하는 마이그레이션 전략.",
-            storyId: "payment"
-        },
-        {
-            id: "F.04",
-            title: "웹소켓 인터셉터 체인 (Websocket Interceptor Chain)",
-            description: "웹소켓 핸들러 전후에 로깅, 복구, 인증 로직을 주입할 수 있는 데코레이터 패턴 미들웨어.",
-            storyId: "websocket"
-        },
-        {
             id: "F.05",
-            title: "스키마리스 로그 파이프라인 (Schema-less Log Pipeline)",
+            title: "로그 프로세스 개선",
             description: "Go 구조체 정의만으로 스키마 관리 없이 빅데이터 저장소로 로그를 전송하는 자동화 파이프라인.",
             storyId: "log-pipeline"
         },
         {
             id: "F.07",
-            title: "앱 서비스 이관 (Self-Publishing Migration)",
+            title: "앱 서비스 이관",
             description: "퍼블리셔 계약 종료 위기에서 2개월 내 인프라/DB/인증을 자체 플랫폼으로 긴급 이관하고, Apple Transfer API로 무중단 계정 마이그레이션을 달성한 사례.",
             storyId: "service-transfer"
         },
         {
             id: "F.08",
-            title: "무중단 결제 스키마 마이그레이션 (Zero-Downtime Dual-Write Migration)",
+            title: "결제 스키마 무중단 마이그레이션",
             description: "초기 설계 결함으로 누락된 구매일자를 Store API 역추적으로 복원하고, 이중 기록 전략으로 10만 건을 무중단 마이그레이션한 사례.",
             storyId: "payment-migration"
         },
         {
             id: "F.09",
-            title: "통합 매출 조회 API (Unified Revenue API)",
+            title: "통합 매출 조회 API",
             description: "3-Tier 환율 캐싱과 big.Int 정밀 환산으로 글로벌 다통화 결제를 원화 매출로 집계하는 운영툴 API.",
             storyId: "revenue-api"
         },
         {
             id: "F.10",
-            title: "Apple 계정 이관 장애 복구 (Apple Transfer Recovery)",
+            title: "Apple 계정 이관 장애 복구",
             description: "Apple 앱 이관 완료 시 기존 유저가 신규 계정으로 생성되는 장애를 Transfer API와 Account Linking으로 12시간 내 전체 복구한 위기 대응 사례.",
             storyId: "apple-transfer"
         }
