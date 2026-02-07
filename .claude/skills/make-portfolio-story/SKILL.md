@@ -139,20 +139,47 @@ solution: "짧은 해결 제목: 콜론 뒤에 해결 과정을 작성"
 - 컨텍스트 문서에 Mermaid/ASCII 다이어그램이 있으면 → Tailwind CSS JSX 컴포넌트로 변환
 - 없으면 → `PlaceholderArch` 컴포넌트 사용
 
-**다이어그램 가시성 규칙 (중요)**:
+**다이어그램 스타일 규칙 (중요)**:
 
-기존 다이어그램들의 텍스트가 너무 흐려서 가독성이 떨어지는 문제가 반복되었다. 다음 규칙을 반드시 따른다:
+흑백(모노크롬) 기조로 작성한다. 컬러 배경·보더는 사용하지 않고, 강조가 필요한 곳만 `font-bold`로 처리한다.
+
+**색상 규칙:**
 
 | 요소 | 라이트 모드 | 다크 모드 | 비고 |
 | --- | --- | --- | --- |
-| 주요 라벨 | `text-stone-900` | `dark:text-stone-100` | 박스 안 제목 |
-| 보조 설명 | `text-stone-600` | `dark:text-stone-300` | 박스 안 부제 |
-| 화살표 (→) | `text-stone-900` | `dark:text-stone-100` | 흐리면 안 됨 |
-| 섹션 제목 | 해당 색상 600~700 | 해당 색상 400 | 예: `text-red-600 dark:text-red-400` |
-| 전체 폰트 크기 | `text-sm` | — | `text-xs`는 사용 금지 |
-| 요약 영역 텍스트 | `text-stone-700` | `dark:text-stone-300` | 하단 요약 |
+| 본문 텍스트 | `text-stone-900` | `dark:text-stone-100` | 기본 텍스트 색상 |
+| 섹션 라벨 | `text-stone-900` | `dark:text-stone-100` | 흐리게 하지 않음 |
+| 화살표 (→, ↓) | `text-stone-400` | `dark:text-stone-500` | 연결선은 약간 연하게 |
+| 보조 설명 | `text-stone-500` | `dark:text-stone-400` | tier 설명, 하단 요약 본문 |
+| 섹션 보더 | `border-stone-300` | `dark:border-stone-600` | 바깥 박스 |
+| 내부 박스 보더 | `border-stone-200` | `dark:border-stone-700` | 안쪽 셀 |
+| 배경 | `bg-white` | `dark:bg-stone-950` | 컬러 배경 사용 금지 |
+| 강조 | `font-bold` | — | 컬러 대신 굵기로 강조 |
 
-**금지**: `text-stone-400`, `text-stone-300` 등 흐린 색상을 주요 텍스트에 사용하지 않는다. 상단 타이틀(tracking-widest)에만 `text-stone-500 dark:text-stone-400` 허용.
+**폰트 크기:**
+
+| 요소 | 크기 | 비고 |
+| --- | --- | --- |
+| 기본 본문 | `text-sm` (14px) | 컨테이너에 적용 |
+| 섹션 라벨 | `text-xs` (12px) | `tracking-widest`와 함께 |
+| `text-[10px]` | 사용 금지 | — |
+| `text-xs` 기본 본문 | 사용 금지 | 너무 작음 |
+
+**한국어 우선:**
+
+다이어그램 안의 텍스트도 한국어를 기본으로 한다. 고유명사(Redis, MongoDB 등)만 영어를 허용한다.
+
+- `Analytics Controller (REST API)` → `매출 조회 API`
+- `Reporting Service` → `집계 서비스`
+- `Tier 1` → `1단계`
+- `On-Demand Aggregation` → `온디맨드 집계`
+
+**금지 사항:**
+
+- 컬러 배경 (`bg-indigo-50`, `bg-amber-50` 등) 사용 금지
+- 컬러 보더 (`border-indigo-300`, `border-green-700` 등) 사용 금지
+- 컬러 텍스트로 강조 (`text-indigo-600`, `text-amber-400` 등) 사용 금지
+- `text-stone-400` 이하 흐린 색상을 주요 텍스트에 사용 금지
 
 **4-2. 아키텍처 설명 (`architectureDescription` prop)**:
 
@@ -370,6 +397,6 @@ Step 1-7 수행 후, Step 8에서 `npx tsc --noEmit`으로 타입 에러 검증�
 - **한국어 우선**: 포트폴리오 컨텐츠는 한국어로 작성한다. Feature Index 제목에 영어 괄호 표기를 넣지 않는다.
 - **원본 문서를 그대로 쓰지 않는다**: 초안 문서의 표현은 과장되거나 부정확할 수 있다. 반드시 사용자와 대화를 통해 다듬는다. 예: "발견했다" → "문서를 보고 알았다", "계정 유실" → "신규 계정으로 생성되는 문제".
 - **아키텍처 = 다이어그램 + 설명**: 다이어그램만으로는 빈약하다. `architectureDescription`으로 설계 의도, 사고 과정, 진행 과정을 반드시 보충한다.
-- **다이어그램 가시성**: 주요 텍스트에 `text-stone-400` 이하의 흐린 색상을 사용하지 않는다. `text-stone-900 dark:text-stone-100` 이상 사용. 전체 폰트는 `text-sm` (text-xs 금지).
+- **다이어그램 스타일**: 흑백 기조, `font-bold`로 강조. 컬러 배경·보더·텍스트 사용 금지. 본문 `text-sm`, 라벨 `text-xs`. 한국어 우선(고유명사만 영어 허용).
 - **break-keep 클래스**: 한국어 텍스트가 포함된 `<p>` 태그에는 `break-keep` 클래스를 사용한다.
 - **용어 통일**: 프로젝트 전체에서 동일한 개념에 동일한 용어를 사용한다. 새 스토리 작성 시 기존 스토리의 용어와 충돌이 없는지 확인한다.
