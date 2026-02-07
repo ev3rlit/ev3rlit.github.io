@@ -152,7 +152,7 @@ export const SwissFeatureSummary = ({
                             "mt-auto hidden lg:block pt-4 border-t border-stone-200 dark:border-stone-800 transition-all duration-700 delay-700",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                             <Link href={`/portfolio/story/${storyId}`} className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-transparent hover:border-stone-900 dark:hover:border-white pb-1 transition-all cursor-pointer text-stone-500 hover:text-stone-900 dark:hover:text-white">
+                             <Link href={`/portfolio/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-transparent hover:border-stone-900 dark:hover:border-white pb-1 transition-all cursor-pointer text-stone-500 hover:text-stone-900 dark:hover:text-white">
                                 상세 스토리 보기 <span className="text-lg">→</span>
                             </Link>
                         </div>
@@ -243,7 +243,7 @@ export const SwissFeatureSummary = ({
                             "mt-12 lg:hidden transition-all duration-700 delay-700",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <Link href={`/portfolio/story/${storyId}`} className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-stone-900 dark:border-white pb-1">
+                            <Link href={`/portfolio/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-stone-900 dark:border-white pb-1">
                                 상세 스토리 보기 <span className="text-lg">→</span>
                             </Link>
                         </div>

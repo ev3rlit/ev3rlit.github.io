@@ -35,8 +35,9 @@ export const SwissFeatureRow = ({ id, title, description, storyId }: SwissFeatur
 
                 {/* Action Column */}
                 <div className="md:col-span-2 flex md:justify-end mt-2 md:mt-0">
-                    <Link 
+                    <Link
                         href={`/portfolio/story/${storyId}`}
+                        target="_blank"
                         className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                     >
                         View Details 
