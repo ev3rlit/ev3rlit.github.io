@@ -8,6 +8,8 @@ import { Detail_LogPipeline } from '@/views/portfolio/story-detail/Detail_LogPip
 import { Detail_AppleTransfer } from '@/views/portfolio/story-detail/Detail_AppleTransfer';
 import { Detail_GuildMineCqrs } from '@/views/portfolio/story-detail/Detail_GuildMineCqrs';
 import { Detail_GuildMineConcurrency } from '@/views/portfolio/story-detail/Detail_GuildMineConcurrency';
+import { Detail_ErrorHandling } from '@/views/portfolio/story-detail/Detail_ErrorHandling';
+import { Detail_WebsocketMiddleware } from '@/views/portfolio/story-detail/Detail_WebsocketMiddleware';
 
 // Map story IDs to their detail components
 const storyMap: Record<string, React.ComponentType> = {
@@ -18,7 +20,9 @@ const storyMap: Record<string, React.ComponentType> = {
     'log-pipeline': Detail_LogPipeline,
     'apple-transfer': Detail_AppleTransfer,
     'guild-mine-cqrs': Detail_GuildMineCqrs,
-    'guild-mine-concurrency': Detail_GuildMineConcurrency
+    'guild-mine-concurrency': Detail_GuildMineConcurrency,
+    'error-handling': Detail_ErrorHandling,
+    'websocket-middleware': Detail_WebsocketMiddleware
 };
 
 interface PageProps {

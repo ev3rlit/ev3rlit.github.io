@@ -8,13 +8,12 @@ import { useSidebarStore } from "@/features/layout/model/useSidebarStore";
 import { StoryDetail_ErrorHandling } from "@/views/portfolio/projects/StoryDetail_ErrorHandling";
 import {
     SwissFeatureSummary_Documentation,
-    SwissFeatureSummary_ErrorHandling,
+    SwissFeatureSummary_ErrorSystem,
     SwissFeatureSummary_Growth,
     SwissFeatureSummary_LogPipeline,
     SwissFeatureSummary_Migration,
     SwissFeatureSummary_Payment,
     SwissFeatureSummary_TrackingContainer,
-    SwissFeatureSummary_Websocket,
 } from "@/widgets/portfolio/stories";
 import {
     SwissAboutSection,
@@ -181,12 +180,11 @@ export const SwissMinimalPage = () => {
                         </div>
 
                         {/* DYNAMIC STORIES (Samguk Blade) */}
-                        <SwissFeatureSummary_ErrorHandling sectionNumber="S.01" storyNumber="01" />
-                        <SwissFeatureSummary_Websocket sectionNumber="S.02" storyNumber="02" />
-                        <SwissFeatureSummary_TrackingContainer sectionNumber="S.03" storyNumber="03" />
-                        <SwissFeatureSummary_Payment sectionNumber="S.04" storyNumber="04" />
-                        <SwissFeatureSummary_Migration sectionNumber="S.05" storyNumber="05" />
-                        <SwissFeatureSummary_LogPipeline sectionNumber="S.06" storyNumber="06" />
+                        <SwissFeatureSummary_ErrorSystem sectionNumber="S.01" storyNumber="01" />
+                        <SwissFeatureSummary_TrackingContainer sectionNumber="S.02" storyNumber="02" />
+                        <SwissFeatureSummary_Payment sectionNumber="S.03" storyNumber="03" />
+                        <SwissFeatureSummary_Migration sectionNumber="S.04" storyNumber="04" />
+                        <SwissFeatureSummary_LogPipeline sectionNumber="S.05" storyNumber="05" />
 
                         {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
                         <div id="retrospective-samguk">

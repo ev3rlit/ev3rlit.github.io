@@ -19,6 +19,18 @@ export const SwissFeatureIndex = () => {
 
     const features = [
         {
+            id: "F.13",
+            title: "에러 핸들링 도입",
+            description: "oops 라이브러리를 Fork하여 정수형 에러 코드·컨텍스트·스택 트레이스를 포함한 구조화된 에러 시스템 구축.",
+            storyId: "error-handling"
+        },
+        {
+            id: "F.14",
+            title: "웹소켓 인터셉터",
+            description: "고릴라 웹소켓에 gRPC 스타일 인터셉터를 직접 구현하여, 로깅·에러 처리·트랜잭션을 자동화한 미들웨어 시스템.",
+            storyId: "websocket-middleware"
+        },
+        {
             id: "F.05",
             title: "로그 프로세스 개선",
             description: "Go 구조체 정의만으로 스키마 관리 없이 빅데이터 저장소로 로그를 전송하는 자동화 파이프라인.",

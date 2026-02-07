@@ -4,6 +4,7 @@ import type React from 'react';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUp, Github, ExternalLink, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Highlight, themes } from 'prism-react-renderer';
 import { SwissNavigation } from './SwissNavigation';
 import { useSidebarStore } from '@/features/layout/model/useSidebarStore';
 
@@ -25,12 +26,25 @@ const SimpleMarkdown = ({ content }: { content: string }) => {
                 i++;
             }
             i++; // skip closing ```
+            const code = codeLines.join('\n');
             elements.push(
                 <div key={`code-${elements.length}`} className="my-4">
-                    {lang && <div className="text-[10px] uppercase tracking-widest text-stone-400 mb-1 font-mono">{lang}</div>}
-                    <pre className="bg-stone-900 dark:bg-stone-950 text-stone-100 p-4 overflow-x-auto text-xs leading-relaxed border border-stone-700">
-                        <code>{codeLines.join('\n')}</code>
-                    </pre>
+                    {lang && <div className="text-sm uppercase tracking-widest text-stone-400 mb-1 font-mono">{lang}</div>}
+                    <Highlight theme={themes.oneDark} code={code} language={lang || 'text'}>
+                        {({ style, tokens, getLineProps, getTokenProps }) => (
+                            <pre className="p-4 overflow-x-auto text-base leading-relaxed border border-stone-700" style={{ ...style, margin: 0 }}>
+                                <code>
+                                    {tokens.map((line, i) => (
+                                        <div key={i} {...getLineProps({ line })}>
+                                            {line.map((token, key) => (
+                                                <span key={key} {...getTokenProps({ token })} />
+                                            ))}
+                                        </div>
+                                    ))}
+                                </code>
+                            </pre>
+                        )}
+                    </Highlight>
                 </div>
             );
             continue;
@@ -38,15 +52,56 @@ const SimpleMarkdown = ({ content }: { content: string }) => {
 
         // H2
         if (line.startsWith('## ')) {
-            elements.push(<h3 key={`h2-${elements.length}`} className="text-xl font-bold text-stone-900 dark:text-white mt-8 mb-3">{line.slice(3)}</h3>);
+            elements.push(<h3 key={`h2-${elements.length}`} className="text-3xl font-bold text-stone-900 dark:text-white mt-8 mb-3">{line.slice(3)}</h3>);
             i++;
             continue;
         }
 
         // H3
         if (line.startsWith('### ')) {
-            elements.push(<h4 key={`h3-${elements.length}`} className="text-base font-bold text-stone-900 dark:text-white mt-6 mb-2">{line.slice(4)}</h4>);
+            elements.push(<h4 key={`h3-${elements.length}`} className="text-xl font-bold text-stone-900 dark:text-white mt-6 mb-2">{line.slice(4)}</h4>);
             i++;
+            continue;
+        }
+
+        // Table
+        if (line.startsWith('|') && line.endsWith('|')) {
+            const tableRows: string[][] = [];
+            while (i < lines.length && lines[i].startsWith('|') && lines[i].endsWith('|')) {
+                const row = lines[i].split('|').slice(1, -1).map(cell => cell.trim());
+                // Skip separator rows (e.g. | --- | --- |)
+                if (!row.every(cell => /^-+$/.test(cell) || /^:?-+:?$/.test(cell))) {
+                    tableRows.push(row);
+                }
+                i++;
+            }
+            if (tableRows.length > 0) {
+                const [header, ...body] = tableRows;
+                elements.push(
+                    <div key={`table-${elements.length}`} className="my-4 overflow-x-auto">
+                        <table className="w-full text-lg border-collapse">
+                            <thead>
+                                <tr className="border-b-2 border-stone-300 dark:border-stone-600">
+                                    {header.map((cell, idx) => (
+                                        <th key={idx} className="text-left py-2 px-3 font-bold text-stone-900 dark:text-white">{cell}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {body.map((row, rowIdx) => (
+                                    <tr key={rowIdx} className="border-b border-stone-200 dark:border-stone-700">
+                                        {row.map((cell, cellIdx) => (
+                                            <td key={cellIdx} className="py-2 px-3 text-stone-600 dark:text-stone-400">
+                                                <InlineMarkdown text={cell} />
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            }
             continue;
         }
 
@@ -58,7 +113,7 @@ const SimpleMarkdown = ({ content }: { content: string }) => {
                 i++;
             }
             elements.push(
-                <ol key={`ol-${elements.length}`} className="list-decimal list-inside space-y-1 my-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                <ol key={`ol-${elements.length}`} className="list-decimal list-inside space-y-1 my-3 text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
                     {listItems.map((item, idx) => (
                         <li key={idx} className="break-keep">
                             <InlineMarkdown text={item} />
@@ -77,7 +132,7 @@ const SimpleMarkdown = ({ content }: { content: string }) => {
 
         // Paragraph
         elements.push(
-            <p key={`p-${elements.length}`} className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed my-2 break-keep">
+            <p key={`p-${elements.length}`} className="text-lg text-stone-600 dark:text-stone-400 leading-relaxed my-2 break-keep">
                 <InlineMarkdown text={line} />
             </p>
         );
@@ -97,7 +152,7 @@ const InlineMarkdown = ({ text }: { text: string }) => {
                     return <strong key={idx} className="font-bold text-stone-900 dark:text-white">{part.slice(2, -2)}</strong>;
                 }
                 if (part.startsWith('`') && part.endsWith('`')) {
-                    return <code key={idx} className="px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-mono border border-stone-200 dark:border-stone-700">{part.slice(1, -1)}</code>;
+                    return <code key={idx} className="px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-base font-mono border border-stone-200 dark:border-stone-700">{part.slice(1, -1)}</code>;
                 }
                 return <span key={idx}>{part}</span>;
             })}
@@ -127,6 +182,10 @@ interface SwissProjectDetailProps {
         category: string;
         items: string[];
     }[];
+    screenshots?: {
+        image: React.ReactNode;
+        caption?: string;
+    }[];
     architecture?: React.ReactNode; // Flexible: Image or Component
     architectureDescription?: string; // Markdown-like description below architecture diagram
     mainTasks: {
@@ -143,12 +202,36 @@ export const SwissProjectDetail = ({
     projectInfo,
     overview,
     keywords,
+    screenshots,
     architecture,
     architectureDescription,
     mainTasks,
     challenges
 }: SwissProjectDetailProps) => {
     const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
+
+    // 동적 섹션 번호 계산
+    const sectionNumbers = (() => {
+        let n = 1;
+        const nums = {
+            overview: String(n++).padStart(2, '0'),
+            screenshots: '',
+            keywords: '',
+            architecture: '',
+            mainTasks: '',
+            challenges: '',
+        };
+        if (screenshots && screenshots.length > 0) {
+            nums.screenshots = String(n++).padStart(2, '0');
+        }
+        nums.keywords = String(n++).padStart(2, '0');
+        if (architecture) {
+            nums.architecture = String(n++).padStart(2, '0');
+        }
+        nums.mainTasks = String(n++).padStart(2, '0');
+        nums.challenges = String(n++).padStart(2, '0');
+        return nums;
+    })();
 
     useEffect(() => {
         setPortfolioMode(true);
@@ -240,7 +323,7 @@ export const SwissProjectDetail = ({
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">01 / 개요</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.overview} / 개요</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="max-w-3xl">
@@ -266,11 +349,38 @@ export const SwissProjectDetail = ({
                         </div>
                     </section>
                     
-                    {/* 02 Keywords (Tech Stack + Others) */}
+                    {/* Screenshots */}
+                    {screenshots && screenshots.length > 0 && (
+                        <section className="border-b border-stone-200 dark:border-stone-800">
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
+                                    <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.screenshots} / 화면</h2>
+                                </div>
+                                <div className="md:col-span-9 py-16 pl-0 md:pl-12">
+                                    <div className="grid grid-cols-1 gap-8">
+                                        {screenshots.map((screenshot, idx) => (
+                                            <figure key={idx}>
+                                                <div className="relative w-full border border-stone-200 dark:border-stone-700 overflow-hidden">
+                                                    {screenshot.image}
+                                                </div>
+                                                {screenshot.caption && (
+                                                    <figcaption className="mt-3 text-sm font-mono text-stone-500 dark:text-stone-400">
+                                                        {screenshot.caption}
+                                                    </figcaption>
+                                                )}
+                                            </figure>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Keywords (Tech Stack + Others) */}
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">02 / 키워드 & 기술</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.keywords} / 키워드 & 기술</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="max-w-3xl space-y-6">
@@ -298,7 +408,7 @@ export const SwissProjectDetail = ({
                         <section className="border-b border-stone-200 dark:border-stone-800">
                             <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                    <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">03 / 아키텍처</h2>
+                                    <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.architecture} / 아키텍처</h2>
                                 </div>
                                 <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                     <div className="relative w-full border border-stone-900 dark:border-white p-2">
@@ -318,7 +428,7 @@ export const SwissProjectDetail = ({
                     <section className="border-b border-stone-200 dark:border-stone-800">
                         <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">04 / 주요 작업</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.mainTasks} / 주요 작업</h2>
                             </div>
                             <div className="md:col-span-9">
                                 <div className="flex flex-col">
@@ -337,7 +447,7 @@ export const SwissProjectDetail = ({
                     <section>
                          <div className="grid grid-cols-1 md:grid-cols-12">
                             <div className="md:col-span-3 py-16 border-r border-stone-200 dark:border-stone-800 pr-8">
-                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">05 / 문제 해결</h2>
+                                <h2 className="text-base font-bold uppercase tracking-widest text-stone-400 sticky top-8">{sectionNumbers.challenges} / 문제 해결</h2>
                             </div>
                             <div className="md:col-span-9 py-16 pl-0 md:pl-12">
                                 <div className="space-y-12">
