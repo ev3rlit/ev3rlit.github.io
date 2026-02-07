@@ -13,6 +13,7 @@ import {
     SwissFeatureSummary_LogPipeline,
     SwissFeatureSummary_Migration,
     SwissFeatureSummary_Payment,
+    SwissFeatureSummary_ServiceTransfer,
     SwissFeatureSummary_TrackingContainer,
 } from "@/widgets/portfolio/stories";
 import {
@@ -185,6 +186,7 @@ export const SwissMinimalPage = () => {
                         <SwissFeatureSummary_Payment sectionNumber="S.03" storyNumber="03" />
                         <SwissFeatureSummary_Migration sectionNumber="S.04" storyNumber="04" />
                         <SwissFeatureSummary_LogPipeline sectionNumber="S.05" storyNumber="05" />
+                        <SwissFeatureSummary_ServiceTransfer sectionNumber="S.06" storyNumber="06" />
 
                         {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
                         <div id="retrospective-samguk">

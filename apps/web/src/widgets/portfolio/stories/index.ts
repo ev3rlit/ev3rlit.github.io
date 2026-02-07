@@ -7,3 +7,4 @@ export { SwissFeatureSummary_Migration } from './SwissFeatureSummary_Migration';
 export { SwissFeatureSummary_LogPipeline } from './SwissFeatureSummary_LogPipeline';
 export { SwissFeatureSummary_Documentation } from './SwissFeatureSummary_Documentation';
 export { SwissFeatureSummary_Growth } from './SwissFeatureSummary_Growth';
+export { SwissFeatureSummary_ServiceTransfer } from './SwissFeatureSummary_ServiceTransfer';
