@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { cn } from '@/shared/lib/cn';
 import { SwissSectionContainer } from './SwissSectionContainer';
 
-interface SwissStorySectionProps {
+interface SwissFeatureSummaryProps {
     sectionNumber: string;
     storyNumber: string;
     keyword: string;
@@ -14,11 +14,11 @@ interface SwissStorySectionProps {
 
     // 7-Step Structure
     step01_intro: string;
-    step02_background: string;
+    step02_background: string | string[];
     step03_problem: string;
     step03_solution: string;
     step04_action: string;
-    step05_result: string;
+    step05_result: string | string[];
     step06_performance: string;
     step07_capability: string;
     storyId: string;
@@ -36,7 +36,7 @@ const SwissKPI = ({ label, value }: { label: string; value: string }) => (
     </div>
 );
 
-export const SwissStorySection = ({
+export const SwissFeatureSummary = ({
     sectionNumber,
     storyNumber,
     keyword,
@@ -51,7 +51,7 @@ export const SwissStorySection = ({
     step07_capability,
     storyId,
     kpiList,
-}: SwissStorySectionProps) => {
+}: SwissFeatureSummaryProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
 
@@ -128,9 +128,17 @@ export const SwissStorySection = ({
                                         02 배경 및 문제점
                                     </h3>
                                     <div className="space-y-3">
-                                        <p className="body-text text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-line font-medium">
-                                            {step02_background}
-                                        </p>
+                                        {Array.isArray(step02_background) ? (
+                                            <ul className="list-disc list-outside pl-4 space-y-1.5">
+                                                {step02_background.map((item, i) => (
+                                                    <li key={i} className="body-text text-stone-700 dark:text-stone-300 leading-relaxed font-medium">{item}</li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p className="body-text text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-line font-medium">
+                                                {step02_background}
+                                            </p>
+                                        )}
                                         <p className="body-text text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-line font-medium">
                                             {step03_problem}
                                         </p>
@@ -201,9 +209,17 @@ export const SwissStorySection = ({
                                 06 상세 성과
                             </h3>
                             <div className="p-3 bg-stone-100 dark:bg-stone-900 border border-transparent hover:border-stone-300 dark:hover:border-stone-700 transition-colors">
-                                <p className="body-text text-stone-800 dark:text-stone-200 leading-relaxed whitespace-pre-line font-medium">
-                                    {step05_result}
-                                </p>
+                                {Array.isArray(step05_result) ? (
+                                    <ul className="list-disc list-outside pl-4 space-y-1.5">
+                                        {step05_result.map((item, i) => (
+                                            <li key={i} className="body-text text-stone-800 dark:text-stone-200 leading-relaxed font-medium">{item}</li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="body-text text-stone-800 dark:text-stone-200 leading-relaxed whitespace-pre-line font-medium">
+                                        {step05_result}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
