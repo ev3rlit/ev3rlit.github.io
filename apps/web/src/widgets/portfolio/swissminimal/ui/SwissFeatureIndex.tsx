@@ -38,8 +38,8 @@ export const SwissFeatureIndex = () => {
         },
         {
             id: "F.09",
-            title: "통합 매출 조회 API",
-            description: "3-Tier 환율 캐싱과 big.Int 정밀 환산으로 글로벌 다통화 결제를 원화 매출로 집계하는 운영툴 API.",
+            title: "매출 집계 API",
+            description: "3개 스토어의 다통화 결제 데이터를 원화로 환산하고, 상품별·기간별·플랫폼별 매출 통계를 제공하는 운영툴 API.",
             storyId: "revenue-api"
         },
         {
