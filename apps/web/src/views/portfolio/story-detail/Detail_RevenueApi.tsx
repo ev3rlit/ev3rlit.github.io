@@ -2,96 +2,90 @@ import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
 
 const RevenueArchitecture = () => (
-    <div className="w-full bg-stone-50 dark:bg-stone-900 p-8 font-mono text-xs">
-        <div className="max-w-3xl mx-auto space-y-8">
-            <div className="text-center text-stone-400 text-[10px] uppercase tracking-widest mb-8">3-Tier Exchange Rate Caching — On-Demand Currency Conversion</div>
+    <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
+        <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center text-stone-900 dark:text-stone-100 text-xs tracking-widest mb-8">3단계 환율 캐싱 · 온디맨드 매출 집계</div>
 
-            {/* Request Flow */}
-            <div className="border border-indigo-300 dark:border-indigo-700 p-4 bg-indigo-50 dark:bg-indigo-950/30">
-                <div className="text-[10px] uppercase tracking-widest text-indigo-400 mb-3">Analytics Controller (REST API)</div>
+            {/* 매출 조회 API */}
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">매출 조회 API</div>
                 <div className="grid grid-cols-2 gap-2 text-center">
                     {['상품별 일자 매출', '상품별 기간 매출', '일별 총 매출', '기간별 총 매출'].map((t) => (
-                        <div key={t} className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                            <span className="text-indigo-600 dark:text-indigo-400">{t}</span>
+                        <div key={t} className="border border-stone-200 dark:border-stone-700 p-2">
+                            {t}
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-lg">↓ errgroup 병렬 집계 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 병렬 집계 ↓</div>
 
-            {/* Reporting Engine */}
-            <div className="border border-amber-300 dark:border-amber-700 p-4 bg-amber-50 dark:bg-amber-950/30">
-                <div className="text-[10px] uppercase tracking-widest text-amber-500 mb-3">Reporting Service (errgroup Worker Pool)</div>
+            {/* 집계 서비스 */}
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">집계 서비스</div>
                 <div className="flex items-center justify-center gap-3 text-center">
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-stone-500">TransactionIndex</span>
-                    </div>
-                    <span className="text-stone-300">→</span>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-amber-600 dark:text-amber-400">환율 환산</span>
-                    </div>
-                    <span className="text-stone-300">→</span>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-stone-500">플랫폼별 분류</span>
-                    </div>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">거래 내역 조회</div>
+                    <span className="text-stone-400 dark:text-stone-500">→</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2 font-bold">환율 환산</div>
+                    <span className="text-stone-400 dark:text-stone-500">→</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">플랫폼별 분류</div>
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-lg">↓ On-Demand 환율 조회 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 환율 조회 ↓</div>
 
-            {/* 3-Tier Cache */}
-            <div className="border border-green-300 dark:border-green-700 p-4 bg-green-50 dark:bg-green-950/30">
-                <div className="text-[10px] uppercase tracking-widest text-green-500 mb-3">CurrencyExchangeService (3-Tier Cache)</div>
+            {/* 3단계 환율 캐시 */}
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">환율 서비스 — 3단계 캐시</div>
                 <div className="space-y-2">
                     {[
-                        { tier: 'Tier 1', label: 'Redis', detail: '주요 통화 1h / 기타 3h TTL' },
-                        { tier: 'Tier 2', label: 'MongoDB', detail: '날짜별 영구 저장' },
-                        { tier: 'Tier 3', label: 'Free Exchange API', detail: '외부 폴백 (heimdall 지수 백오프)' }
+                        { tier: '1단계', label: 'Redis', detail: '주요 통화 1h / 기타 3h' },
+                        { tier: '2단계', label: 'MongoDB', detail: '날짜별 버킷 패턴 영구 저장' },
+                        { tier: '3단계', label: '외부 API', detail: '폴백 (지수 백오프)' }
                     ].map((t) => (
                         <div key={t.tier} className="flex items-center gap-3">
-                            <div className="w-16 text-right text-stone-400">{t.tier}</div>
-                            <div className="flex-1 border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800 flex justify-between">
-                                <span className="text-green-600 dark:text-green-400">{t.label}</span>
-                                <span className="text-stone-400">{t.detail}</span>
+                            <div className="w-14 text-right text-stone-400 dark:text-stone-500">{t.tier}</div>
+                            <div className="flex-1 border border-stone-200 dark:border-stone-700 p-2 flex justify-between">
+                                <span className="font-bold">{t.label}</span>
+                                <span className="text-stone-500 dark:text-stone-400">{t.detail}</span>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-lg">↓ 집계 결과 저장 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 결과 저장 ↓</div>
 
-            {/* On-Demand Aggregation Storage */}
-            <div className="border border-sky-300 dark:border-sky-700 p-4 bg-sky-50 dark:bg-sky-950/30">
-                <div className="text-[10px] uppercase tracking-widest text-sky-500 mb-3">On-Demand Aggregation (스케줄러 없음)</div>
+            {/* 온디맨드 집계 */}
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">온디맨드 집계 — 스케줄러 없음</div>
                 <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                        <div className="w-20 text-right text-stone-400 text-[10px]">조회 요청</div>
-                        <div className="flex-1 border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800 text-center">
-                            <span className="text-sky-600 dark:text-sky-400">Redis 캐시 확인</span>
-                            <span className="text-stone-300 mx-2">→</span>
-                            <span className="text-sky-600 dark:text-sky-400">MongoDB 확인</span>
-                            <span className="text-stone-300 mx-2">→</span>
-                            <span className="text-stone-500">실시간 계산</span>
+                        <div className="w-16 text-right text-stone-400 dark:text-stone-500 text-xs">조회 시</div>
+                        <div className="flex-1 border border-stone-200 dark:border-stone-700 p-2 text-center">
+                            Redis 캐시
+                            <span className="text-stone-400 dark:text-stone-500 mx-2">→</span>
+                            MongoDB
+                            <span className="text-stone-400 dark:text-stone-500 mx-2">→</span>
+                            <span className="font-bold">실시간 계산</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        <div className="w-20 text-right text-stone-400 text-[10px]">계산 후</div>
-                        <div className="flex-1 border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800 text-center">
-                            <span className="text-stone-500">ProductIndexSalesStat / DailySalesStat</span>
-                            <span className="text-stone-300 mx-2">→</span>
-                            <span className="text-sky-600 dark:text-sky-400">MongoDB Upsert + Redis Set</span>
+                        <div className="w-16 text-right text-stone-400 dark:text-stone-500 text-xs">계산 후</div>
+                        <div className="flex-1 border border-stone-200 dark:border-stone-700 p-2 text-center">
+                            집계 결과
+                            <span className="text-stone-400 dark:text-stone-500 mx-2">→</span>
+                            <span className="font-bold">MongoDB 저장 + Redis 캐싱</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Bucket Pattern Summary */}
-            <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-400">
-                <div><span className="text-stone-500">구조</span> — 날짜별 1개 도큐먼트에 전체 통화 환율을 버킷으로 저장</div>
-                <div><span className="text-stone-500">조회</span> — 필요한 통화만 projection으로 추출</div>
-                <div><span className="text-stone-500">이점</span> — 통화쌍별 도큐먼트 대비 관리 포인트 감소, 조회 단순화</div>
+            {/* 버킷 패턴 요약 */}
+            <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-500 dark:text-stone-400">
+                <div><span className="text-stone-900 dark:text-stone-100">구조</span> — 날짜별 1개 도큐먼트에 전체 통화 환율을 버킷으로 저장</div>
+                <div><span className="text-stone-900 dark:text-stone-100">조회</span> — 필요한 통화만 projection으로 추출</div>
+                <div><span className="text-stone-900 dark:text-stone-100">이점</span> — 통화쌍별 도큐먼트 대비 관리 단순화</div>
             </div>
         </div>
     </div>
@@ -132,6 +126,8 @@ export const Detail_RevenueApi = () => (
             "1. **Redis 캐시** — 동일 조건의 최근 조회 결과가 있으면 즉시 반환 (상품별 10분 / 당일 1분 TTL)",
             "2. **MongoDB 영구 저장** — 캐시 미스 시 DB에 저장된 집계 결과 조회",
             "3. **실시간 계산** — DB에도 없으면 TransactionIndex를 순회하며 집계 후 MongoDB Upsert + Redis Set",
+            "",
+            "일별 총 매출 집계 시 특정 상품의 환율 변환이 실패하면 해당 상품을 매출에서 제외하고 나머지만 합산합니다. 3단계 캐시를 모두 거친 뒤의 예외이므로 실제로 발생할 가능성은 거의 없지만, 하나의 실패가 전체 집계를 막지 않도록 한 안전장치입니다.",
             "",
             "### 집계 결과 스키마",
             "",
@@ -187,7 +183,7 @@ export const Detail_RevenueApi = () => (
             },
             {
                 problem: "외부 환율 API 의존성: Free Exchange API 장애 시 환율 조회 실패로 매출 집계 전체가 중단되는 위험",
-                solution: "3-Tier 캐싱 폴백: Redis(빠른 조회) → MongoDB(날짜별 영구 저장) → 외부 API(최후 수단) 순서로 조회. 한번 조회된 환율은 영구 저장되어 외부 API 장애 시에도 과거 데이터 조회 가능. 3단계 모두 실패한 경우 환율 환산을 포기하고 원래 통화 코드와 가격을 그대로 클라이언트에 반환하여 데이터 유실 없이 Graceful Degradation 처리"
+                solution: "3-Tier 캐싱 폴백: Redis(빠른 조회) → MongoDB(날짜별 영구 저장) → 외부 API(최후 수단) 순서로 조회. 한번 조회된 환율은 영구 저장되어 외부 API 장애 시에도 과거 데이터 조회 가능. 3단계 모두 실패하면 환산을 건너뛰고 원본 통화·가격을 그대로 반환"
             }
         ]}
     />
