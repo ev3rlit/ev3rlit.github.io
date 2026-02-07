@@ -47,6 +47,18 @@ export const SwissFeatureIndex = () => {
             title: "Apple 계정 이관 장애 복구",
             description: "Apple 앱 이관 완료 시 기존 유저가 신규 계정으로 생성되는 장애를 Transfer API와 Account Linking으로 12시간 내 전체 복구한 위기 대응 사례.",
             storyId: "apple-transfer"
+        },
+        {
+            id: "F.11",
+            title: "연합 금광: 도메인 설계와 CQRS",
+            description: "기획팀과 협의하여 도메인을 분리하고, CQRS + 이벤트 소싱으로 20개 이상의 API를 지원하는 아키텍처를 설계",
+            storyId: "guild-mine-cqrs"
+        },
+        {
+            id: "F.12",
+            title: "연합 금광: 분산 동시성 제어",
+            description: "Redis Stream 기반 명령 라우팅과 멱등성 키, 직접 Aggregate 호출로 분산 서버 환경의 데이터 일관성 확보",
+            storyId: "guild-mine-concurrency"
         }
     ];
 

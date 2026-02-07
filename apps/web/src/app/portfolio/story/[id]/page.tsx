@@ -6,6 +6,8 @@ import { Detail_PaymentMigration } from '@/views/portfolio/story-detail/Detail_P
 import { Detail_RevenueApi } from '@/views/portfolio/story-detail/Detail_RevenueApi';
 import { Detail_LogPipeline } from '@/views/portfolio/story-detail/Detail_LogPipeline';
 import { Detail_AppleTransfer } from '@/views/portfolio/story-detail/Detail_AppleTransfer';
+import { Detail_GuildMineCqrs } from '@/views/portfolio/story-detail/Detail_GuildMineCqrs';
+import { Detail_GuildMineConcurrency } from '@/views/portfolio/story-detail/Detail_GuildMineConcurrency';
 
 // Map story IDs to their detail components
 const storyMap: Record<string, React.ComponentType> = {
@@ -14,7 +16,9 @@ const storyMap: Record<string, React.ComponentType> = {
     'payment-migration': Detail_PaymentMigration,
     'revenue-api': Detail_RevenueApi,
     'log-pipeline': Detail_LogPipeline,
-    'apple-transfer': Detail_AppleTransfer
+    'apple-transfer': Detail_AppleTransfer,
+    'guild-mine-cqrs': Detail_GuildMineCqrs,
+    'guild-mine-concurrency': Detail_GuildMineConcurrency
 };
 
 interface PageProps {
