@@ -11,7 +11,6 @@ import {
     SwissFeatureSummary_ErrorSystem,
     SwissFeatureSummary_Growth,
     SwissFeatureSummary_LogPipeline,
-    SwissFeatureSummary_Migration,
     SwissFeatureSummary_Payment,
     SwissFeatureSummary_ServiceTransfer,
     SwissFeatureSummary_TrackingContainer,
@@ -181,12 +180,11 @@ export const SwissMinimalPage = () => {
                         </div>
 
                         {/* DYNAMIC STORIES (Samguk Blade) */}
-                        <SwissFeatureSummary_ErrorSystem sectionNumber="S.01" storyNumber="01" />
-                        <SwissFeatureSummary_TrackingContainer sectionNumber="S.02" storyNumber="02" />
-                        <SwissFeatureSummary_Payment sectionNumber="S.03" storyNumber="03" />
-                        <SwissFeatureSummary_Migration sectionNumber="S.04" storyNumber="04" />
+                        <SwissFeatureSummary_ServiceTransfer sectionNumber="S.01" storyNumber="01" />
+                        <SwissFeatureSummary_Payment sectionNumber="S.02" storyNumber="02" />
+                        <SwissFeatureSummary_ErrorSystem sectionNumber="S.03" storyNumber="03" />
+                        <SwissFeatureSummary_TrackingContainer sectionNumber="S.04" storyNumber="04" />
                         <SwissFeatureSummary_LogPipeline sectionNumber="S.05" storyNumber="05" />
-                        <SwissFeatureSummary_ServiceTransfer sectionNumber="S.06" storyNumber="06" />
 
                         {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
                         <div id="retrospective-samguk">

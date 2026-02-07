@@ -6,7 +6,7 @@ export const SwissFeatureSummary_ServiceTransfer = ({ sectionNumber, storyNumber
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Infrastructure · Migration"
-            title={`앱 서비스 이관 &\nSelf-Publishing 전환`}
+            title={`앱 서비스 이관 &\n자체 서비스 전환`}
             subtitle="AWS → Naver Cloud 전체 이관 (1인 백엔드, 2개월 + 8시간 Cut-over)"
             step01_intro="퍼블리셔 계약 종료로 서비스가 종료될 위기에서, 2개월 내 전체 인프라·데이터·인증을 자체 플랫폼으로 이관하여 서비스를 지켜냈습니다."
             step02_background="라이브 중인 게임의 퍼블리싱 계약이 종료되어, 퍼블리셔가 제공하던 인증·결제·로그·인프라를 모두 자체 서비스로 교체해야 했습니다. 서버 개발자는 본인 혼자였으며, 준비 기간은 단 2개월로 제한되었습니다."
@@ -18,7 +18,7 @@ export const SwissFeatureSummary_ServiceTransfer = ({ sectionNumber, storyNumber
             kpiList={[
                 { label: "이관 소요", value: "8시간" },
                 { label: "유저 데이터", value: "무손실" },
-                { label: "서비스 중단", value: "0건" }
+                { label: "계정 이관", value: "수십만 건" }
             ]}
             step07_capability="라이브 서비스의 인프라 전환과 대규모 데이터 마이그레이션을 주도한 경험이 있습니다. 제한된 시간 안에서 우선순위를 판단하고 안전하게 실행할 수 있습니다."
             storyId="service-transfer"
