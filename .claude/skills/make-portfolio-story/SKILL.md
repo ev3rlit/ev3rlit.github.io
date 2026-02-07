@@ -56,9 +56,13 @@ AskUserQuestion으로 다음 정보를 확인한다.
 
 ---
 
-#### Step 3: 컨텍스트 분석
+#### Step 3: 컨텍스트 분석 및 사용자 검토
 
-`contextDocPath`의 마크다운 문서를 Read하고, 아래 `SwissProjectDetailProps` 인터페이스에 맞게 매핑한다.
+**중요: 원본 문서를 그대로 매핑하지 않는다.** 원본 초안의 표현이 부정확하거나 과장된 경우가 많으므로, 사용자와 대화를 통해 내용을 다듬는 과정이 반드시 필요하다.
+
+**3-1. 초안 읽기 및 초벌 매핑**
+
+`contextDocPath`의 마크다운 문서를 Read하고, 아래 `SwissProjectDetailProps` 인터페이스에 맞게 초벌 매핑한다.
 
 ```typescript
 interface SwissProjectDetailProps {
@@ -77,15 +81,27 @@ interface SwissProjectDetailProps {
         strategy: string;
     };
     keywords: { category: string; items: string[] }[];
-    architecture?: React.ReactNode; // Step 4에서 별도 처리
+    architecture?: React.ReactNode;              // Step 4에서 별도 처리
+    architectureDescription?: string;            // Step 4에서 별도 처리
     mainTasks: { title: string; description: string }[];
     challenges: { problem: string; solution: string }[];
 }
 ```
 
+**3-2. 사용자 검토 (필수)**
+
+초벌 매핑 결과를 사용자에게 제시하고, 다음 항목을 확인받는다:
+
+- **overview.intro**: 실제 상황과 다른 표현이 없는지 (예: "발견했다" vs "문서를 보고 알았다")
+- **challenges**: 실제로 겪은 문제가 맞는지, 과장되거나 부정확한 표현이 없는지
+- **keywords**: 실제 사용한 기술이 맞는지 (예: 실제로 Shell Script를 안 썼는데 포함된 경우)
+- **용어 통일**: 프로젝트 전체에서 일관된 용어를 사용하는지 (예: "복수 OAuth 연동" → "Account Linking")
+
+사용자가 수정을 요청하면 반영한 뒤 다음 단계로 진행한다.
+
 **challenges 콜론 규칙 (중요)**
 
-`SwissProjectDetail.tsx`의 렌더링 로직(246-259행)에서 `problem`/`solution` 문자열을 `:` 기준으로 분리하여 제목(h4)과 본문(p)을 렌더링한다:
+`SwissProjectDetail.tsx`의 렌더링 로직에서 `problem`/`solution` 문자열을 `:` 기준으로 분리하여 제목(h4)과 본문(p)을 렌더링한다:
 
 ```tsx
 <h4>{challenge.problem.split(':')[0]}</h4>
@@ -101,8 +117,8 @@ solution: "짧은 해결 제목: 콜론 뒤에 해결 과정을 작성"
 예시:
 ```typescript
 {
-    problem: "Apple 'Pending State' 함정: QA에서 정상 동작으로 오판했으나, 이관 완료 시점에 신규 Team ID 기반 sub가 발급되며 기존 유저 계정이 유실되는 초대형 장애 발생",
-    solution: "Multi-Auth 아키텍처 활용: Transfer API의 transfer_sub로 신/구 계정을 매핑하고, 신규 sub를 기존 계정에 '추가 연동'하는 방식으로 12시간 내 전체 유저 복구 완료"
+    problem: "이관 전 검증 부족: QA에서 이관 중 상태의 Apple 로그인이 정상 동작하여 별도 마이그레이션이 불필요하다고 판단. 이관 완료 시 신규 sub 발급으로 기존 유저가 신규 계정으로 생성되는 장애 발생",
+    solution: "Transfer API 기반 계정 복구: transfer_sub로 신/구 계정을 매핑하고, Account Linking 구조를 활용하여 기존 연동을 유지한 채 신규 sub를 추가 연동. 12시간 내 전체 유저 복구 완료"
 }
 ```
 
@@ -115,33 +131,68 @@ solution: "짧은 해결 제목: 콜론 뒤에 해결 과정을 작성"
 - `PascalName`: storyId를 PascalCase로 변환 (예: `service-transfer` → `ServiceTransfer`)
 - **개별 파일로 생성** (Detail_Stories.tsx 번들에 추가하지 않음)
 
-**아키텍처 다이어그램 처리**:
-- 컨텍스트 문서에 Mermaid/ASCII 다이어그램이 있으면 → Tailwind CSS JSX 컴포넌트로 변환하여 파일 상단에 선언
-- 없으면 → `PlaceholderArch` 컴포넌트를 파일 상단에 선언하여 사용
+**아키텍처 = 다이어그램 + 설명 (둘 다 필수)**
 
-**생성 템플릿**:
+다이어그램만으로는 정보가 빈약하다. 반드시 `architectureDescription` prop을 함께 작성하여 **왜 이렇게 설계했는지, 어떤 사고 과정을 거쳤는지, 어떤 문제를 고려했는지**를 설명해야 한다.
+
+**4-1. 아키텍처 다이어그램 (`architecture` prop)**:
+- 컨텍스트 문서에 Mermaid/ASCII 다이어그램이 있으면 → Tailwind CSS JSX 컴포넌트로 변환
+- 없으면 → `PlaceholderArch` 컴포넌트 사용
+
+**다이어그램 가시성 규칙 (중요)**:
+
+기존 다이어그램들의 텍스트가 너무 흐려서 가독성이 떨어지는 문제가 반복되었다. 다음 규칙을 반드시 따른다:
+
+| 요소 | 라이트 모드 | 다크 모드 | 비고 |
+| --- | --- | --- | --- |
+| 주요 라벨 | `text-stone-900` | `dark:text-stone-100` | 박스 안 제목 |
+| 보조 설명 | `text-stone-600` | `dark:text-stone-300` | 박스 안 부제 |
+| 화살표 (→) | `text-stone-900` | `dark:text-stone-100` | 흐리면 안 됨 |
+| 섹션 제목 | 해당 색상 600~700 | 해당 색상 400 | 예: `text-red-600 dark:text-red-400` |
+| 전체 폰트 크기 | `text-sm` | — | `text-xs`는 사용 금지 |
+| 요약 영역 텍스트 | `text-stone-700` | `dark:text-stone-300` | 하단 요약 |
+
+**금지**: `text-stone-400`, `text-stone-300` 등 흐린 색상을 주요 텍스트에 사용하지 않는다. 상단 타이틀(tracking-widest)에만 `text-stone-500 dark:text-stone-400` 허용.
+
+**4-2. 아키텍처 설명 (`architectureDescription` prop)**:
+
+다이어그램 아래에 렌더링되는 마크다운 텍스트. 다음 내용을 포함한다:
+
+- **설계 의도**: 왜 이런 구조를 선택했는가
+- **사고 과정**: 어떤 대안을 고려했고 왜 이 방식을 택했는가
+- **진행 과정**: 실제로 어떤 순서로 작업을 진행했는가 (해당하는 경우)
+- **기술적 배경**: DB 구조, 인증 흐름 등 다이어그램만으로 전달하기 어려운 맥락
+
+형식은 마크다운 문자열 배열을 `.join("\n")`으로 결합한다:
+
+```typescript
+architectureDescription={[
+    "## 왜 이런 구조인가",
+    "",
+    "설명 텍스트...",
+    "",
+    "### 세부 항목",
+    "",
+    "| 항목 | 설명 |",
+    "| --- | --- |",
+    "| A | B |"
+].join("\n")}
+```
+
+**참고 파일**:
+- `Detail_ServiceTransfer.tsx` — 이관 진행 과정 + 인프라 설명 + 테이블
+- `Detail_AppleTransfer.tsx` — DB 구조 설명 + 샘플 테스트 경위
+- `Detail_RevenueApi.tsx` — On-Demand 전략 설명 + 코드 스니펫
+
+**4-3. 생성 템플릿**:
 
 ```tsx
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
-// architecture에 PlaceholderArch가 필요한 경우
-import { Server } from 'lucide-react';
 
-// 아키텍처 다이어그램 (또는 PlaceholderArch)
 const ArchitectureDiagram = () => (
-    // ... 컨텍스트에 따라 생성
+    // ... 컨텍스트에 따라 생성 (가시성 규칙 준수)
 );
-
-// PlaceholderArch 폴백 (아키텍처 정보가 없을 때)
-// const PlaceholderArch = () => (
-//     <div className="aspect-[16/9] w-full bg-stone-100 dark:bg-stone-900 flex items-center justify-center border border-dashed border-stone-300 dark:border-stone-700">
-//         <div className="text-center p-8">
-//             <Server className="w-16 h-16 mx-auto mb-4 text-stone-400" />
-//             <h3 className="text-lg font-bold text-stone-500">Architecture Diagram</h3>
-//             <p className="text-sm text-stone-400 mt-2">Wireframe Placeholder</p>
-//         </div>
-//     </div>
-// );
 
 export const Detail_{PascalName} = () => (
     <SwissProjectDetail
@@ -164,6 +215,11 @@ export const Detail_{PascalName} = () => (
             // ...
         ]}
         architecture={<ArchitectureDiagram />}
+        architectureDescription={[
+            "## 설계 의도 또는 진행 과정",
+            "",
+            "왜 이런 구조를 선택했는지, 어떤 과정을 거쳤는지 설명...",
+        ].join("\n")}
         mainTasks={[
             { title: "{taskTitle}", description: "{taskDesc}" },
             // ...
@@ -311,6 +367,9 @@ Step 1-7 수행 후, Step 8에서 `npx tsc --noEmit`으로 타입 에러 검증�
 
 - **개별 파일 원칙**: 항상 `Detail_{PascalName}.tsx`로 개별 파일을 생성한다. `Detail_Stories.tsx`에 추가하지 않는다.
 - **콜론 규칙 필수**: challenges의 problem/solution은 반드시 "제목: 설명" 형식을 따라야 한다. 이것은 `SwissProjectDetail.tsx:246-259`의 렌더링 로직에 의존한다.
-- **한국어 우선**: 포트폴리오 컨텐츠는 한국어로 작성한다.
-- **아키텍처 다이어그램 스타일**: Tailwind JSX로 변환 시 Swiss minimalist 스타일(stone 계열 색상, mono 폰트, 미니멀 라인)을 따른다. `Detail_ServiceTransfer.tsx`의 `InfraArchitecture` 컴포넌트를 참고한다.
+- **한국어 우선**: 포트폴리오 컨텐츠는 한국어로 작성한다. Feature Index 제목에 영어 괄호 표기를 넣지 않는다.
+- **원본 문서를 그대로 쓰지 않는다**: 초안 문서의 표현은 과장되거나 부정확할 수 있다. 반드시 사용자와 대화를 통해 다듬는다. 예: "발견했다" → "문서를 보고 알았다", "계정 유실" → "신규 계정으로 생성되는 문제".
+- **아키텍처 = 다이어그램 + 설명**: 다이어그램만으로는 빈약하다. `architectureDescription`으로 설계 의도, 사고 과정, 진행 과정을 반드시 보충한다.
+- **다이어그램 가시성**: 주요 텍스트에 `text-stone-400` 이하의 흐린 색상을 사용하지 않는다. `text-stone-900 dark:text-stone-100` 이상 사용. 전체 폰트는 `text-sm` (text-xs 금지).
 - **break-keep 클래스**: 한국어 텍스트가 포함된 `<p>` 태그에는 `break-keep` 클래스를 사용한다.
+- **용어 통일**: 프로젝트 전체에서 동일한 개념에 동일한 용어를 사용한다. 새 스토리 작성 시 기존 스토리의 용어와 충돌이 없는지 확인한다.
