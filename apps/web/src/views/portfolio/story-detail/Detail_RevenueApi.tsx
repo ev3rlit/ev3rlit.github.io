@@ -101,7 +101,7 @@ export const Detail_RevenueApi = () => (
     <SwissProjectDetail
         projectInfo={{
             number: "011",
-            title: "통합 매출 조회 API\n글로벌 환율 환산 시스템",
+            title: "매출 집계 API",
             description: "3개 스토어의 다통화 결제 데이터를 원화로 환산하고, 상품별·기간별·플랫폼별 매출 통계를 제공하는 운영툴 API",
             role: "Backend Engineer",
             period: "2025.04 — 2025.06",
@@ -109,7 +109,7 @@ export const Detail_RevenueApi = () => (
             links: {}
         }}
         overview={{
-            intro: "퍼블리셔 의존에서 벗어나 자체 매출 집계 시스템이 필요해졌습니다. Google Play(USD), App Store(JPY), Galaxy Store(EUR) 등 20개국 다통화 결제를 원화(KRW)로 정확히 환산하고, 상품별·기간별 매출 통계를 실시간 제공해야 하는 과제였습니다.",
+            intro: "퍼블리셔 의존에서 벗어나 자체 매출 집계 시스템이 필요해졌습니다. Google Play, App Store, Galaxy Store 3개 스토어의 영수증에는 각 결제 건의 현지 통화로 금액이 기록됩니다. 이 다양한 통화의 결제 데이터를 원화(KRW)로 환산하고, 상품별·기간별 매출 통계를 제공해야 하는 과제였습니다.",
             goals: "상품별/일별/기간별/플랫폼별 매출 조회 REST API 구축과, 글로벌 다통화 결제를 원화로 자동 환산하는 환율 시스템 개발",
             strategy: "3-Tier 환율 캐싱(Redis → MongoDB → Free Exchange API)으로 외부 의존도를 최소화하고, On-Demand 방식으로 필요한 시점에만 환율을 조회합니다. 환율 데이터는 기준 통화 대비 상대 통화 수가 많아 통화쌍별 도큐먼트 대신 날짜별 버킷 패턴으로 관리하고, errgroup 병렬 집계로 응답 시간을 단축했습니다."
         }}
