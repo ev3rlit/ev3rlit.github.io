@@ -101,18 +101,18 @@ export const SwissFeatureSummary = ({
                             </h2>
 
                             <div className={cn(
-                                "flex flex-wrap gap-2 text-sm font-mono text-stone-600 dark:text-stone-400 mb-6 transition-all duration-700 delay-100",
+                                "flex flex-wrap gap-2 text-sm font-mono text-stone-600 dark:text-stone-400 mb-12 transition-all duration-700 delay-100",
                                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                             )}>
                                 <span className="text-indigo-700 dark:text-indigo-400 font-bold">{keyword}</span>
                             </div>
 
-                            <div className="space-y-6">
+                            <div className="space-y-14">
                                 <div className={cn(
                                     "transition-all duration-700 delay-200",
                                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                                 )}>
-                                    <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-2 border-b border-stone-200 dark:border-stone-700 pb-1">
+                                    <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-1">
                                         01 프로젝트 개요
                                     </h3>
                                     <p className="heading-lg font-bold leading-tight text-stone-900 dark:text-white">
@@ -124,7 +124,7 @@ export const SwissFeatureSummary = ({
                                     "transition-all duration-700 delay-300",
                                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                                 )}>
-                                    <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-2 border-b border-stone-200 dark:border-stone-700 pb-1">
+                                    <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-1">
                                         02 배경 및 문제점
                                     </h3>
                                     <div className="space-y-3">
@@ -163,10 +163,10 @@ export const SwissFeatureSummary = ({
                         
                         {/* Solution & Action */}
                         <div className={cn(
-                            "py-4 lg:pt-0 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-400",
+                            "py-10 lg:pt-0 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-400",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-700 dark:text-indigo-400 mb-3">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-700 dark:text-indigo-400 mb-4">
                                 03 해결책 및 04 액션
                             </h3>
                             <p className="heading-lg font-normal text-stone-900 dark:text-white leading-tight tracking-tight mb-4">
@@ -179,10 +179,10 @@ export const SwissFeatureSummary = ({
 
                         {/* Quantitative Performance */}
                         <div className={cn(
-                            "py-5 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-500",
+                            "py-10 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-500",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-4">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-5">
                                 {kpiList && kpiList.length > 0 ? "05 정량적 성과" : "05 정성적 평가"}
                             </h3>
                             {kpiList && kpiList.length > 0 ? (
@@ -202,10 +202,10 @@ export const SwissFeatureSummary = ({
 
                         {/* Detailed Performance */}
                         <div className={cn(
-                            "py-5 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-600",
+                            "py-10 border-b border-stone-200 dark:border-stone-800 transition-all duration-700 delay-600",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-4">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-5">
                                 06 상세 성과
                             </h3>
                             <div className="p-3 bg-stone-100 dark:bg-stone-900 border border-transparent hover:border-stone-300 dark:hover:border-stone-700 transition-colors">
@@ -225,10 +225,10 @@ export const SwissFeatureSummary = ({
 
                         {/* Contribution */}
                         <div className={cn(
-                            "py-5 lg:pb-0 transition-all duration-700 delay-700",
+                            "py-10 lg:pb-0 transition-all duration-700 delay-700",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-700 dark:text-indigo-400 mb-3">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-700 dark:text-indigo-400 mb-4">
                                 07 입사 시 기여점
                             </h3>
                             <div className="border-l-4 border-stone-900 dark:border-white pl-4 py-2 bg-stone-50 dark:bg-stone-900">
