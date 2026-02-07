@@ -2,97 +2,85 @@ import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
 
 const LogPipelineArchitecture = () => (
-    <div className="w-full bg-stone-50 dark:bg-stone-900 p-8 font-mono text-sm">
-        <div className="max-w-3xl mx-auto space-y-8">
-            <div className="text-center text-stone-400 text-xs uppercase tracking-widest mb-8">스키마리스 로그 파이프라인 — 트랜잭션 로거 + 배치 발송</div>
+    <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
+        <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center text-stone-900 dark:text-stone-100 text-xs tracking-widest mb-8">스키마리스 로그 파이프라인 — 트랜잭션 로거 + 배치 발송</div>
 
             {/* 비즈니스 로직 */}
-            <div className="border border-indigo-300 dark:border-indigo-700 p-4 bg-indigo-50 dark:bg-indigo-950/30">
-                <div className="text-xs tracking-widest text-indigo-400 mb-3">비즈니스 로직</div>
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">비즈니스 로직</div>
                 <div className="grid grid-cols-2 gap-2 text-center">
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-indigo-600 dark:text-indigo-400">Go 구조체 정의</span>
-                        <br />
-                        <span className="text-stone-400">ActLoggable 구현</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">
+                        <div className="font-bold text-xs">Go 구조체 정의</div>
+                        <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">ActLoggable 구현</div>
                     </div>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-indigo-600 dark:text-indigo-400">ctx.AddLog()</span>
-                        <br />
-                        <span className="text-stone-400">CommonLog 자동 주입</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">
+                        <div className="font-bold text-xs">ctx.AddLog()</div>
+                        <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">CommonLog 자동 주입</div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-xl">↓ 로그 임시 보관 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 로그 임시 보관 ↓</div>
 
             {/* 트랜잭션 로거 */}
-            <div className="border border-blue-300 dark:border-blue-700 p-4 bg-blue-50 dark:bg-blue-950/30">
-                <div className="text-xs tracking-widest text-blue-500 mb-3">트랜잭션 로거 (요청 단위 트랜잭션)</div>
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">트랜잭션 로거 (요청 단위 트랜잭션)</div>
                 <div className="space-y-2">
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800 text-center">
-                        <span className="text-stone-500">로그 임시 보관</span>
-                        <span className="text-stone-300 mx-2">→</span>
-                        <span className="text-blue-600 dark:text-blue-400">요청 성공?</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2 text-center">
+                        로그 임시 보관
+                        <span className="text-stone-400 dark:text-stone-500 mx-2">→</span>
+                        <span className="font-bold">요청 성공?</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-center">
-                        <div className="border border-green-300 dark:border-green-600 p-2 bg-white dark:bg-stone-800">
-                            <span className="text-green-600 dark:text-green-400">Commit</span>
-                            <br />
-                            <span className="text-stone-400">로그 발송</span>
+                        <div className="border border-stone-200 dark:border-stone-700 p-2">
+                            <div className="font-bold text-xs">Commit</div>
+                            <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">로그 발송</div>
                         </div>
-                        <div className="border border-red-300 dark:border-red-600 p-2 bg-white dark:bg-stone-800">
-                            <span className="text-red-500 dark:text-red-400">Rollback</span>
-                            <br />
-                            <span className="text-stone-400">로그 폐기</span>
+                        <div className="border border-stone-200 dark:border-stone-700 p-2">
+                            <div className="font-bold text-xs">Rollback</div>
+                            <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">로그 폐기</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-xl">↓ 비동기 배치 발송 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 비동기 배치 발송 ↓</div>
 
             {/* 배치 발송 */}
-            <div className="border border-amber-300 dark:border-amber-700 p-4 bg-amber-50 dark:bg-amber-950/30">
-                <div className="text-xs tracking-widest text-amber-500 mb-3">배치 발송 (Kinesis Producer)</div>
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">배치 발송 (Kinesis Producer)</div>
                 <div className="flex items-center justify-center gap-3 text-center">
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-stone-500">버퍼 수집</span>
-                    </div>
-                    <span className="text-stone-300">→</span>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-amber-600 dark:text-amber-400">배치 전송</span>
-                    </div>
-                    <span className="text-stone-300">→</span>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-stone-500">실패 시 재시도</span>
-                    </div>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">버퍼 수집</div>
+                    <span className="text-stone-400 dark:text-stone-500">→</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2 font-bold">배치 전송</div>
+                    <span className="text-stone-400 dark:text-stone-500">→</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">실패 시 재시도</div>
                 </div>
             </div>
 
-            <div className="flex justify-center text-stone-300 text-xl">↓ 스트리밍 ↓</div>
+            <div className="flex justify-center text-stone-400 dark:text-stone-500">↓ 스트리밍 ↓</div>
 
             {/* 분석 시스템 */}
-            <div className="border border-green-300 dark:border-green-700 p-4 bg-green-50 dark:bg-green-950/30">
-                <div className="text-xs tracking-widest text-green-500 mb-3">분석 시스템</div>
+            <div className="border border-stone-300 dark:border-stone-600 p-4">
+                <div className="text-xs tracking-widest text-stone-900 dark:text-stone-100 mb-3">분석 시스템</div>
                 <div className="grid grid-cols-2 gap-2 text-center">
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-green-600 dark:text-green-400">OpenSearch</span>
-                        <br />
-                        <span className="text-stone-400">실시간 인덱싱</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">
+                        <div className="font-bold text-xs">OpenSearch</div>
+                        <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">실시간 인덱싱</div>
                     </div>
-                    <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-green-600 dark:text-green-400">백오피스 검색</span>
-                        <br />
-                        <span className="text-stone-400">RequestID 그룹 조회</span>
+                    <div className="border border-stone-200 dark:border-stone-700 p-2">
+                        <div className="font-bold text-xs">백오피스 검색</div>
+                        <div className="text-stone-500 dark:text-stone-400 text-xs mt-1">RequestID 그룹 조회</div>
                     </div>
                 </div>
             </div>
 
             {/* Summary */}
-            <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-400">
-                <div><span className="text-stone-500">Before</span> — 로그 추가 0.5일 (MySQL 스키마 + SP + C++ 연동)</div>
-                <div><span className="text-stone-500">After</span> — Go 구조체 정의 + AddLog() 호출 = 1시간 이내</div>
-                <div><span className="text-stone-500">Scale</span> — 1,000만 건/일, ~7,000 건/분</div>
+            <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-500 dark:text-stone-400">
+                <div><span className="text-stone-900 dark:text-stone-100">Before</span> — 로그 추가 0.5일 (MySQL 스키마 + SP + C++ 연동)</div>
+                <div><span className="text-stone-900 dark:text-stone-100">After</span> — Go 구조체 정의 + AddLog() 호출 = 1시간 이내</div>
+                <div><span className="text-stone-900 dark:text-stone-100">Scale</span> — 1,000만 건/일, ~7,000 건/분</div>
             </div>
         </div>
     </div>
