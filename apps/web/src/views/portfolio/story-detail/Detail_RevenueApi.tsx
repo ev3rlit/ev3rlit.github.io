@@ -29,7 +29,7 @@ const RevenueArchitecture = () => (
                     </div>
                     <span className="text-stone-300">→</span>
                     <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
-                        <span className="text-amber-600 dark:text-amber-400">big.Int 환산</span>
+                        <span className="text-amber-600 dark:text-amber-400">환율 환산</span>
                     </div>
                     <span className="text-stone-300">→</span>
                     <div className="border border-stone-300 dark:border-stone-600 p-2 bg-white dark:bg-stone-800">
@@ -87,11 +87,11 @@ const RevenueArchitecture = () => (
                 </div>
             </div>
 
-            {/* Result */}
+            {/* Bucket Pattern Summary */}
             <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-400">
-                <div><span className="text-stone-500">Input</span> — MicroPrice(×10⁶) + exchangeRate(×10⁶)</div>
-                <div><span className="text-stone-500">Process</span> — big.Int 곱셈 → 나눗셈 (정수 연산)</div>
-                <div><span className="text-stone-500">Output</span> — exchangedMicroPrice (원화 환산, DB 영구 박제)</div>
+                <div><span className="text-stone-500">구조</span> — 날짜별 1개 도큐먼트에 전체 통화 환율을 버킷으로 저장</div>
+                <div><span className="text-stone-500">조회</span> — 필요한 통화만 projection으로 추출</div>
+                <div><span className="text-stone-500">이점</span> — 통화쌍별 도큐먼트 대비 관리 포인트 감소, 조회 단순화</div>
             </div>
         </div>
     </div>
@@ -111,7 +111,7 @@ export const Detail_RevenueApi = () => (
         overview={{
             intro: "퍼블리셔 의존에서 벗어나 자체 매출 집계 시스템이 필요해졌습니다. Google Play(USD), App Store(JPY), Galaxy Store(EUR) 등 20개국 다통화 결제를 원화(KRW)로 정확히 환산하고, 상품별·기간별 매출 통계를 실시간 제공해야 하는 과제였습니다.",
             goals: "상품별/일별/기간별/플랫폼별 매출 조회 REST API 구축과, 글로벌 다통화 결제를 원화로 자동 환산하는 환율 시스템 개발",
-            strategy: "3-Tier 환율 캐싱(Redis → MongoDB → Free Exchange API)으로 외부 의존도를 최소화하고, On-Demand 방식으로 필요한 시점에만 환율을 조회합니다. big.Int 정수 연산으로 부동소수점 오차를 원천 차단하고, errgroup 병렬 집계로 대량 조회 성능을 확보했습니다."
+            strategy: "3-Tier 환율 캐싱(Redis → MongoDB → Free Exchange API)으로 외부 의존도를 최소화하고, On-Demand 방식으로 필요한 시점에만 환율을 조회합니다. 환율 데이터는 기준 통화 대비 상대 통화 수가 많아 통화쌍별 도큐먼트 대신 날짜별 버킷 패턴으로 관리하고, errgroup 병렬 집계로 응답 시간을 단축했습니다."
         }}
         keywords={[
             { category: "Language", items: ["Go"] },
@@ -168,8 +168,8 @@ export const Detail_RevenueApi = () => (
                 description: "Redis(주요 통화 1시간 / 기타 3시간 TTL) → MongoDB(날짜별 영구 저장) → Free Exchange API(외부 폴백) 순서로 환율을 조회. On-Demand 방식으로 필요한 시점에 환율을 가져오고 자동 캐싱하여 외부 API 호출을 최소화"
             },
             {
-                title: "부동소수점 정밀 환산 (big.Int)",
-                description: "MicroPrice(×10⁶) 단위에서 환율을 곱하면 오차가 누적되므로, big.Int로 곱셈 후 나누기하는 방식으로 정밀도 보장. exchangedMicroPrice를 DB에 영구 박제하여 환율 변동과 무관하게 결과 불변성 확보"
+                title: "환율 데이터 버킷 패턴 설계",
+                description: "기준 통화 대비 상대 통화 수가 압도적으로 많아, 통화쌍마다 도큐먼트를 관리하는 것은 비효율적이라 판단. 날짜별 하나의 도큐먼트에 전체 환율을 버킷으로 통합하고, 필요한 통화만 projection으로 조회하여 데이터 관리를 단순화"
             },
             {
                 title: "errgroup 기반 병렬 매출 집계",
@@ -182,8 +182,8 @@ export const Detail_RevenueApi = () => (
         ]}
         challenges={[
             {
-                problem: "다통화 부동소수점 오차: USD 0.99, JPY 160 등 다양한 통화의 MicroPrice에 환율을 곱하면 소수점 이하 오차가 누적되어 매출 합산 시 원단위 차이 발생",
-                solution: "big.Int 정밀 계산: exchangeRate를 micro 단위(×10⁶)로 변환 후 big.Int 곱셈 → 나눗셈으로 정수 연산만 수행. 환산된 원화를 DB에 영구 박제(exchangedMicroPrice)하여 재계산 시에도 동일 결과 보장"
+                problem: "환율 데이터 모델링: 기준 통화 대비 상대 통화가 수십 개에 달해, 통화쌍별로 도큐먼트를 생성하면 일자당 수십 건이 생기고 조회·갱신이 복잡해지는 문제",
+                solution: "버킷 패턴 적용: 날짜별 하나의 도큐먼트에 모든 환율을 내장 배열로 저장. 필요한 통화만 projection으로 꺼내고, 하루치 환율 갱신도 단일 Upsert로 처리하여 데이터 관리와 조회를 단순화"
             },
             {
                 problem: "외부 환율 API 의존성: Free Exchange API 장애 시 환율 조회 실패로 매출 집계 전체가 중단되는 위험",
