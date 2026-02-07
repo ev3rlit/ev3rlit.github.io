@@ -1,8 +1,8 @@
-import { SwissStorySection } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
+import { SwissFeatureSummary } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
 
-export const Story_Growth = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
+export const SwissFeatureSummary_Growth = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
     return (
-        <SwissStorySection
+        <SwissFeatureSummary
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Growth"
@@ -15,10 +15,6 @@ export const Story_Growth = ({ sectionNumber, storyNumber }: { sectionNumber: st
             step04_action="API 구현 전, 필요한 실행 순서를 자연어로 주석 작성 → 주석에 맞춰 코드 구현. 이 방식이 가장 버그가 적고 효율적임을 체감, 지금까지도 유지 중인 개발 철학이 됨."
             step05_result="시스템적 해결은 못했으나 개인 방법론 확립: Think First, Code Later"
             step06_performance="'Atomicity(원자성)는 타협할 수 없는 가치' 체득. 이 실패는 훗날 삼국블레이드에서 'Error as Value'와 '트랜잭션 미들웨어'를 1순위로 설계하게 만든 결정적 계기."
-            kpiList={[
-                { label: "설계 원칙", value: "Think First" },
-                { label: "우선 순위", value: "정합성" }
-            ]}
             step07_capability="실패를 숨기지 않고 방법론으로 승화시킵니다. 과거의 실수를 반복하지 않는 견고한 설계와, 코딩 전 충분히 생각하는 습관을 갖춘 개발자입니다."
             storyId="growth"
         />

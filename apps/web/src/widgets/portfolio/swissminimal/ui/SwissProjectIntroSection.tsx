@@ -55,13 +55,7 @@ interface SwissProjectIntroSectionProps {
 }
 
 const isEnhancedMode = (props: SwissProjectIntroSectionProps) =>
-	!!(
-		props.challenges ||
-		props.strategy ||
-		props.enhancedMetrics ||
-		props.contributions ||
-		props.modules
-	);
+	!!(props.enhancedMetrics || props.modules);
 
 export const SwissProjectIntroSection = (
 	props: SwissProjectIntroSectionProps,
@@ -72,21 +66,12 @@ export const SwissProjectIntroSection = (
 		period,
 		projectRole,
 		genre,
-		engine,
 		description,
 		contribution,
 		metrics,
 		onDetailClick,
-		platform,
-		teamSize,
-		affiliation,
-		context,
-		challenges,
-		strategy,
 		enhancedMetrics,
-		contributions,
 		techStack,
-		architecturePatterns,
 		modules,
 		screenshots,
 	} = props;
@@ -254,43 +239,13 @@ export const SwissProjectIntroSection = (
 								</div>
 							)}
 
-							{/* Architecture Patterns */}
-							{architecturePatterns && architecturePatterns.length > 0 && (
-								<div className="flex flex-wrap gap-2 mb-8">
-									{architecturePatterns.map((pattern) => (
-										<span
-											key={pattern}
-											className="bg-stone-200 dark:bg-stone-700 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-stone-600 dark:text-stone-300"
-										>
-											{pattern}
-										</span>
-									))}
-								</div>
-							)}
 						</div>
 
 						<div className="space-y-12">
-							{/* Introduction / Context */}
+							{/* Basic Info (Role & Period only) */}
 							<div
 								className={cn(
 									"transition-all duration-700 delay-100",
-									deepDiveVisible
-										? "opacity-100 translate-y-0"
-										: "opacity-0 translate-y-8",
-								)}
-							>
-								<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-2">
-									개요 (Introduction)
-								</h3>
-								<p className="text-lg md:text-xl font-medium leading-relaxed text-stone-900 dark:text-stone-100 break-keep">
-									{context || description}
-								</p>
-							</div>
-
-							{/* Basic Info */}
-							<div
-								className={cn(
-									"transition-all duration-700 delay-200",
 									deepDiveVisible
 										? "opacity-100 translate-y-0"
 										: "opacity-0 translate-y-8",
@@ -316,65 +271,25 @@ export const SwissProjectIntroSection = (
 											{period}
 										</span>
 									</div>
-									{teamSize && (
-										<div>
-											<span className="label-text text-stone-400 block mb-1">
-												팀 규모
-											</span>
-											<span className="body-text text-stone-900 dark:text-white">
-												{teamSize}
-											</span>
-										</div>
-									)}
-									{platform && (
-										<div>
-											<span className="label-text text-stone-400 block mb-1">
-												플랫폼
-											</span>
-											<span className="body-text text-stone-900 dark:text-white">
-												{platform}
-											</span>
-										</div>
-									)}
-									{affiliation && (
-										<div>
-											<span className="label-text text-stone-400 block mb-1">
-												소속
-											</span>
-											<span className="body-text text-stone-900 dark:text-white">
-												{affiliation}
-											</span>
-										</div>
-									)}
-									<div>
-										<span className="label-text text-stone-400 block mb-1">
-											엔진
-										</span>
-										<span className="body-text text-stone-900 dark:text-white">
-											{engine}
-										</span>
-									</div>
 								</div>
 							</div>
 
-							{/* Challenges */}
-							{challenges && challenges.length > 0 && (
+							{/* My Role / Contribution */}
+							{contribution && (
 								<div
 									className={cn(
-										"transition-all duration-700 delay-300",
+										"transition-all duration-700 delay-200",
 										deepDiveVisible
 											? "opacity-100 translate-y-0"
 											: "opacity-0 translate-y-8",
 									)}
 								>
 									<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-2">
-										핵심 문제 (Core Problems)
+										나의 역할 (My Role)
 									</h3>
-									<ul className="list-disc list-inside text-base text-stone-600 dark:text-stone-300 leading-relaxed space-y-2 marker:text-indigo-600 dark:marker:text-indigo-400 break-keep">
-										{challenges.map((c) => (
-											<li key={c}>{c}</li>
-										))}
-									</ul>
+									<p className="text-base leading-relaxed text-stone-700 dark:text-stone-300 break-keep">
+										{contribution}
+									</p>
 								</div>
 							)}
 						</div>
@@ -382,25 +297,6 @@ export const SwissProjectIntroSection = (
 
 					{/* RIGHT COLUMN */}
 					<div className="lg:col-span-7 flex flex-col border-t lg:border-t-0 border-stone-200 dark:border-stone-700 lg:border-l lg:pl-16">
-						{/* Strategy */}
-						{strategy && (
-							<div
-								className={cn(
-									"py-8 lg:pt-0 border-b border-stone-200 dark:border-stone-700 transition-all duration-700",
-									deepDiveVisible
-										? "opacity-100 translate-y-0"
-										: "opacity-0 translate-y-8",
-								)}
-							>
-								<h3 className="text-xs font-bold uppercase tracking-widest accent-indigo mb-4">
-									해결 전략 (Strategy)
-								</h3>
-								<p className="heading-lg text-stone-900 dark:text-white leading-tight tracking-tight mb-6 break-keep">
-									{strategy}
-								</p>
-							</div>
-						)}
-
 						{/* KPI - Enhanced Metrics */}
 						{enhancedMetrics && enhancedMetrics.length > 0 && (
 							<div
@@ -457,52 +353,6 @@ export const SwissProjectIntroSection = (
 										</div>
 									))}
 								</div>
-							</div>
-						)}
-
-						{/* Contributions */}
-						{contributions && contributions.length > 0 && (
-							<div
-								className={cn(
-									"py-10 border-b border-stone-200 dark:border-stone-700 transition-all duration-700 delay-200",
-									deepDiveVisible
-										? "opacity-100 translate-y-0"
-										: "opacity-0 translate-y-8",
-								)}
-							>
-								<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-6">
-									주요 기여 (Contributions)
-								</h3>
-								<ul className="space-y-3">
-									{contributions.map((c) => (
-										<li
-											key={c}
-											className="flex items-start gap-3 text-base text-stone-700 dark:text-stone-300 leading-relaxed break-keep"
-										>
-											<span className="w-1.5 h-1.5 bg-indigo-600 dark:bg-indigo-400 rounded-full mt-2 shrink-0" />
-											{c}
-										</li>
-									))}
-								</ul>
-							</div>
-						)}
-
-						{/* Legacy Contribution fallback */}
-						{!contributions && contribution && (
-							<div
-								className={cn(
-									"py-10 border-b border-stone-200 dark:border-stone-700 transition-all duration-700 delay-200",
-									deepDiveVisible
-										? "opacity-100 translate-y-0"
-										: "opacity-0 translate-y-8",
-								)}
-							>
-								<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-6">
-									나의 기여 (Contribution)
-								</h3>
-								<p className="body-text text-stone-600 dark:text-stone-300 break-keep">
-									{contribution}
-								</p>
 							</div>
 						)}
 

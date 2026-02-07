@@ -1,8 +1,8 @@
-import { SwissStorySection } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
+import { SwissFeatureSummary } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
 
-export const Story_TrackingContainer = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
+export const SwissFeatureSummary_TrackingContainer = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
     return (
-        <SwissStorySection
+        <SwissFeatureSummary
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Legacy Migration"

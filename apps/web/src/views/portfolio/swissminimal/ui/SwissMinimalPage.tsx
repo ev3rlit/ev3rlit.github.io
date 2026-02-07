@@ -7,14 +7,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSidebarStore } from "@/features/layout/model/useSidebarStore";
 import { StoryDetail_ErrorHandling } from "@/views/portfolio/projects/StoryDetail_ErrorHandling";
 import {
-    Story_Documentation,
-    Story_ErrorHandling,
-    Story_Growth,
-    Story_LogPipeline,
-    Story_Migration,
-    Story_Payment,
-    Story_TrackingContainer,
-    Story_Websocket,
+    SwissFeatureSummary_Documentation,
+    SwissFeatureSummary_ErrorHandling,
+    SwissFeatureSummary_Growth,
+    SwissFeatureSummary_LogPipeline,
+    SwissFeatureSummary_Migration,
+    SwissFeatureSummary_Payment,
+    SwissFeatureSummary_TrackingContainer,
+    SwissFeatureSummary_Websocket,
 } from "@/widgets/portfolio/stories";
 import {
     SwissAboutSection,
@@ -148,57 +148,28 @@ export const SwissMinimalPage = () => {
                                 engine="Unreal Engine 5 Client / Golang Server"
                                 description="글로벌 20개국에 서비스 중인 방치형 액션 RPG의 서버 아키텍처를 설계하고, 런칭부터 라이브 운영까지 전 사이클을 주도했습니다."
                                 contribution="라이브 장애 90% 감소 및 로그 시스템 자동화를 통한 운영 효율 400% 증대 달성."
-                                platform="Android / iOS (Google Play, App Store, Galaxy Store)"
-                                teamSize="전체 15명 (개발자 6명)"
-                                affiliation="액션스퀘어 → 넥써쓰/원유니버스 (사업부 이관)"
-                                context="입사 초기, 잦은 라이브 장애와 비효율적인 로그 시스템으로 고통받던 팀에 합류하여, '서버 아키텍처를 안정화'하고 '운영 효율을 극대화'하는 데 주력했습니다."
-                                challenges={[
-                                    "BladeX에서 부재했던 에러 핸들링·트랜잭션 시스템을 처음부터 설계하여 안정성 기반 확보",
-                                    "Golang·MongoDB를 처음부터 학습하여 6개월 만에 상용 서비스 런칭",
-                                    "퍼블리셔 계약 해지 → 2개월 만에 자체 서비스 전환 (AWS → Naver Cloud 인프라 이관)",
-                                    "라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 완수"
-                                ]}
-                                strategy="WebSocket RPC 기반 MSA 구조와 Error as Value 패턴을 도입하여, 안정성과 운영 효율을 동시에 확보하는 서버 아키텍처를 설계했습니다."
                                 enhancedMetrics={[
                                     { kpi: "Google Play 순위", value: "1위", context: "콜라보 이벤트 당일" },
                                     { kpi: "피크 DAU", value: "10,000", context: "일간 활성 사용자" },
                                     { kpi: "서비스 가용성", value: "무중단", context: "21개월 라이브 운영" },
                                     { kpi: "API 응답 속도", value: "5ms", context: "50ms → 5ms 개선" }
                                 ]}
-                                contributions={[
-                                    "서버 아키텍처 설계: WebSocket RPC 기반 MSA 구조 설계 및 핸들러 라우팅 시스템 구축",
-                                    "에러 핸들링 체계화: Error as Value 패턴 도입, Stack Trace·UserID·Params를 자동 수집하는 글로벌 미들웨어 설계",
-                                    "데이터 정합성 보장: Redis 분산 락 + 인메모리 트랜잭션(Write-back) 도입으로 동시성 이슈 해결",
-                                    "무중단 서비스 이관: 퍼블리셔 계약 해지 → AWS에서 Naver Cloud로 전체 인프라·데이터 마이그레이션 주도",
-                                    "운영 효율화: 행위 기반 로그 ID 설계로 개발자 개입 없이 CS 처리 가능한 체계 구축"
-                                ]}
                                 techStack={["Golang", "MongoDB", "Redis", "WebSocket", "AWS Kinesis", "Naver Cloud Platform", "Jenkins"]}
-                                architecturePatterns={["MSA", "Event-Driven", "Write-back Cache", "CQRS", "Distributed Lock", "Error as Value"]}
                                 modules={[
                                     {
-                                        title: "에러 핸들링 시스템",
-                                        description: "Error as Value 패턴과 글로벌 미들웨어로 핫픽스 소요 시간을 1일에서 1~2시간으로 단축.",
-                                        tags: ["Golang", "Middleware", "Error Handling"]
-                                    },
-                                    {
-                                        title: "WebSocket 미들웨어",
-                                        description: "RPC 기반 WebSocket 통신 구조 설계로 실시간 양방향 통신 안정화.",
-                                        tags: ["WebSocket", "RPC", "MSA"]
-                                    },
-                                    {
-                                        title: "트래킹 컨테이너",
-                                        description: "스키마리스 로그 파이프라인 구축으로 로그 개발 생산성 0.5일에서 1시간으로 개선.",
-                                        tags: ["Logging", "Pipeline", "Schema-less"]
+                                        title: "앱 서비스 이관",
+                                        description: "퍼블리셔 계약 해지 후 AWS에서 Naver Cloud로 2개월 내 전체 인프라·데이터 무중단 이관.",
+                                        tags: ["AWS", "NCP", "Zero-downtime"]
                                     },
                                     {
                                         title: "결제 마이그레이션",
-                                        description: "퍼블리셔 해지 후 결제 데이터 10만 건 무중단 마이그레이션 완수.",
+                                        description: "라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 완수.",
                                         tags: ["Payment", "Migration", "Zero-downtime"]
                                     },
                                     {
-                                        title: "서비스 이관",
-                                        description: "AWS에서 Naver Cloud로 2개월 내 전체 인프라·데이터 마이그레이션 완료.",
-                                        tags: ["AWS", "NCP", "Infrastructure"]
+                                        title: "응답속도 개선",
+                                        description: "API 응답 속도를 50ms에서 5ms로 개선, 인메모리 캐시와 쿼리 최적화 적용.",
+                                        tags: ["Performance", "Cache", "Optimization"]
                                     }
                                 ]}
                                 screenshots={[
@@ -210,12 +181,12 @@ export const SwissMinimalPage = () => {
                         </div>
 
                         {/* DYNAMIC STORIES (Samguk Blade) */}
-                        <Story_ErrorHandling sectionNumber="S.01" storyNumber="01" />
-                        <Story_Websocket sectionNumber="S.02" storyNumber="02" />
-                        <Story_TrackingContainer sectionNumber="S.03" storyNumber="03" />
-                        <Story_Payment sectionNumber="S.04" storyNumber="04" />
-                        <Story_Migration sectionNumber="S.05" storyNumber="05" />
-                        <Story_LogPipeline sectionNumber="S.06" storyNumber="06" />
+                        <SwissFeatureSummary_ErrorHandling sectionNumber="S.01" storyNumber="01" />
+                        <SwissFeatureSummary_Websocket sectionNumber="S.02" storyNumber="02" />
+                        <SwissFeatureSummary_TrackingContainer sectionNumber="S.03" storyNumber="03" />
+                        <SwissFeatureSummary_Payment sectionNumber="S.04" storyNumber="04" />
+                        <SwissFeatureSummary_Migration sectionNumber="S.05" storyNumber="05" />
+                        <SwissFeatureSummary_LogPipeline sectionNumber="S.06" storyNumber="06" />
 
                         {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
                         <div id="retrospective-samguk">
@@ -262,8 +233,8 @@ export const SwissMinimalPage = () => {
                         </div>
 
                         {/* DYNAMIC STORIES (BladeX) */}
-                        <Story_Documentation sectionNumber="S.07" storyNumber="07" />
-                        <Story_Growth sectionNumber="S.08" storyNumber="08" />
+                        <SwissFeatureSummary_Documentation sectionNumber="S.07" storyNumber="07" />
+                        <SwissFeatureSummary_Growth sectionNumber="S.08" storyNumber="08" />
 
                         {/* PAGE 13: RETROSPECTIVE (BladeX) */}
                         <div id="retrospective-bladex">

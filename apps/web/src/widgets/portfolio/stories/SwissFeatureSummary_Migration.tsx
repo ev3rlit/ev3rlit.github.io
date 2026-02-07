@@ -1,8 +1,8 @@
-import { SwissStorySection } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
+import { SwissFeatureSummary } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
 
-export const Story_Migration = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
+export const SwissFeatureSummary_Migration = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
     return (
-        <SwissStorySection
+        <SwissFeatureSummary
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="DevOps"
@@ -21,7 +21,7 @@ export const Story_Migration = ({ sectionNumber, storyNumber }: { sectionNumber:
                 { label: "인프라", value: "100% 자립" }
             ]}
             step07_capability="위기 상황에서 침착하게 원인을 분석하고 해결책을 제시하며, 클라우드 인프라를 바닥부터 설계하고 구축할 수 있습니다."
-            storyId="service-transfer"
+            storyId="migration"
         />
     );
 };

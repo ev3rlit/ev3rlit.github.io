@@ -1,8 +1,8 @@
-import { SwissStorySection } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
+import { SwissFeatureSummary } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
 
-export const Story_Payment = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
+export const SwissFeatureSummary_Payment = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
     return (
-        <SwissStorySection
+        <SwissFeatureSummary
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Migration"
@@ -21,7 +21,7 @@ export const Story_Payment = ({ sectionNumber, storyNumber }: { sectionNumber: s
                 { label: "처리 속도", value: "20배↑" }
             ]}
             step07_capability="대규모 데이터 마이그레이션 시나리오를 설계하고, 운영 중인 서비스에 영향 없이 DB 구조를 개선할 수 있습니다."
-            storyId="payment-migration"
+            storyId="payment"
         />
     );
 };

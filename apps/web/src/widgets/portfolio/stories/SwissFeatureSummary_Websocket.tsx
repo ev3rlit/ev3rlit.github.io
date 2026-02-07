@@ -1,8 +1,8 @@
-import { SwissStorySection } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
+import { SwissFeatureSummary } from "@/widgets/portfolio/swissminimal/ui/SwissStorySection";
 
-export const Story_Websocket = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
+export const SwissFeatureSummary_Websocket = ({ sectionNumber, storyNumber }: { sectionNumber: string; storyNumber: string }) => {
     return (
-        <SwissStorySection
+        <SwissFeatureSummary
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Middleware"
@@ -21,7 +21,7 @@ export const Story_Websocket = ({ sectionNumber, storyNumber }: { sectionNumber:
                 { label: "자동 복구", value: "100%" }
             ]}
             step07_capability="미들웨어/인터셉터 아키텍처를 설계하여 팀 전체의 코드 품질을 상향 평준화할 수 있습니다."
-            storyId="websocket-middleware"
+            storyId="websocket"
         />
     );
 };
