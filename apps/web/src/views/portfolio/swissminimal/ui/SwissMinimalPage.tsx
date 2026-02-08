@@ -7,6 +7,7 @@ import {
     SwissFeatureSummary_Documentation,
     SwissFeatureSummary_ErrorSystem,
     SwissFeatureSummary_Growth,
+    SwissFeatureSummary_GuildMineCqrs,
     SwissFeatureSummary_LogPipeline,
     SwissFeatureSummary_Payment,
     SwissFeatureSummary_ServiceTransfer,
@@ -143,6 +144,7 @@ export const SwissMinimalPage = () => {
                 <SwissFeatureSummary_ErrorSystem sectionNumber="S.03" storyNumber="03" />
                 <SwissFeatureSummary_TrackingContainer sectionNumber="S.04" storyNumber="04" />
                 <SwissFeatureSummary_LogPipeline sectionNumber="S.05" storyNumber="05" />
+                <SwissFeatureSummary_GuildMineCqrs sectionNumber="S.06" storyNumber="06" />
 
                 {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
                 <div id="retrospective-samguk">

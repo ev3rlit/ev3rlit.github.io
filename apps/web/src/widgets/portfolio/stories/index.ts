@@ -7,3 +7,4 @@ export { SwissFeatureSummary_LogPipeline } from './SwissFeatureSummary_LogPipeli
 export { SwissFeatureSummary_Documentation } from './SwissFeatureSummary_Documentation';
 export { SwissFeatureSummary_Growth } from './SwissFeatureSummary_Growth';
 export { SwissFeatureSummary_ServiceTransfer } from './SwissFeatureSummary_ServiceTransfer';
+export { SwissFeatureSummary_GuildMineCqrs } from './SwissFeatureSummary_GuildMineCqrs';
