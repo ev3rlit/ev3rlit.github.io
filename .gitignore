@@ -178,3 +178,6 @@ dist
 
 ### Turbo ###
 .turbo
+
+./Web
+docs/features
