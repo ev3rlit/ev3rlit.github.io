@@ -56,16 +56,15 @@ export const Detail_ServiceTransfer = () => (
     <SwissProjectDetail
         projectInfo={{
             number: getFeatureNumber("service-transfer"),
-            title: "앱 서비스 이관\n(Self-Publishing)",
+            title: "앱 서비스 이관",
             description: "퍼블리셔 계약 종료로 인한 서비스 종료 위기에서, 만 2개월 내 전체 서비스(인프라/DB/인증)를 자체 플랫폼으로 긴급 이관하여 서비스를 지켜냈습니다.",
             role: "Backend Engineer",
-            period: "2개월 준비 + 8시간 Cut-over",
-            status: "이관 완료",
+            period: "2개월 준비 + 8시간 전환 점검",
             links: {}
         }}
         overview={{
-            intro: "라이브 중인 게임 서비스의 퍼블리싱 계약 종료에 따라, 기존 퍼블리셔가 제공하던 모든 기술적 인프라(인증, 결제, 로그, 서버)를 자체 서비스로 이관(Self-Publishing)해야 했습니다.",
-            goals: "단 2개월의 준비 기간과 8시간의 컷오버(Cut-over) 내에 모든 데이터와 시스템을 교체하고, 이관 직후부터 비즈니스 연속성을 보장해야 했습니다.",
+            intro: "라이브 중인 게임 서비스의 퍼블리싱 계약 종료에 따라, 기존 퍼블리셔가 제공하던 모든 기술적 인프라(인증, 결제, 로그, 서버)를 자체 서비스로 이관해야 했습니다.",
+            goals: "단 2개월의 준비 기간과 8시간의 전환 점검 내에 모든 데이터와 시스템을 교체하고, 이관 직후부터 비즈니스 연속성을 보장해야 했습니다.",
             strategy: "AWS → Naver Cloud로의 인프라 전환, Firebase CLI를 활용한 계정 이관, Apple Transfer API를 활용한 인증 마이그레이션, 그리고 환율 불변성을 갖춘 통합 매출 데이터 웨어하우스 구축을 병행 수행했습니다."
         }}
         keywords={[
@@ -112,12 +111,6 @@ export const Detail_ServiceTransfer = () => (
             "**Phase 4 — 안정화 및 대응**",
             "- 오픈 직후 Apple 로그인 장애 인지 및 Transfer API 긴급 배치 복구 수행",
             "- 스토어별 결제 검증 키 교체 및 정상 동작 확인",
-            "",
-            "## 이관 후 인프라 — 핵심 설계 포인트",
-            "",
-            "1. **도메인 분리** — 서버 간 통신 없이 각 서비스(Gateway, Auth, Game, Admin)가 독립적으로 동작하여, 트래픽에 따라 서비스별로 개별 스케일링이 가능합니다.",
-            "2. **Stateless 설계** — 세션과 상태는 Redis에 위임하여 서버 스케일링이 용이합니다.",
-            "3. **Ranking Server** — 외부 통신 없는 백그라운드 스케줄러로 DB에 직접 접근합니다.",
             "",
             "## 왜 Naver Cloud(NCP)인가 — 운영 효율화를 위한 기술 스택 통일",
             "",
