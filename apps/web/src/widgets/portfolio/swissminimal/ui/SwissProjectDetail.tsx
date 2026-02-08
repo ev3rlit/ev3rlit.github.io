@@ -504,8 +504,8 @@ export const SwissProjectDetail = ({
                     {/* Footer */}
                     <footer className="pt-24 pb-12 flex justify-between items-end border-t border-stone-900 dark:border-white mt-16">
                         <div>
-                            <p className="text-xs font-mono text-stone-400 mb-2 uppercase tracking-widest">Minimalist Portfolio V2</p>
-                            <p className="text-sm font-bold text-stone-900 dark:text-white">© 2024 J. Doe Portfolio</p>
+                            <p className="text-xs font-mono text-stone-400 mb-2 uppercase tracking-widest">Swiss Minimal Portfolio</p>
+                            <p className="text-sm font-bold text-stone-900 dark:text-white">© 2026 최범휘. All rights reserved.</p>
                         </div>
                         <button 
                             type="button"

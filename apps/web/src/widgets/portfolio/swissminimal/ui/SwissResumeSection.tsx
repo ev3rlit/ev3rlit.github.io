@@ -331,7 +331,7 @@ export const SwissResumeSection = () => {
 
                         {/* Footer */}
                         <div className="pt-6 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-300 font-mono">
-                            <p>© 2024 BeomHwi Choi</p>
+                            <p>© 2026 최범휘. All rights reserved.</p>
                         </div>
                     </div>
 
