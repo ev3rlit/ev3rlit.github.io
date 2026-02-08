@@ -16,18 +16,20 @@ export function Experience({ company, period, role, stack, children }: Experienc
             <div className="mb-8">
                 <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1">
                     <h3 className="text-2xl font-black text-slate-900 dark:text-stone-100 tracking-tight leading-none">{company}</h3>
-                    <time className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-500/80">{period}</time>
+                    <time className="font-mono text-[13px] font-bold uppercase tracking-[0.2em] text-indigo-500/80">{period}</time>
                 </div>
                 <div className="text-[13px] font-bold text-slate-400 dark:text-stone-500 uppercase tracking-widest mt-3">{role}</div>
 
                 {stack && (
-                    <div className="flex flex-wrap gap-1.5 mt-3 pb-4 border-b border-slate-50 dark:border-stone-800/50">
-                        {stack.split(',').map((tech) => (
-                            <span
-                                key={tech}
-                                className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-stone-800/80 text-[11px] font-semibold text-slate-500 dark:text-stone-400 border border-slate-200 dark:border-stone-700/50"
-                            >
-                                {tech.trim()}
+                    <div className="flex flex-wrap items-center gap-x-2 mt-3 pb-4 border-b border-slate-50 dark:border-stone-800/50">
+                        {stack.split(',').map((tech, i, arr) => (
+                            <span key={tech} className="flex items-center gap-2">
+                                <span className="text-[14px] font-bold text-slate-700 dark:text-stone-300">
+                                    {tech.trim()}
+                                </span>
+                                {i < arr.length - 1 && (
+                                    <span className="text-slate-300 dark:text-stone-700 font-light text-[10px]">/</span>
+                                )}
                             </span>
                         ))}
                     </div>
@@ -102,5 +104,46 @@ export function FeatureItem({ children }: { children: React.ReactNode }) {
             <span className="text-slate-300 dark:text-stone-700 font-bold group-hover/item:text-indigo-400 transition-colors mt-[1px]">•</span>
             <span>{children}</span>
         </li>
+    );
+}
+export function TechStack({ tech }: { tech: string }) {
+    // Split by comma if it's a string containing multiple items, or just treat as single string
+    const items = tech.split(',').map(t => t.trim());
+
+    return (
+        <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-2.5 pl-[17px]">
+            <span className="font-bold text-slate-400 dark:text-stone-500 text-[11px] uppercase tracking-wider">Tech</span>
+            <div className="flex flex-wrap items-center gap-x-2 text-[13px] font-semibold text-indigo-600/90 dark:text-indigo-400/90">
+                {items.map((item, i) => {
+                    // Check for markdown link format: [text](url)
+                    const linkMatch = item.match(/^\[(.*?)\]\((.*?)\)$/);
+
+                    let content;
+                    if (linkMatch) {
+                        content = (
+                            <Link
+                                href={linkMatch[2]}
+                                className="hover:underline hover:text-indigo-500 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {linkMatch[1]}
+                            </Link>
+                        );
+                    } else {
+                        content = item;
+                    }
+
+                    return (
+                        <span key={i} className="flex items-center gap-2">
+                            {content}
+                            {i < items.length - 1 && (
+                                <span className="text-slate-300 dark:text-stone-700 font-light text-[10px]">/</span>
+                            )}
+                        </span>
+                    );
+                })}
+            </div>
+        </div>
     );
 }
