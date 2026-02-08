@@ -132,7 +132,7 @@ export const SwissProjectIntroSection = (
 								: "opacity-0 translate-y-8",
 						)}
 					>
-						({sectionNumber}) 케이스 스터디
+						({sectionNumber}) 프로젝트
 					</span>
 				</div>
 
@@ -165,7 +165,6 @@ export const SwissProjectIntroSection = (
 				<div className="max-w-[1600px] mx-auto py-12">
 					<SwissScreenshotGallery
 						screenshots={screenshots}
-						itemWidth="180px"
 						containerHeight="420px"
 					/>
 				</div>
@@ -260,7 +259,7 @@ export const SwissProjectIntroSection = (
 									)}
 								>
 									<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-2">
-										나의 역할 (My Role)
+										주요 기여
 									</h3>
 									<ul className="space-y-2">
 										{contribution.map((item) => (

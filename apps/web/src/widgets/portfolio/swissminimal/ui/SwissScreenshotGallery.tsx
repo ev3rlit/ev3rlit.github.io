@@ -7,10 +7,65 @@ import { cn } from "@/shared/lib/cn";
 
 interface SwissScreenshotGalleryProps {
 	screenshots: { src: string; alt: string; caption?: string }[];
-	itemWidth?: string;
 	containerHeight?: string;
 	className?: string;
 }
+
+/** Hook: 이미지 로드 후 가로/세로 비율을 반환 */
+const useImageAspect = (src: string) => {
+	const [aspect, setAspect] = useState<number | null>(null);
+	useEffect(() => {
+		const img = new Image();
+		img.onload = () => setAspect(img.naturalWidth / img.naturalHeight);
+		img.src = src;
+	}, [src]);
+	return aspect;
+};
+
+const GalleryItem = ({
+	shot,
+	idx,
+	baseHeight,
+	onItemClick,
+}: {
+	shot: { src: string; alt: string; caption?: string };
+	idx: number;
+	baseHeight: number;
+	onItemClick: (idx: number) => void;
+}) => {
+	const aspect = useImageAspect(shot.src);
+	const width = aspect ? Math.round(baseHeight * aspect) : baseHeight;
+
+	return (
+		<div
+			className="flex-shrink-0 flex flex-col"
+			style={{ width }}
+		>
+			<button
+				type="button"
+				onClick={() => onItemClick(idx)}
+				className="group flex-1 relative border border-stone-200 dark:border-stone-800 overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-zoom-in"
+			>
+				<img
+					src={shot.src}
+					alt={shot.alt}
+					className="absolute inset-0 w-full h-full object-contain"
+					draggable={false}
+				/>
+				<div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+					<span className="opacity-0 group-hover:opacity-100 transition-opacity text-white bg-black/60 px-3 py-1.5 text-xs font-mono tracking-wider">
+						확대 보기
+					</span>
+				</div>
+			</button>
+			{shot.caption && (
+				<p className="label-text text-stone-500 dark:text-stone-400 mt-2 text-center truncate">
+					{shot.caption}
+				</p>
+			)}
+		</div>
+	);
+};
 
 /* ─── Gallery Lightbox (internal) ─── */
 const GalleryLightbox = ({
@@ -214,7 +269,6 @@ const GalleryLightbox = ({
 /* ─── Main Gallery ─── */
 export const SwissScreenshotGallery = ({
 	screenshots,
-	itemWidth = "180px",
 	containerHeight = "420px",
 	className,
 }: SwissScreenshotGalleryProps) => {
@@ -307,34 +361,13 @@ export const SwissScreenshotGallery = ({
 			>
 				<div className="inline-flex min-w-full justify-center gap-4 h-full px-8">
 					{screenshots.map((shot, idx) => (
-						<div
+						<GalleryItem
 							key={`${shot.src}-${idx}`}
-							className="flex-shrink-0 flex flex-col"
-							style={{ width: itemWidth }}
-						>
-							<button
-								type="button"
-								onClick={() => handleItemClick(idx)}
-								className="group flex-1 relative border border-stone-200 dark:border-stone-800 overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-zoom-in"
-							>
-								<img
-									src={shot.src}
-									alt={shot.alt}
-									className="absolute inset-0 w-full h-full object-contain"
-									draggable={false}
-								/>
-								<div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-									<span className="opacity-0 group-hover:opacity-100 transition-opacity text-white bg-black/60 px-3 py-1.5 text-xs font-mono tracking-wider">
-										확대 보기
-									</span>
-								</div>
-							</button>
-							{shot.caption && (
-								<p className="label-text text-stone-500 dark:text-stone-400 mt-2 text-center truncate">
-									{shot.caption}
-								</p>
-							)}
-						</div>
+							shot={shot}
+							idx={idx}
+							baseHeight={parseInt(containerHeight ?? "420", 10) - 40}
+							onItemClick={handleItemClick}
+						/>
 					))}
 				</div>
 			</div>
