@@ -51,6 +51,10 @@ interface SwissProjectIntroSectionProps {
 	architecturePatterns?: string[];
 	modules?: ProjectModule[];
 	screenshots?: Screenshot[];
+	storeLinks?: {
+		playStore?: string;
+		appStore?: string;
+	};
 }
 
 const isEnhancedMode = (props: SwissProjectIntroSectionProps) =>
@@ -73,6 +77,7 @@ export const SwissProjectIntroSection = (
 		techStack,
 		modules,
 		screenshots,
+		storeLinks,
 	} = props;
 
 	const enhanced = isEnhancedMode(props);
@@ -247,6 +252,26 @@ export const SwissProjectIntroSection = (
 									</div>
 								</div>
 							</div>
+
+							{/* Store Links */}
+							{storeLinks && (
+								<div
+									className={cn(
+										"transition-all duration-700 delay-150",
+										deepDiveVisible
+											? "opacity-100 translate-y-0"
+											: "opacity-0 translate-y-8",
+									)}
+								>
+									<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-2">
+										스토어 (Store)
+									</h3>
+									<div className="flex gap-3">
+										<StoreIcon type="playStore" href={storeLinks.playStore} />
+										<StoreIcon type="appStore" href={storeLinks.appStore} />
+									</div>
+								</div>
+							)}
 
 							{/* My Role / Contribution */}
 							{contribution && (
@@ -428,6 +453,43 @@ export const SwissProjectIntroSection = (
 	);
 };
 
+const StoreIcon = ({ type, href }: { type: "playStore" | "appStore"; href?: string }) => {
+	const disabled = !href;
+	const Tag = disabled ? "span" : "a";
+	const linkProps = disabled ? {} : { href, target: "_blank", rel: "noopener noreferrer" };
+
+	return (
+		<Tag
+			{...linkProps}
+			className={cn(
+				"flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all duration-200",
+				disabled
+					? "border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 cursor-not-allowed line-through decoration-stone-300 dark:decoration-stone-600"
+					: "border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:border-stone-900 dark:hover:border-stone-100 hover:text-stone-900 dark:hover:text-white",
+			)}
+		>
+			{type === "playStore" ? (
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<title>Google Play</title>
+					<path d="M3.61 1.814a1.5 1.5 0 0 0-.61 1.186v18a1.5 1.5 0 0 0 .61 1.186l.39.234L14.5 12 4 1.58l-.39.234Z" fill={disabled ? "currentColor" : "#4285F4"} opacity={disabled ? 0.3 : 1} />
+					<path d="M18.5 8.5 14.5 12l4 3.5 4.5-2.625a1.5 1.5 0 0 0 0-2.75L18.5 8.5Z" fill={disabled ? "currentColor" : "#FBBC04"} opacity={disabled ? 0.3 : 1} />
+					<path d="M4 22.42 14.5 12l4 3.5-11 6.42a1.5 1.5 0 0 1-.89.28 1.5 1.5 0 0 1-.61-.13l-2-.15Z" fill={disabled ? "currentColor" : "#34A853"} opacity={disabled ? 0.3 : 1} />
+					<path d="M4 1.58 14.5 12l-4-3.5L18.5 8.5l-2-.15a1.5 1.5 0 0 0-.61-.13 1.5 1.5 0 0 0-.89.28L4 1.58Z" fill={disabled ? "currentColor" : "#EA4335"} opacity={disabled ? 0.3 : 1} />
+				</svg>
+			) : (
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" opacity={disabled ? 0.3 : 1}>
+					<title>App Store</title>
+					<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z" />
+				</svg>
+			)}
+			<span>{type === "playStore" ? "Google Play" : "App Store"}</span>
+			{disabled && (
+				<span className="text-[10px] uppercase tracking-wider opacity-50">종료</span>
+			)}
+		</Tag>
+	);
+};
+
 /**
  * Legacy layout for backward compatibility (BladeX, etc.)
  * Renders the original snap-section single-screen layout.
@@ -443,6 +505,7 @@ const LegacyLayout = ({
 	description,
 	contribution,
 	onDetailClick,
+	storeLinks,
 }: SwissProjectIntroSectionProps) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const sectionRef = useRef<HTMLElement>(null);
@@ -536,6 +599,20 @@ const LegacyLayout = ({
 							<div className="body-text">{engine}</div>
 						</div>
 					</div>
+
+					{storeLinks && (
+						<div
+							className={cn(
+								"flex gap-3 mb-6 transition-all duration-700 delay-250",
+								isVisible
+									? "opacity-100 translate-y-0"
+									: "opacity-0 translate-y-8",
+							)}
+						>
+							<StoreIcon type="playStore" href={storeLinks.playStore} />
+							<StoreIcon type="appStore" href={storeLinks.appStore} />
+						</div>
+					)}
 
 					<div
 						className={cn(

@@ -46,6 +46,10 @@ export const SwissProjectIntro_SamgukBlade = () => {
                     tags: ["Performance", "Cache", "Optimization"],
                 },
             ]}
+            storeLinks={{
+                playStore: "https://play.google.com/store/apps/details?id=com.hybeim.tkic&pcampaignid=web_share",
+                appStore: "https://apps.apple.com/kr/app/%EC%82%BC%EA%B5%AD%EB%B8%94%EB%A0%88%EC%9D%B4%EB%93%9C-%ED%82%A4%EC%9A%B0%EA%B8%B0-9-999-%EB%BD%91%EA%B8%B0-%EC%A6%9D%EC%A0%95/id6557070807",
+            }}
             screenshots={[
                 { src: "/images/portfolio/tkic/title.png", alt: "타이틀 화면", caption: "타이틀" },
                 { src: "/images/portfolio/tkic/main-lobby.png", alt: "메인 로비", caption: "메인 로비" },

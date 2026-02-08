@@ -44,6 +44,7 @@ export const SwissProjectIntro_BladeX = () => {
                     tags: ["사용자 경험", "서버 중계", "소켓 통신"],
                 },
             ]}
+            storeLinks={{}}
             screenshots={[
                 { src: "/images/portfolio/bladex/main-lobby.jpeg", alt: "메인 로비", caption: "메인 로비" },
                 { src: "/images/portfolio/bladex/ingame.jpeg", alt: "인게임", caption: "인게임" },
