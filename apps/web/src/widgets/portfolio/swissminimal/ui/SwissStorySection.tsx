@@ -15,7 +15,7 @@ interface SwissFeatureSummaryProps {
     // 7-Step Structure
     step01_intro: string;
     step02_background: string | string[];
-    step03_problem: string;
+    step03_problem: string | string[];
     step03_solution: string;
     step04_action: string;
     step05_result: string | string[];
@@ -139,9 +139,17 @@ export const SwissFeatureSummary = ({
                                                 {step02_background}
                                             </p>
                                         )}
-                                        <p className="body-text text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-line font-medium">
-                                            {step03_problem}
-                                        </p>
+                                        {Array.isArray(step03_problem) ? (
+                                            <ul className="list-disc list-outside pl-4 space-y-1.5">
+                                                {step03_problem.map((item, i) => (
+                                                    <li key={i} className="body-text text-stone-700 dark:text-stone-300 leading-relaxed font-medium">{item}</li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p className="body-text text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-line font-medium">
+                                                {step03_problem}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
