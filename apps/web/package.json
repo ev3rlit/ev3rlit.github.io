@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate:snippets": "tsx scripts/generate-snippets.ts",
+    "generate:pdf": "tsx scripts/generate-portfolio-pdf.ts",
     "test": "vitest"
   },
   "dependencies": {
@@ -57,6 +58,8 @@
     "autoprefixer": "^10.0.1",
     "jsdom": "^27.4.0",
     "monaco-editor": "^0.55.1",
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.58.2",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "tsx": "^4.21.0",
