@@ -11,7 +11,7 @@ const SchemaArchitecture = () => (
             <div className="border border-stone-300 dark:border-stone-600 p-4 bg-white dark:bg-stone-900">
                 <div className="text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-3">Before (기존 스키마)</div>
                 <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-stone-900 dark:text-white">
-                    <span className="text-stone-500 dark:text-stone-400">billing_receipt</span> — 영수증 원본만 저장
+                    <span className="text-stone-500 dark:text-stone-400">billing_receipt</span> — 결제 ID만 저장
                 </div>
                 <div className="mt-2 text-stone-500 dark:text-stone-400 text-xs text-center">
                     구매일자 없음 / 통화 없음 / 가격 없음
@@ -125,7 +125,7 @@ export const Detail_PaymentMigration = () => (
             links: {}
         }}
         overview={{
-            intro: "퍼블리셔가 매출 대시보드를 제공하던 시절, 우리는 영수증 원본만 DB에 저장했습니다. 퍼블리셔 계약 해지 후 자체 매출 집계가 필요해졌으나, 구매일자·통화·가격 등 핵심 필드가 스키마에 존재하지 않는 치명적 결함을 발견했습니다.",
+            intro: "퍼블리셔가 매출 대시보드를 제공하던 시절, 우리는 결제 ID만 DB에 저장했습니다. 퍼블리셔 계약 해지 후 자체 매출 집계가 필요해졌으나, 구매일자·통화·가격 등 핵심 필드가 스키마에 존재하지 않는 치명적 결함을 발견했습니다.",
             goals: "라이브 서비스 무중단 상태에서 10만 건 이상의 기존 영수증을 신규 스키마로 마이그레이션하고, 3개 스토어 API를 호출하여 누락된 구매일자를 역으로 복원해야 했습니다.",
             strategy: "배포 시점을 기준으로 '기존 데이터'와 '신규 데이터'를 분리하는 이중 기록(Dual-Write) 전략을 적용했습니다. 기존 데이터는 백그라운드 프로세스가 Store API를 호출하여 마이그레이션하고, 배포 이후 신규 결제는 새 스키마에 직접 기록했습니다."
         }}
@@ -139,7 +139,7 @@ export const Detail_PaymentMigration = () => (
         mainTasks={[
             {
                 title: "플랫폼별 스토어 API 역추적",
-                description: "Google Play, App Store, Galaxy Store 각각의 API를 호출하여 영수증 원본에서 누락된 구매일자를 역으로 복원"
+                description: "Google Play, App Store, Galaxy Store 각각의 API를 호출하여 결제 ID로부터 누락된 구매일자를 역으로 복원"
             },
             {
                 title: "플랫폼별 테이블 + 통합 결제 인덱스 설계",
