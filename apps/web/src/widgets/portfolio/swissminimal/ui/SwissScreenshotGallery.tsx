@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 
 interface SwissScreenshotGalleryProps {
@@ -344,16 +345,18 @@ export const SwissScreenshotGallery = ({
 			{/* Right fade */}
 			<div className="pointer-events-none absolute top-0 bottom-0 right-0 w-12 bg-gradient-to-l from-stone-50 dark:from-stone-900 to-transparent z-10" />
 
-			{/* Lightbox overlay */}
-			{lightboxIndex !== null && (
-				<GalleryLightbox
-					screenshots={screenshots}
-					index={lightboxIndex}
-					onClose={() => setLightboxIndex(null)}
-					onPrev={handlePrev}
-					onNext={handleNext}
-				/>
-			)}
+			{/* Lightbox overlay — portal to body to escape ancestor transforms */}
+			{lightboxIndex !== null &&
+				createPortal(
+					<GalleryLightbox
+						screenshots={screenshots}
+						index={lightboxIndex}
+						onClose={() => setLightboxIndex(null)}
+						onPrev={handlePrev}
+						onNext={handleNext}
+					/>,
+					document.body,
+				)}
 		</div>
 	);
 };
