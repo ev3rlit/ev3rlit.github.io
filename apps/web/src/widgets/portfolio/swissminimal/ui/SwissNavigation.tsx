@@ -188,7 +188,7 @@ export const SwissNavigation = () => {
                     <ThemeToggle />
                     <button
                         type="button"
-                        onClick={() => handleNavClick(navItems[4])}
+                        onClick={() => router.push('/portfolio/contact')}
                         className="label-text px-4 py-2 bg-stone-900 text-white dark:bg-white dark:text-stone-900 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white dark:hover:text-white transition-colors"
                     >
                         제안하기
@@ -201,7 +201,7 @@ export const SwissNavigation = () => {
                     <button
                         type="button"
                         className="label-text text-stone-500"
-                        onClick={() => handleNavClick(navItems[4])}
+                        onClick={() => router.push('/portfolio/contact')}
                     >
                         메뉴
                     </button>

@@ -15,14 +15,6 @@ const Github = ({ className }: { className?: string }) => (
     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
 );
 
-const techStack = ['Golang', 'C++', 'MongoDB', 'Redis', 'AWS (Kinesis)', 'React'];
-
-const collaborationStyle = [
-    { title: '자율적 코드 리뷰', desc: "문제 지적을 넘어 '현상'과 '대안'을 제시하는 건설적 피드백" },
-    { title: '시각화된 소통', desc: '복잡한 로직은 반드시 마인드맵/다이어그램으로 그려서 공유' },
-    { title: '기록 중심', desc: '구두 논의 후 반드시 텍스트로 요약하여 문맥 공유' }
-];
-
 export const SwissContactSection = () => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
@@ -61,7 +53,7 @@ export const SwissContactSection = () => {
                     </div>
                 </div>
 
-                {/* Skills */}
+                {/* Closing Message */}
                 <div className="col-span-12 md:col-span-5 mt-8 md:mt-0">
                     <h2
                         className={cn(
@@ -69,57 +61,26 @@ export const SwissContactSection = () => {
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
-                        기술 역량 &<br />
-                        <span className="accent-indigo">협업 스타일</span>
+                        함께 만들고,<br />
+                        <span className="accent-indigo">함께 성장하고 싶습니다.</span>
                     </h2>
 
-                    {/* Tech Stack */}
-                    <div
+                    <p
                         className={cn(
-                            "mb-8 transition-all duration-700 delay-200",
+                            "text-base text-stone-500 dark:text-stone-400 leading-relaxed break-keep transition-all duration-700 delay-200",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
-                        <div className="label-text text-stone-500 mb-3">기술 스택</div>
-                        <div className="flex flex-wrap gap-2">
-                            {techStack.map((tech) => (
-                                <span
-                                    key={tech}
-                                    className="px-3 py-1 border border-stone-300 dark:border-stone-700 text-sm font-medium text-stone-700 dark:text-stone-300"
-                                >
-                                    {tech}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Collaboration Style */}
-                    <div
-                        className={cn(
-                            "transition-all duration-700 delay-300",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                    >
-                        <div className="label-text text-stone-500 mb-4">협업 스타일</div>
-                        <div className="space-y-4">
-                            {collaborationStyle.map((item) => (
-                                <div key={item.title} className="flex items-start gap-3">
-                                    <span className="w-2 h-2 bg-indigo-600 dark:bg-indigo-400 mt-1.5 flex-shrink-0"></span>
-                                    <div>
-                                        <span className="body-text font-medium text-stone-900 dark:text-white">{item.title}:</span>
-                                        <span className="body-text text-stone-500 ml-1">{item.desc}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                        포트폴리오를 끝까지 읽어주셔서 감사합니다.<br />
+                        편하게 연락 주시면 빠르게 답변드리겠습니다.
+                    </p>
                 </div>
 
                 {/* Contact */}
                 <div className="col-span-12 md:col-span-5 mt-8 md:mt-0 md:pl-8">
                     <div
                         className={cn(
-                            "transition-all duration-700 delay-400",
+                            "transition-all duration-700 delay-300",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}
                     >
