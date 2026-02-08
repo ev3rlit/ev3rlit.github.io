@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { SwissSectionContainer } from "./SwissSectionContainer";
+import { SwissScreenshotGallery } from "./SwissScreenshotGallery";
 import { cn } from "@/shared/lib/cn";
 
 interface Metric {
@@ -163,36 +163,12 @@ export const SwissProjectIntroSection = (
 
 			{/* SCREENSHOTS SECTION */}
 			{screenshots && screenshots.length > 0 && (
-				<div className="max-w-[1600px] mx-auto px-4 md:px-8 py-12">
-					<div
-						className={cn(
-							"grid gap-6 justify-items-center",
-							screenshots.length === 1
-								? "grid-cols-1 max-w-xs mx-auto"
-								: screenshots.length === 2
-									? "grid-cols-2 md:grid-cols-2 max-w-lg mx-auto"
-									: "grid-cols-3 max-w-3xl mx-auto",
-						)}
-					>
-						{screenshots.map((shot) => (
-							<div key={shot.src} className="w-full">
-								<div className="aspect-[9/16] relative border border-stone-200 dark:border-stone-800 overflow-hidden bg-stone-100 dark:bg-stone-800">
-									<Image
-										src={shot.src}
-										alt={shot.alt}
-										fill
-										className="object-contain"
-										sizes="(max-width: 768px) 80vw, (max-width: 1200px) 30vw, 280px"
-									/>
-								</div>
-								{shot.caption && (
-									<p className="label-text text-stone-500 mt-2 text-center">
-										{shot.caption}
-									</p>
-								)}
-							</div>
-						))}
-					</div>
+				<div className="max-w-[1600px] mx-auto py-12">
+					<SwissScreenshotGallery
+						screenshots={screenshots}
+						itemWidth="180px"
+						containerHeight="420px"
+					/>
 				</div>
 			)}
 

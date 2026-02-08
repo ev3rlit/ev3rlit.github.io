@@ -131,9 +131,22 @@ export const SwissMinimalPage = () => {
                             }
                         ]}
                         screenshots={[
-                            { src: "/images/portfolio/samguk_battle.svg", alt: "삼국블레이드 전투 화면 와이어프레임", caption: "전투 화면" },
-                            { src: "/images/portfolio/samguk_inventory.svg", alt: "삼국블레이드 영웅 정보 화면 와이어프레임", caption: "영웅 정보" },
-                            { src: "/images/portfolio/samguk_gacha.svg", alt: "삼국블레이드 가챠 화면 와이어프레임", caption: "가챠 / 뽑기" }
+
+                            { src: "/images/portfolio/tkic/title.png", alt: "타이틀 화면", caption: "타이틀" },
+                            { src: "/images/portfolio/tkic/main-lobby.png", alt: "메인 로비", caption: "메인 로비" },
+                            { src: "/images/portfolio/tkic/offline-reward.png", alt: "오프라인 보상", caption: "오프라인 보상" },
+                            { src: "/images/portfolio/tkic/character.jpeg", alt: "캐릭터 목록", caption: "캐릭터" },
+                            { src: "/images/portfolio/tkic/character-detail.jpeg", alt: "캐릭터 상세", caption: "캐릭터 상세" },
+                            { src: "/images/portfolio/tkic/gacha.png", alt: "가챠 화면", caption: "가챠" },
+                            { src: "/images/portfolio/tkic/gacha-result.png", alt: "가챠 결과", caption: "가챠 결과" },
+                            { src: "/images/portfolio/tkic/shop.png", alt: "상점", caption: "상점" },
+                            { src: "/images/portfolio/tkic/shop-subscription.png", alt: "구독 상품", caption: "구독 상품" },
+                            { src: "/images/portfolio/tkic/castle-defense.png", alt: "성채 방어", caption: "성채 방어" },
+                            { src: "/images/portfolio/tkic/morale.png", alt: "사기 시스템", caption: "사기 시스템" },
+                            { src: "/images/portfolio/tkic/pvp.png", alt: "PvP", caption: "PvP" },
+                            { src: "/images/portfolio/tkic/treasure.png", alt: "보물", caption: "보물" },
+                            { src: "/images/portfolio/tkic/weapons.png", alt: "무기", caption: "무기" },
+                            { src: "/images/portfolio/tkic/worldboss.png", alt: "월드보스", caption: "월드보스" },
                         ]}
                     />
                 </div>
