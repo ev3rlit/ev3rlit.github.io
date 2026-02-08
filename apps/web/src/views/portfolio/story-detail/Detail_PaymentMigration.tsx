@@ -2,10 +2,10 @@ import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
 import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
-const MigrationArchitecture = () => (
+const SchemaArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-base">
         <div className="max-w-3xl mx-auto space-y-8">
-            <div className="text-center text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-8">무중단 스키마 마이그레이션 — 이중 기록 전략</div>
+            <div className="text-center text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-8">스키마 변경</div>
 
             {/* Before */}
             <div className="border border-stone-300 dark:border-stone-600 p-4 bg-white dark:bg-stone-900">
@@ -35,14 +35,82 @@ const MigrationArchitecture = () => (
                     <span className="text-indigo-600 dark:text-indigo-400">통합 결제 인덱스</span> <span className="text-stone-900 dark:text-white">— 구매일자, 통화, 가격</span>
                 </div>
             </div>
+        </div>
+    </div>
+);
 
-            {/* Process */}
-            <div className="mt-6 border-t border-dashed border-stone-300 dark:border-stone-600 pt-4 space-y-2 text-center text-stone-700 dark:text-stone-300 text-sm">
-                <div><span className="text-indigo-600 dark:text-indigo-400">1단계</span> — 배포 전: 기존 10만 건 백그라운드 병렬 마이그레이션</div>
-                <div><span className="text-indigo-600 dark:text-indigo-400">2단계</span> — 배포 후: 신규 결제 → 새 스키마로 직접 기록 (이중 기록)</div>
-                <div><span className="text-indigo-600 dark:text-indigo-400">3단계</span> — 검증: 거래 ID 차집합 비교 (누락 0건)</div>
+const DualWriteArchitecture = () => (
+    <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-base">
+        <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-8">이중 기록 전략 — 무중단 마이그레이션 흐름</div>
+
+            {/* Timeline divider */}
+            <div className="relative flex items-center gap-4">
+                <span className="h-px bg-stone-300 dark:bg-stone-600 flex-grow" />
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest whitespace-nowrap">배포 시점 기준 분리</span>
+                <span className="h-px bg-stone-300 dark:bg-stone-600 flex-grow" />
+            </div>
+
+            {/* Two paths */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Path A: 기존 데이터 */}
+                <div className="border border-stone-300 dark:border-stone-600 p-5 bg-white dark:bg-stone-900 space-y-4">
+                    <div className="text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400">경로 A — 기존 데이터 (10만 건)</div>
+
+                    <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-sm text-stone-900 dark:text-white">
+                        기존 영수증 DB
+                    </div>
+                    <div className="flex justify-center text-stone-400">↓</div>
+                    <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-sm text-stone-900 dark:text-white">
+                        워커 풀 (병렬 처리)
+                    </div>
+                    <div className="flex justify-center text-stone-400">↓</div>
+                    <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-sm text-stone-900 dark:text-white">
+                        스토어 API 호출<br />
+                        <span className="text-xs text-stone-500 dark:text-stone-400">구매일자 역추적</span>
+                    </div>
+                    <div className="flex justify-center text-stone-400">↓</div>
+                    <div className="border border-indigo-600 dark:border-indigo-400 p-3 bg-white dark:bg-stone-800 text-center text-sm">
+                        <span className="text-indigo-600 dark:text-indigo-400 font-bold">신규 스키마 저장</span>
+                    </div>
+                </div>
+
+                {/* Path B: 신규 데이터 */}
+                <div className="border border-stone-900 dark:border-white p-5 bg-white dark:bg-stone-900 space-y-4">
+                    <div className="text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400">경로 B — 신규 결제</div>
+
+                    <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-sm text-stone-900 dark:text-white">
+                        실시간 결제 발생
+                    </div>
+                    <div className="flex justify-center text-stone-400">↓</div>
+                    <div className="border border-stone-200 dark:border-stone-700 p-3 bg-white dark:bg-stone-800 text-center text-sm text-stone-900 dark:text-white">
+                        결제 검증 완료
+                    </div>
+                    <div className="flex justify-center text-stone-400">↓</div>
+                    <div className="border border-indigo-600 dark:border-indigo-400 p-3 bg-white dark:bg-stone-800 text-center text-sm">
+                        <span className="text-indigo-600 dark:text-indigo-400 font-bold">신규 스키마 직접 기록</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Merge point */}
+            <div className="flex justify-center text-stone-400">↓ 두 경로 합류 ↓</div>
+
+            {/* Verification */}
+            <div className="border border-stone-900 dark:border-white p-4 bg-white dark:bg-stone-900 text-center space-y-2">
+                <div className="text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400">정합성 검증</div>
+                <div className="text-sm text-stone-900 dark:text-white">기존 거래 ID 목록 ∩ 신규 테이블 거래 ID → 차집합 비교</div>
+                <div className="text-sm font-bold text-indigo-600 dark:text-indigo-400">누락 0건 확인</div>
             </div>
         </div>
+    </div>
+);
+
+const MigrationArchitecture = () => (
+    <div className="space-y-12">
+        <SchemaArchitecture />
+        <DualWriteArchitecture />
     </div>
 );
 
