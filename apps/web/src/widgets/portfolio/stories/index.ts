@@ -1,4 +1,3 @@
-export { SwissFeatureSummary_ErrorHandling } from './SwissFeatureSummary_ErrorHandling';
 export { SwissFeatureSummary_Websocket } from './SwissFeatureSummary_Websocket';
 export { SwissFeatureSummary_ErrorSystem } from './SwissFeatureSummary_ErrorSystem';
 export { SwissFeatureSummary_TrackingContainer } from './SwissFeatureSummary_TrackingContainer';
