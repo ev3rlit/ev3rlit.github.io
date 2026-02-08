@@ -21,7 +21,7 @@ export const Story_DataEngineering = () => {
             }
             step3_problem={
                 <>
-                    DB에는 영수증 원본(Base64)만 있을 뿐, <strong>분석 필수 데이터</strong>가 전무했습니다.
+                    DB에는 결제 ID만 있을 뿐, <strong>분석 필수 데이터</strong>가 전무했습니다.
                     운영 중인 DB라 스키마 변경 시 다운타임 리스크가 컸습니다.
                 </>
             }
@@ -34,7 +34,7 @@ export const Story_DataEngineering = () => {
             step4_process={
                 <ul className="list-disc list-inside space-y-1 marker:text-indigo-600">
                     <li><strong>Schema Redesign:</strong> 플랫폼별 테이블 분리 및 통합 인덱스 테이블 설계</li>
-                    <li><strong>Data Recovery:</strong> 스토어 API 역조회를 통해 Base64 영수증 상세 정보 복원</li>
+                    <li><strong>Data Recovery:</strong> 스토어 API 역조회를 통해 결제 ID로부터 상세 정보 복원</li>
                     <li><strong>Verification:</strong> Transaction ID 전수 검증으로 데이터 무결성 100% 확보</li>
                 </ul>
             }
