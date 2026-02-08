@@ -36,7 +36,7 @@ interface SwissProjectIntroSectionProps {
 	genre: string;
 	engine: string;
 	description: string;
-	contribution: string;
+	contribution: string[];
 	metrics?: Metric[];
 	onDetailClick?: () => void;
 	platform?: string;
@@ -47,7 +47,6 @@ interface SwissProjectIntroSectionProps {
 	challenges?: string[];
 	strategy?: string;
 	enhancedMetrics?: EnhancedMetric[];
-	contributions?: string[];
 	techStack?: string[];
 	architecturePatterns?: string[];
 	modules?: ProjectModule[];
@@ -263,9 +262,17 @@ export const SwissProjectIntroSection = (
 									<h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-3 border-b border-stone-200 dark:border-stone-700 pb-2">
 										나의 역할 (My Role)
 									</h3>
-									<p className="text-base leading-relaxed text-stone-700 dark:text-stone-300 break-keep">
-										{contribution}
-									</p>
+									<ul className="space-y-2">
+										{contribution.map((item) => (
+											<li
+												key={item}
+												className="flex items-start gap-2 text-sm leading-relaxed text-stone-700 dark:text-stone-300 break-keep"
+											>
+												<span className="mt-1.5 w-1.5 h-1.5 bg-indigo-600 dark:bg-indigo-400 rounded-full shrink-0" />
+												{item}
+											</li>
+										))}
+									</ul>
 								</div>
 							)}
 						</div>
@@ -582,9 +589,17 @@ const LegacyLayout = ({
 						)}
 					>
 						<div className="label-text text-stone-500 mb-4">나의 기여</div>
-						<p className="body-text text-stone-600 dark:text-stone-300 mb-8">
-							{contribution}
-						</p>
+						<ul className="space-y-2 mb-8">
+							{contribution.map((item) => (
+								<li
+									key={item}
+									className="flex items-start gap-2 body-text text-stone-600 dark:text-stone-300"
+								>
+									<span className="mt-1.5 w-1.5 h-1.5 bg-indigo-600 dark:bg-indigo-400 rounded-full shrink-0" />
+									{item}
+								</li>
+							))}
+						</ul>
 
 						{onDetailClick && (
 							<button

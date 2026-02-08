@@ -17,11 +17,14 @@ import {
     SwissAboutSection,
     SwissBladeXRetrospectiveSection,
     SwissContactSection,
+    SwissGrowthCurveSection,
     SwissHeroSection,
     SwissNavigation,
+    SwissProjectIntro_SamgukBlade,
     SwissProjectIntroSection,
     SwissResumeSection,
     SwissRetrospectiveSection,
+    SwissWeaknessSection_Default,
 } from "@/widgets/portfolio/swissminimal";
 
 export const SwissMinimalPage = () => {
@@ -97,58 +100,7 @@ export const SwissMinimalPage = () => {
 
                 {/* PAGE 4: PROJECT INTRO (삼국블레이드) */}
                 <div id="project-samguk">
-                    <SwissProjectIntroSection
-                        sectionNumber="03"
-                        projectName="삼국블레이드 키우기"
-                        period="2023.04 - 2025.10"
-                        projectRole="Server Architect & Lead"
-                        genre="방치형 액션 RPG"
-                        engine="Unreal Engine 5 Client / Golang Server"
-                        description="글로벌 20개국에 서비스 중인 방치형 액션 RPG의 서버 아키텍처를 설계하고, 런칭부터 라이브 운영까지 전 사이클을 주도했습니다."
-                        contribution="라이브 장애 90% 감소 및 로그 시스템 자동화를 통한 운영 효율 400% 증대 달성."
-                        enhancedMetrics={[
-                            { kpi: "Google Play 순위", value: "1위", context: "콜라보 이벤트 당일" },
-                            { kpi: "피크 DAU", value: "10,000", context: "일간 활성 사용자" },
-                            { kpi: "서비스 가용성", value: "무중단", context: "21개월 라이브 운영" },
-                            { kpi: "API 응답 속도", value: "5ms", context: "50ms → 5ms 개선" }
-                        ]}
-                        techStack={["Golang", "MongoDB", "Redis", "WebSocket", "AWS Kinesis", "Naver Cloud Platform", "Jenkins"]}
-                        modules={[
-                            {
-                                title: "앱 서비스 이관",
-                                description: "퍼블리셔 계약 해지 후 AWS에서 Naver Cloud로 2개월 내 전체 인프라·데이터 무중단 이관.",
-                                tags: ["AWS", "NCP", "Zero-downtime"]
-                            },
-                            {
-                                title: "결제 마이그레이션",
-                                description: "라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 완수.",
-                                tags: ["Payment", "Migration", "Zero-downtime"]
-                            },
-                            {
-                                title: "응답속도 개선",
-                                description: "API 응답 속도를 50ms에서 5ms로 개선, 인메모리 캐시와 쿼리 최적화 적용.",
-                                tags: ["Performance", "Cache", "Optimization"]
-                            }
-                        ]}
-                        screenshots={[
-
-                            { src: "/images/portfolio/tkic/title.png", alt: "타이틀 화면", caption: "타이틀" },
-                            { src: "/images/portfolio/tkic/main-lobby.png", alt: "메인 로비", caption: "메인 로비" },
-                            { src: "/images/portfolio/tkic/offline-reward.png", alt: "오프라인 보상", caption: "오프라인 보상" },
-                            { src: "/images/portfolio/tkic/character.jpeg", alt: "캐릭터 목록", caption: "캐릭터" },
-                            { src: "/images/portfolio/tkic/character-detail.jpeg", alt: "캐릭터 상세", caption: "캐릭터 상세" },
-                            { src: "/images/portfolio/tkic/gacha.png", alt: "가챠 화면", caption: "가챠" },
-                            { src: "/images/portfolio/tkic/gacha-result.png", alt: "가챠 결과", caption: "가챠 결과" },
-                            { src: "/images/portfolio/tkic/shop.png", alt: "상점", caption: "상점" },
-                            { src: "/images/portfolio/tkic/shop-subscription.png", alt: "구독 상품", caption: "구독 상품" },
-                            { src: "/images/portfolio/tkic/castle-defense.png", alt: "성채 방어", caption: "성채 방어" },
-                            { src: "/images/portfolio/tkic/morale.png", alt: "사기 시스템", caption: "사기 시스템" },
-                            { src: "/images/portfolio/tkic/pvp.png", alt: "PvP", caption: "PvP" },
-                            { src: "/images/portfolio/tkic/treasure.png", alt: "보물", caption: "보물" },
-                            { src: "/images/portfolio/tkic/weapons.png", alt: "무기", caption: "무기" },
-                            { src: "/images/portfolio/tkic/worldboss.png", alt: "월드보스", caption: "월드보스" },
-                        ]}
-                    />
+                    <SwissProjectIntro_SamgukBlade />
                 </div>
 
                 {/* DYNAMIC STORIES (Samguk Blade) */}
@@ -199,7 +151,7 @@ export const SwissMinimalPage = () => {
                         genre="콘솔급 블록체인 액션 RPG"
                         engine="Unreal Engine / C++ Server"
                         description="기존 서비스 종료된 Blade2 에셋을 재활용하여, 블록체인 기반의 신규 게임 개발. 이 프로젝트는 성공보다 실패에서 더 많이 배운 경험입니다."
-                        contribution="문서화 없이 방치된 Legacy C++ 서버 코어를 분석하여 아키텍처 문서화 및 아이템/인벤토리 코어 로직 설계."
+                        contribution={["문서화 없이 방치된 Legacy C++ 서버 코어를 분석하여 아키텍처 문서화 및 아이템/인벤토리 코어 로직 설계."]}
                     />
                 </div>
 
@@ -212,7 +164,17 @@ export const SwissMinimalPage = () => {
                     <SwissBladeXRetrospectiveSection />
                 </div>
 
-                {/* PAGE 14: SKILLS & CONTACT */}
+                {/* PAGE 14: GROWTH CURVE */}
+                <div id="growth-curve">
+                    <SwissGrowthCurveSection />
+                </div>
+
+                {/* PAGE 15: WEAKNESS & PLAN */}
+                <div id="weakness-plan">
+                    <SwissWeaknessSection_Default />
+                </div>
+
+                {/* PAGE 16: SKILLS & CONTACT */}
                 <div id="contact">
                     <SwissContactSection />
                 </div>
