@@ -1,0 +1,141 @@
+# Go 개발자가 TypeORM을 만났을 때
+
+> 솔직한 감상문
+
+---
+
+## 시작
+
+나는 Go 개발자다. 정확히는 게임 서버를 Go로 만들다가, 이직을 위해 NestJS + TypeORM을 공부하게 됐다.
+
+Go에서는 모든 게 명시적이다. 에러는 반환값으로 돌아오고, 구조체 태그로 DB 매핑을 하고, 쿼리는 sqlx로 직접 쓴다. 예측 가능하다.
+
+TypeORM을 처음 만났을 때, 첫 느낌은 "왜 이렇게 마법이 많지?"였다.
+
+---
+
+## 첫 번째 불편함: 예외가 어디서 터지는지 모르겠다
+
+Go에서는 이렇게 쓴다:
+
+```go
+user, err := repo.FindOne(id)
+if err != nil {
+    return nil, fmt.Errorf("user not found: %w", err)
+}
+```
+
+에러가 반환값이다. 함수 시그니처에 명시되어 있다. 컴파일러가 에러 처리를 강제한다.
+
+TypeScript/NestJS는?
+
+```typescript
+async findOne(id: number): Promise<User> {
+    const user = await this.userRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException();
+    return user;
+}
+```
+
+함수 시그니처에 `NotFoundException`이 보이지 않는다. 어떤 예외가 발생하는지 코드를 열어봐야 안다. 이해가지 않는건 다른 에러는 예외처리하는데, 데이터를 못찾는건 예외처리를 안한다.
+
+TypeORM의 `findOne`이 `QueryFailedError`를 던질 수 있다는 건 소스코드를 뒤져봐야 알았다.
+
+---
+
+## 두 번째 불편함: save()가 너무 많은 일을 한다
+
+단순히 INSERT 하나 하고 싶었다.
+
+```typescript
+const entity = repo.create({ title: 'Hello' });
+await repo.save(entity);
+```
+
+로그를 켜보니:
+
+```
+START TRANSACTION
+INSERT INTO ... RETURNING ...
+COMMIT
+```
+
+???
+
+단순 INSERT인데 왜 트랜잭션이 감싸져 있지?
+
+알고 보니 `save()`는:
+- 신규/수정 자동 판별
+- cascade 관계 처리
+- @BeforeInsert 등 훅 실행
+- 트랜잭션으로 감싸기
+
+"마법"이 너무 많다. Go의 철학과 정반대다.
+
+---
+
+## 그래서 어떻게 했나
+
+결국 QueryBuilder로 직접 쓰기로 했다.
+
+```typescript
+const result = await this.repo
+    .createQueryBuilder()
+    .insert()
+    .into(Posts)
+    .values(data)
+    .returning('*')
+    .execute();
+return result.raw[0];
+```
+
+쿼리 1개. 트랜잭션 없음. 예측 가능.
+
+upsert도 마찬가지:
+
+```typescript
+await repo
+    .createQueryBuilder()
+    .insert()
+    .into(Posts)
+    .values({ id, ...data })
+    .orUpdate(['title', 'content'], ['id'])
+    .returning('*')
+    .execute();
+```
+
+단일 쿼리로 INSERT or UPDATE. PostgreSQL의 `ON CONFLICT`를 그대로 쓴다.
+
+---
+
+## 깨달은 것들
+
+### ORM은 편의 도구지, 은탄환이 아니다
+
+단순 CRUD는 ORM으로, 복잡한 쿼리는 Raw SQL로. 하이브리드가 현실적이다.
+
+### TypeScript의 예외 처리는 느슨하다
+
+함수 시그니처에 예외가 안 보인다. 팀 내 문서화가 필수다.
+
+### "명시적인 게 좋다"는 건 변하지 않았다
+
+Go에서 배운 철학은 TypeScript에서도 유효하다. `save()` 대신 `insert()`, `QueryBuilder` 대신 직접 제어.
+
+---
+
+## 그래도 TypeORM/NestJS를 쓰는 이유
+
+- 생태계가 크다 (npm)
+- 빠르게 프로토타이핑 가능
+- 프론트엔드와 코드 공유
+
+타입 안전성이 더 필요하면 Prisma도 고려해볼 만하다.
+
+---
+
+## 마무리
+
+Go에서 오면 불편한 게 많다. 근데 그 불편함을 인지하고 있다면, 우회할 방법은 있다.
+
+결국 도구는 도구일 뿐이다.
