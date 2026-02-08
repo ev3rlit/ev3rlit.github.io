@@ -8,18 +8,19 @@ export const SwissProjectIntro_SamgukBlade = () => {
             sectionNumber="03"
             projectName="삼국블레이드 키우기"
             period="2023.04 - 2025.10"
-            projectRole="Server Architect & Lead"
+            projectRole="백엔드 개발자"
             genre="방치형 액션 RPG"
             engine="Unreal Engine 5 Client / Golang Server"
             description="글로벌 20개국에 서비스 중인 방치형 액션 RPG의 서버 아키텍처를 설계하고, 런칭부터 라이브 운영까지 전 사이클을 주도했습니다."
             contribution={[
-                "Golang 기반 게임 서버 아키텍처 설계 및 기술 스택(MongoDB, Redis) 선정을 주도하여 런칭부터 21개월 무중단 라이브 운영 달성",
+                "Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성",
                 "트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축",
                 "퍼블리셔 계약 해지 후 AWS → Naver Cloud Platform 전체 인프라·데이터 무중단 이관을 2개월 내 완수",
                 "라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 설계 및 실행",
                 "커스텀 에러 핸들링 시스템 도입으로 라이브 장애 발생률 90% 감소",
-                "AWS Kinesis 기반 실시간 로그 파이프라인 구축으로 운영 모니터링 효율 400% 증대",
+                "AWS Kinesis 기반 실시간 로그 파이프라인 구축으로 운영 모니터링 체계 확립",
                 "인메모리 캐시 레이어 및 쿼리 최적화로 API 응답 속도 50ms → 5ms 개선",
+                "관리자 페이지 REST API 설계 및 개발",
             ]}
             enhancedMetrics={[
                 { kpi: "Google Play 순위", value: "1위", context: "콜라보 이벤트 당일" },
