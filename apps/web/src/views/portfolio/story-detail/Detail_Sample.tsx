@@ -11,7 +11,6 @@ export const Detail_Sample = () => {
                 description: "계약 만료로 인한 긴급 이관 상황에서 AWS에서 Naver Cloud로 3개월 만에 무중단 데이터 마이그레이션을 성공적으로 수행했습니다.",
                 role: "Lead Backend Engineer",
                 period: "2024.01 — 2024.03 (3개월)",
-                status: "배포 완료 / 라이브 운영 중",
                 links: {
                     github: "#",
                     demo: "#"

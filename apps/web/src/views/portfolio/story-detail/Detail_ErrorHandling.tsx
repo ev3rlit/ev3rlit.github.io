@@ -73,7 +73,6 @@ export const Detail_ErrorHandling = () => (
             description: "프로젝트 합류 후 에러 핸들링 부재를 발견하고, oops 라이브러리를 Fork하여 에러 코드·컨텍스트·스택 트레이스를 포함한 구조화된 에러 시스템을 구축했습니다.",
             role: "Backend Engineer",
             period: "2024.03",
-            status: "운영 중",
             links: {}
         }}
         overview={{

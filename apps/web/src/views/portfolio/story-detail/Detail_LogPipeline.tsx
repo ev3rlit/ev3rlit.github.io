@@ -95,7 +95,6 @@ export const Detail_LogPipeline = () => (
             description: "기존 C++ 게임 서버의 로그 추가 작업 시간(0.5일)을 1시간 이내로 단축한 스키마리스 트랜잭션 로깅 시스템.",
             role: "Backend Engineer",
             period: "2024.08",
-            status: "운영 중",
             links: {}
         }}
         overview={{

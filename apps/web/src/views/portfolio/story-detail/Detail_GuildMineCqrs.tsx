@@ -78,7 +78,6 @@ export const Detail_GuildMineCqrs = () => (
             description: "기획팀과 협의하여 도메인을 분리하고, CQRS + 이벤트 소싱으로 20개 이상의 API를 지원하는 아키텍처를 설계",
             role: "Backend Engineer",
             period: "2025.04 — 2025.09",
-            status: "운영 중",
             links: {}
         }}
         overview={{

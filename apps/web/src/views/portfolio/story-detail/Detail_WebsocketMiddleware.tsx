@@ -75,7 +75,6 @@ export const Detail_WebsocketMiddleware = () => (
             description: "고릴라 웹소켓에 gRPC 스타일의 인터셉터 패턴을 직접 구현하여, 로깅·에러 처리·트랜잭션을 자동화하고 개발자가 비즈니스 로직에만 집중할 수 있는 환경을 구축했습니다.",
             role: "Backend Engineer",
             period: "2024.03 ~ 2024.04",
-            status: "운영 중",
             links: {}
         }}
         overview={{

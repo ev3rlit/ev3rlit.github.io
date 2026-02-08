@@ -156,7 +156,6 @@ export const Detail_TrackingContainer = () => (
             description: "유저 데이터를 인메모리로 전환하고, Write-back 캐싱과 BSON Patch Diff로 DB 접근을 제거하여 요청 처리 시간을 90% 단축한 사례입니다.",
             role: "Backend Engineer",
             period: "2024.04 — 2024.04",
-            status: "운영 중",
             links: {}
         }}
         overview={{

@@ -101,7 +101,6 @@ export const Detail_AppleTransfer = () => (
             description: "Apple 앱 이관 완료 시점에 기존 유저가 신규 계정으로 생성되는 장애를 12시간 내 전체 복구한 위기 대응 사례.",
             role: "Backend Engineer",
             period: "2024.06",
-            status: "복구 완료",
             links: {}
         }}
         overview={{

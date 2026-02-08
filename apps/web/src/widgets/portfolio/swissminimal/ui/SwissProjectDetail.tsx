@@ -168,7 +168,6 @@ interface SwissProjectDetailProps {
         description: string;
         role: string;
         period: string;
-        status: string; // e.g. "배포 완료 / 운영 중"
         links: {
             github?: string;
             demo?: string;
@@ -290,17 +289,6 @@ export const SwissProjectDetail = ({
                                             <span className="col-span-1 text-xs uppercase tracking-widest text-stone-500 font-bold">기간</span>
                                             <span className="col-span-2 font-mono text-sm border-b border-stone-200 dark:border-stone-800 pb-1">{projectInfo.period}</span>
                                         </div>
-                                        <div className="grid grid-cols-3 items-baseline">
-                                            <span className="col-span-1 text-xs uppercase tracking-widest text-stone-500 font-bold">상태</span>
-                                            <span className="col-span-2 flex items-center gap-2 font-mono text-sm border-b border-stone-200 dark:border-stone-800 pb-1">
-                                                <span className="relative flex h-2 w-2">
-                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
-                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-                                                </span>
-                                                {projectInfo.status}
-                                            </span>
-                                        </div>
-                                        
                                         <div className="pt-8 flex gap-0">
                                             {projectInfo.links.github && (
                                                 <a href={projectInfo.links.github} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-stone-900 dark:bg-white text-white dark:text-stone-900 h-12 px-4 font-bold text-sm hover:bg-indigo-600 dark:hover:bg-indigo-200 transition-colors border border-stone-900 dark:border-white">

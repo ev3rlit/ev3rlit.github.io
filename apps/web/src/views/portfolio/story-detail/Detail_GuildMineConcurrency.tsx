@@ -86,7 +86,6 @@ export const Detail_GuildMineConcurrency = () => (
             description: "Redis Stream 기반 명령 라우팅과 멱등성 키, 직접 Aggregate 호출로 분산 서버 환경의 데이터 일관성 확보",
             role: "Backend Engineer",
             period: "2025.04 — 2025.09",
-            status: "운영 중",
             links: {}
         }}
         overview={{

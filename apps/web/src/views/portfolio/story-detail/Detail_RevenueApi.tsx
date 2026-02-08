@@ -100,7 +100,6 @@ export const Detail_RevenueApi = () => (
             description: "3개 스토어의 다통화 결제 데이터를 원화로 환산하고, 상품별·기간별·플랫폼별 매출 통계를 제공하는 운영툴 API",
             role: "Backend Engineer",
             period: "2025.04 — 2025.06",
-            status: "운영 중",
             links: {}
         }}
         overview={{
