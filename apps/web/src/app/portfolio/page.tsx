@@ -1,6 +1,5 @@
-
-import { PortfolioPage } from "@/views/portfolio/ui/PortfolioPage";
+import { SwissMinimalPage } from "@/views/portfolio/swissminimal/ui/SwissMinimalPage";
 
 export default function Page() {
-    return <PortfolioPage />;
+    return <SwissMinimalPage />;
 }

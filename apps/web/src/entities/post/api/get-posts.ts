@@ -245,3 +245,19 @@ export async function getExperienceWithNeighbors(projectSlug: string, experience
 
     return { experience, prevExperience, nextExperience, total: experiences.length, current: index + 1 };
 }
+
+export async function getPortfolioPostBySlug(slug: string): Promise<Post | null> {
+    const PORTFOLIO_PATH = path.join(process.cwd(), 'content', 'portfolio');
+    const filePath = path.join(PORTFOLIO_PATH, `${slug}.mdx`);
+
+    if (!fs.existsSync(filePath)) return null;
+
+    const source = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(source);
+
+    return {
+        slug,
+        meta: data as PostMeta,
+        content,
+    };
+}

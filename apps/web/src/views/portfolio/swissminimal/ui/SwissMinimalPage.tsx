@@ -108,52 +108,22 @@ export const SwissMinimalPage = () => {
                 <SwissFeatureSummary_LogPipeline sectionNumber="S.05" storyNumber="05" />
                 <SwissFeatureSummary_GuildMineCqrs sectionNumber="S.06" storyNumber="06" />
 
-                {/* PAGE 9: RETROSPECTIVE (삼국블레이드) */}
-                <div id="retrospective-samguk">
-                    <SwissRetrospectiveSection
-                        sectionLabel="(R.01)"
-                        title="Retrospective: Samguk Blade"
-                        subtitle="Evolution & Unfinished Business"
-                        quote="실패에서 배운 것을 적용했으나, 또 다른 성장의 씨앗(부채)을 발견하다"
-                        evolution={{
-                            title: "Evolution",
-                            items: [
-                                "BladeX의 실패를 딛고 <strong>Golang</strong> 도입 및 아키텍처 주도",
-                                "트랜잭션+롤백 미들웨어 초기 설계로 <strong>데이터 무결성 100% 보장</strong>"
-                            ]
-                        }}
-                        techDebt={{
-                            title: "Technical Debt",
-                            items: [
-                                "<strong>Client DX 부족:</strong> 인메모리 트랜잭션 도구로 인한 클라이언트 로직 부하",
-                                "<strong>Observability:</strong> APM 부재로 인한 수동 장애 대응 한계"
-                            ]
-                        }}
-                        lesson={{
-                            title: "Strategic Lesson",
-                            items: [
-                                "<strong>Data Sovereignty:</strong> 퍼블리셔 의존 없는 핵심 데이터 자체 관리의 중요성 체득"
-                            ]
-                        }}
-                    />
-                </div>
-
-                {/* PAGE 10: PROJECT INTRO (BladeX) */}
+                {/* PAGE 11: PROJECT INTRO (BladeX) */}
                 <div id="project-bladex">
                     <SwissProjectIntro_BladeX />
                 </div>
 
-                {/* PAGE 14: GROWTH CURVE */}
+                {/* PAGE 12: GROWTH CURVE */}
                 <div id="growth-curve">
                     <SwissGrowthCurveSection />
                 </div>
 
-                {/* PAGE 15: WEAKNESS & PLAN */}
+                {/* PAGE 13: WEAKNESS & PLAN */}
                 <div id="weakness-plan">
                     <SwissWeaknessSection_Default />
                 </div>
 
-                {/* PAGE 16: SKILLS & CONTACT */}
+                {/* PAGE 14: SKILLS & CONTACT */}
                 <div id="contact">
                     <SwissContactSection />
                 </div>
