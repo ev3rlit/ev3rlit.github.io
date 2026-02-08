@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const WebsocketInterceptorArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -69,7 +70,7 @@ const WebsocketInterceptorArchitecture = () => (
 export const Detail_WebsocketMiddleware = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "003",
+            number: getFeatureNumber("websocket-middleware"),
             title: "웹소켓 인터셉터\n시스템 구축",
             description: "고릴라 웹소켓에 gRPC 스타일의 인터셉터 패턴을 직접 구현하여, 로깅·에러 처리·트랜잭션을 자동화하고 개발자가 비즈니스 로직에만 집중할 수 있는 환경을 구축했습니다.",
             role: "Backend Engineer",

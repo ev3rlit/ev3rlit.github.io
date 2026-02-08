@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const ConcurrencyArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -80,7 +81,7 @@ const ConcurrencyArchitecture = () => (
 export const Detail_GuildMineConcurrency = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "015",
+            number: getFeatureNumber("guild-mine-concurrency"),
             title: "연합 금광 — 분산 동시성 제어",
             description: "Redis Stream 기반 명령 라우팅과 멱등성 키, 직접 Aggregate 호출로 분산 서버 환경의 데이터 일관성 확보",
             role: "Backend Engineer",

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const InfraArchitecture = () => (
     <div className="w-full bg-stone-50 dark:bg-stone-900 p-8 font-mono text-xs">
@@ -54,7 +55,7 @@ const InfraArchitecture = () => (
 export const Detail_ServiceTransfer = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "009",
+            number: getFeatureNumber("service-transfer"),
             title: "앱 서비스 이관\n(Self-Publishing)",
             description: "퍼블리셔 계약 종료로 인한 서비스 종료 위기에서, 만 2개월 내 전체 서비스(인프라/DB/인증)를 자체 플랫폼으로 긴급 이관하여 서비스를 지켜냈습니다.",
             role: "Backend Engineer",

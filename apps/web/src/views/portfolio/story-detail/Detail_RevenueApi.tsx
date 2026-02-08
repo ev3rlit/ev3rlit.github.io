@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const RevenueArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -94,7 +95,7 @@ const RevenueArchitecture = () => (
 export const Detail_RevenueApi = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "011",
+            number: getFeatureNumber("revenue-api"),
             title: "매출 집계 API",
             description: "3개 스토어의 다통화 결제 데이터를 원화로 환산하고, 상품별·기간별·플랫폼별 매출 통계를 제공하는 운영툴 API",
             role: "Backend Engineer",

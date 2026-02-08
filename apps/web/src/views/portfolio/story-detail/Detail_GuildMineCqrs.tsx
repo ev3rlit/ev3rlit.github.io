@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const CqrsArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -72,7 +73,7 @@ const CqrsArchitecture = () => (
 export const Detail_GuildMineCqrs = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "014",
+            number: getFeatureNumber("guild-mine-cqrs"),
             title: "연합 금광 — 도메인 설계와 CQRS",
             description: "기획팀과 협의하여 도메인을 분리하고, CQRS + 이벤트 소싱으로 20개 이상의 API를 지원하는 아키텍처를 설계",
             role: "Backend Engineer",

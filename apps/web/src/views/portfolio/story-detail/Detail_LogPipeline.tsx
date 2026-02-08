@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const LogPipelineArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -89,7 +90,7 @@ const LogPipelineArchitecture = () => (
 export const Detail_LogPipeline = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "012",
+            number: getFeatureNumber("log-pipeline"),
             title: "로그 프로세스 개선",
             description: "기존 C++ 게임 서버의 로그 추가 작업 시간(0.5일)을 1시간 이내로 단축한 스키마리스 트랜잭션 로깅 시스템.",
             role: "Backend Engineer",

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const MigrationArchitecture = () => (
     <div className="w-full bg-stone-50 dark:bg-stone-900 p-8 font-mono text-xs">
@@ -48,7 +49,7 @@ const MigrationArchitecture = () => (
 export const Detail_PaymentMigration = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "010",
+            number: getFeatureNumber("payment-migration"),
             title: "결제 스키마\n무중단 마이그레이션",
             description: "초기 설계 결함으로 구매일자가 누락된 영수증 10만 건을 서비스 중단 없이 신규 스키마로 마이그레이션한 사례입니다.",
             role: "Backend Engineer",

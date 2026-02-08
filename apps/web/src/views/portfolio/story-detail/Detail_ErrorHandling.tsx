@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const ErrorHandlingArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -67,7 +68,7 @@ const ErrorHandlingArchitecture = () => (
 export const Detail_ErrorHandling = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "002",
+            number: getFeatureNumber("error-handling"),
             title: "에러 추적 시스템 구축",
             description: "프로젝트 합류 후 에러 핸들링 부재를 발견하고, oops 라이브러리를 Fork하여 에러 코드·컨텍스트·스택 트레이스를 포함한 구조화된 에러 시스템을 구축했습니다.",
             role: "Backend Engineer",

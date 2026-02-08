@@ -267,7 +267,7 @@ export const SwissProjectDetail = ({
                             <div className="lg:col-span-8">
                                 <div className="flex items-center gap-4 mb-6">
                                     <span className="px-2 py-1 border border-stone-900 dark:border-white text-xs font-mono font-bold uppercase tracking-wider">
-                                        Project #{projectInfo.number}
+                                        Feature #{projectInfo.number}
                                     </span>
                                     <span className="w-12 h-px bg-stone-900 dark:bg-white"></span>
                                 </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const AppleTransferArchitecture = () => (
     <div className="w-full bg-stone-50 dark:bg-stone-900 p-8 font-mono text-sm">
@@ -95,7 +96,7 @@ const AppleTransferArchitecture = () => (
 export const Detail_AppleTransfer = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "013",
+            number: getFeatureNumber("apple-transfer"),
             title: "Apple 계정 이관 장애 복구",
             description: "Apple 앱 이관 완료 시점에 기존 유저가 신규 계정으로 생성되는 장애를 12시간 내 전체 복구한 위기 대응 사례.",
             role: "Backend Engineer",

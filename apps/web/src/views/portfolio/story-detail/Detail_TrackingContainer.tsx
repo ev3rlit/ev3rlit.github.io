@@ -1,5 +1,6 @@
 import React from 'react';
 import { SwissProjectDetail } from '@/widgets/portfolio/swissminimal/ui/SwissProjectDetail';
+import { getFeatureNumber } from '@/widgets/portfolio/swissminimal/ui/featureData';
 
 const TrackingContainerArchitecture = () => (
     <div className="w-full bg-white dark:bg-stone-950 p-8 font-mono text-sm text-stone-900 dark:text-stone-100">
@@ -150,7 +151,7 @@ const TrackingContainerArchitecture = () => (
 export const Detail_TrackingContainer = () => (
     <SwissProjectDetail
         projectInfo={{
-            number: "016",
+            number: getFeatureNumber("tracking-container"),
             title: "유저 데이터\n동기화 시스템",
             description: "유저 데이터를 인메모리로 전환하고, Write-back 캐싱과 BSON Patch Diff로 DB 접근을 제거하여 요청 처리 시간을 90% 단축한 사례입니다.",
             role: "Backend Engineer",

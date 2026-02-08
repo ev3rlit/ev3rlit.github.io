@@ -4,6 +4,9 @@ import { SwissNavigation } from './SwissNavigation';
 import { SwissFeatureRow } from './SwissFeatureRow';
 import { useEffect } from 'react';
 import { useSidebarStore } from '@/features/layout/model/useSidebarStore';
+import { features } from './featureData';
+
+export { getFeatureNumber } from './featureData';
 
 export const SwissFeatureIndex = () => {
     const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
@@ -17,77 +20,14 @@ export const SwissFeatureIndex = () => {
         };
     }, [setPortfolioMode, setSidebarOpen]);
 
-    const features = [
-        {
-            id: "F.13",
-            title: "에러 핸들링 도입",
-            description: "oops 라이브러리를 Fork하여 정수형 에러 코드·컨텍스트·스택 트레이스를 포함한 구조화된 에러 시스템 구축.",
-            storyId: "error-handling"
-        },
-        {
-            id: "F.14",
-            title: "웹소켓 인터셉터",
-            description: "고릴라 웹소켓에 gRPC 스타일 인터셉터를 직접 구현하여, 로깅·에러 처리·트랜잭션을 자동화한 미들웨어 시스템.",
-            storyId: "websocket-middleware"
-        },
-        {
-            id: "F.05",
-            title: "로그 프로세스 개선",
-            description: "Go 구조체 정의만으로 스키마 관리 없이 빅데이터 저장소로 로그를 전송하는 자동화 파이프라인.",
-            storyId: "log-pipeline"
-        },
-        {
-            id: "F.07",
-            title: "앱 서비스 이관",
-            description: "퍼블리셔 계약 종료 위기에서 2개월 내 인프라/DB/인증을 자체 플랫폼으로 긴급 이관하고, Apple Transfer API로 무중단 계정 마이그레이션을 달성한 사례.",
-            storyId: "service-transfer"
-        },
-        {
-            id: "F.08",
-            title: "결제 스키마 무중단 마이그레이션",
-            description: "초기 설계 결함으로 누락된 구매일자를 Store API 역추적으로 복원하고, 이중 기록 전략으로 10만 건을 무중단 마이그레이션한 사례.",
-            storyId: "payment-migration"
-        },
-        {
-            id: "F.09",
-            title: "매출 집계 API",
-            description: "3개 스토어의 다통화 결제 데이터를 원화로 환산하고, 상품별·기간별·플랫폼별 매출 통계를 제공하는 운영툴 API.",
-            storyId: "revenue-api"
-        },
-        {
-            id: "F.10",
-            title: "Apple 계정 이관 장애 복구",
-            description: "Apple 앱 이관 완료 시 기존 유저가 신규 계정으로 생성되는 장애를 Transfer API와 Account Linking으로 12시간 내 전체 복구한 위기 대응 사례.",
-            storyId: "apple-transfer"
-        },
-        {
-            id: "F.11",
-            title: "연합 금광: 도메인 설계와 CQRS",
-            description: "기획팀과 협의하여 도메인을 분리하고, CQRS + 이벤트 소싱으로 20개 이상의 API를 지원하는 아키텍처를 설계",
-            storyId: "guild-mine-cqrs"
-        },
-        {
-            id: "F.12",
-            title: "연합 금광: 분산 동시성 제어",
-            description: "Redis Stream 기반 명령 라우팅과 멱등성 키, 직접 Aggregate 호출로 분산 서버 환경의 데이터 일관성 확보",
-            storyId: "guild-mine-concurrency"
-        },
-        {
-            id: "F.15",
-            title: "유저 데이터 동기화 시스템",
-            description: "유저 데이터를 인메모리로 전환하고 Write-back 캐싱 + BSON Patch Diff로 DB 접근을 제거하여 요청 처리 시간 90% 단축.",
-            storyId: "tracking-container"
-        }
-    ];
-
     return (
         <div className="h-full w-full overflow-y-auto bg-white dark:bg-stone-950 text-stone-900 dark:text-white font-sans selection:bg-stone-900 selection:text-white dark:selection:bg-white dark:selection:text-stone-900">
-            
+
             <SwissNavigation />
 
             <main className="w-full flex-grow pt-32 pb-24 px-6 md:px-12">
                 <div className="max-w-7xl mx-auto">
-                    
+
                     {/* Header Section */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
                         <div className="lg:col-span-8">
@@ -113,10 +53,11 @@ export const SwissFeatureIndex = () => {
 
                     {/* Feature Rows */}
                     <div className="flex flex-col w-full">
-                        {features.map((feature) => (
-                            <SwissFeatureRow 
-                                key={feature.id}
+                        {features.map((feature, idx) => (
+                            <SwissFeatureRow
+                                key={feature.storyId}
                                 {...feature}
+                                id={`F.${String(idx + 1).padStart(3, '0')}`}
                             />
                         ))}
                     </div>
