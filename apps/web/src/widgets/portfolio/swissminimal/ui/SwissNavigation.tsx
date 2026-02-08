@@ -15,9 +15,9 @@ interface NavItem {
 const navItems: NavItem[] = [
     { label: '홈', path: '/portfolio', hash: 'hero' },
     { label: '소개', path: '/portfolio', hash: 'about' },
-    { label: '기능들', path: '/portfolio/features' },
     { label: '프로젝트', path: '/portfolio', hash: 'project-samguk' },
     { label: '연락처', path: '/portfolio', hash: 'contact' },
+    { label: '기능들', path: '/portfolio/features' },
 ];
 
 // Map all observable section IDs → the nav item hash they belong to
@@ -150,16 +150,7 @@ export const SwissNavigation = () => {
             )}
         >
             <div className="swiss-grid items-center h-auto">
-                {/* Logo */}
-                <div className="col-span-6 md:col-span-2">
-                    <button
-                        type="button"
-                        onClick={() => handleNavClick(navItems[0])}
-                        className="heading-md text-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                        HOMVELOPER.
-                    </button>
-                </div>
+                <div className="col-span-6 md:col-span-2" />
 
                 {/* Navigation Links - Desktop */}
                 <div className="hidden md:flex col-span-8 justify-center gap-8">
