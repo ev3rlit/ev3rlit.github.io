@@ -23,10 +23,10 @@ const resumeData = {
         name: "최범휘",
         role: "게임 서버 개발자",
         summary: "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다.",
-        keywords: ["#꼼꼼함", "#안정지향", "#Extreme_Ownership", "#빈틈없는_대비"],
+        keywords: ["#꼼꼼함", "#안정지향", "#책임감", "#빈틈없는_대비", "#빠른_학습_및_적응"],
         contact: {
             email: "bum4496@naver.com",
-            github: "https://github.com/homveloper",
+            github: "https://github.com/ev3rlit",
             blog: "https://ev3rlit.github.io/"
         }
     },
@@ -126,8 +126,8 @@ export const SwissResumeSection = () => {
                     "flex items-baseline gap-3 border-b border-stone-200 dark:border-stone-800 pb-4 mb-8 transition-all duration-700",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}>
-                    <span className="label-text accent-indigo text-lg">(02)</span>
-                    <h2 className="text-lg font-bold text-stone-900 dark:text-white uppercase tracking-widest">
+                    <span className="label-text accent-indigo text-xl">(02)</span>
+                    <h2 className="text-xl font-bold text-stone-900 dark:text-white uppercase tracking-widest">
                         경력 기술서
                     </h2>
                 </div>
@@ -145,19 +145,19 @@ export const SwissResumeSection = () => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex items-baseline gap-3">
-                                <h3 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
+                                <h3 className="text-3xl font-bold text-stone-900 dark:text-white tracking-tight">
                                     {resumeData.profile.name}
                                 </h3>
-                                <span className="text-base font-bold text-stone-600 dark:text-stone-300">
+                                <span className="text-lg font-bold text-stone-600 dark:text-stone-300">
                                     {resumeData.profile.role}
                                 </span>
                             </div>
-                            <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed break-keep">
+                            <p className="text-base text-stone-600 dark:text-stone-300 leading-relaxed break-keep">
                                 {resumeData.profile.summary}
                             </p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {resumeData.profile.keywords.map((kw) => (
-                                    <span key={kw} className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30 px-2 py-0.5 tracking-wide">
+                                    <span key={kw} className="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30 px-2 py-0.5 tracking-wide">
                                         {kw}
                                     </span>
                                 ))}
@@ -168,25 +168,25 @@ export const SwissResumeSection = () => {
                     {/* RIGHT: Contact (3 cols, col-start-10 — aligned with sidebar) */}
                     <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-3">
                         <div>
-                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
                             <a href={`mailto:${resumeData.profile.contact.email}`}
-                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
+                                className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
                                 {resumeData.profile.contact.email}
                             </a>
                         </div>
                         <div>
-                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">GitHub</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">GitHub</h4>
                             <a href={resumeData.profile.contact.github}
                                 target="_blank" rel="noopener noreferrer"
-                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
                                 {resumeData.profile.contact.github}
                             </a>
                         </div>
                         <div>
-                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Blog</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Blog</h4>
                             <a href={resumeData.profile.contact.blog}
                                 target="_blank" rel="noopener noreferrer"
-                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
                                 {resumeData.profile.contact.blog}
                             </a>
                         </div>
@@ -205,7 +205,7 @@ export const SwissResumeSection = () => {
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
                             <div className="flex items-center gap-4 mb-10">
-                                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+                                <h3 className="text-sm font-bold text-stone-400 uppercase tracking-widest">
                                     업무 경력
                                 </h3>
                                 <span className="h-px bg-stone-200 dark:bg-stone-800 w-12"></span>
@@ -216,17 +216,17 @@ export const SwissResumeSection = () => {
                                     <div key={career.company}>
                                         {/* Company Header */}
                                         <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
-                                            <h4 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
+                                            <h4 className="text-3xl font-bold text-stone-900 dark:text-white tracking-tight">
                                                 {career.company}
                                             </h4>
-                                            <span className="font-mono text-xs font-bold text-stone-400 mt-1 md:mt-0">
+                                            <span className="font-mono text-sm font-bold text-stone-400 mt-1 md:mt-0">
                                                 {career.period}
                                                 <span className="ml-2 text-indigo-500 dark:text-indigo-400">
                                                     ({calcDuration(career.period)})
                                                 </span>
                                             </span>
                                         </div>
-                                        <p className="text-base font-bold text-stone-600 dark:text-stone-300 mb-6">
+                                        <p className="text-lg font-bold text-stone-600 dark:text-stone-300 mb-6">
                                             {career.role}
                                         </p>
 
@@ -235,17 +235,17 @@ export const SwissResumeSection = () => {
                                             {career.projects.map((project) => (
                                                 <div key={project.name}>
                                                     <div className="flex flex-col md:flex-row md:items-baseline gap-2 mb-3">
-                                                        <h5 className="text-base font-bold text-stone-900 dark:text-white">
+                                                        <h5 className="text-lg font-bold text-stone-900 dark:text-white">
                                                             {project.name}
                                                         </h5>
-                                                        <span className="text-sm text-stone-500 dark:text-stone-400">
+                                                        <span className="text-base text-stone-500 dark:text-stone-400">
                                                             — {project.desc}
                                                         </span>
                                                     </div>
                                                     <ul className="space-y-2">
                                                         {project.details.map((detail) => (
-                                                            <li key={detail} className="flex items-start gap-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed hover:text-stone-900 dark:hover:text-stone-200 transition-colors duration-200">
-                                                                <span className="mt-2 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0"></span>
+                                                            <li key={detail} className="flex items-start gap-3 text-base text-stone-600 dark:text-stone-400 leading-relaxed hover:text-stone-900 dark:hover:text-stone-200 transition-colors duration-200">
+                                                                <span className="mt-2.5 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0"></span>
                                                                 <span>{detail}</span>
                                                             </li>
                                                         ))}
@@ -264,7 +264,7 @@ export const SwissResumeSection = () => {
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
                             <div className="flex items-center gap-4 mb-6">
-                                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+                                <h3 className="text-sm font-bold text-stone-400 uppercase tracking-widest">
                                     학력
                                 </h3>
                                 <span className="h-px bg-stone-200 dark:bg-stone-800 w-8"></span>
@@ -272,10 +272,10 @@ export const SwissResumeSection = () => {
                             <div className="space-y-4">
                                 {resumeData.education.map((edu) => (
                                     <div key={edu.school} className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 pl-4 border-l-2 border-stone-200 dark:border-stone-800">
-                                        <h4 className="text-base font-bold text-stone-900 dark:text-white">{edu.school}</h4>
-                                        <p className="text-sm text-stone-600 dark:text-stone-400">{edu.major}</p>
-                                        <p className="text-xs text-stone-400">{edu.desc}</p>
-                                        <span className="flex-grow md:text-right font-mono text-xs font-bold text-stone-300">{edu.period}</span>
+                                        <h4 className="text-lg font-bold text-stone-900 dark:text-white">{edu.school}</h4>
+                                        <p className="text-base text-stone-600 dark:text-stone-400">{edu.major}</p>
+                                        <p className="text-sm text-stone-400">{edu.desc}</p>
+                                        <span className="flex-grow md:text-right font-mono text-sm font-bold text-stone-300">{edu.period}</span>
                                     </div>
                                 ))}
                             </div>
@@ -290,16 +290,16 @@ export const SwissResumeSection = () => {
                             "transition-all duration-1000 delay-500",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-6">
+                            <h3 className="text-sm font-bold text-stone-400 uppercase tracking-widest mb-6">
                                 기술 스택
                             </h3>
                             <div className="space-y-8">
                                 {resumeData.techStack.map((stack) => (
                                     <div key={stack.category}>
-                                        <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
+                                        <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
                                             {stack.category}
                                         </h4>
-                                        <p className="text-sm font-medium text-stone-800 dark:text-stone-300 leading-relaxed border-b border-stone-100 dark:border-stone-900 pb-2">
+                                        <p className="text-base font-medium text-stone-800 dark:text-stone-300 leading-relaxed border-b border-stone-100 dark:border-stone-900 pb-2">
                                             {stack.items}
                                         </p>
                                     </div>
@@ -313,7 +313,7 @@ export const SwissResumeSection = () => {
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
                             <div className="flex items-center gap-4 mb-6">
-                                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+                                <h3 className="text-sm font-bold text-stone-400 uppercase tracking-widest">
                                     수상 내역
                                 </h3>
                                 <span className="w-full h-px bg-stone-200 dark:bg-stone-800 flex-grow"></span>
@@ -321,16 +321,16 @@ export const SwissResumeSection = () => {
                             <div className="space-y-6">
                                 {resumeData.awards.map((award) => (
                                     <div key={award.title}>
-                                        <div className="font-mono text-[10px] font-bold text-stone-300 mb-1">{award.year}</div>
-                                        <h4 className="text-sm font-bold text-stone-900 dark:text-white leading-tight">{award.title}</h4>
-                                        <p className="text-xs text-stone-600 dark:text-stone-400 mt-1">{award.award}</p>
+                                        <div className="font-mono text-xs font-bold text-stone-300 mb-1">{award.year}</div>
+                                        <h4 className="text-base font-bold text-stone-900 dark:text-white leading-tight">{award.title}</h4>
+                                        <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">{award.award}</p>
                                     </div>
                                 ))}
                             </div>
                         </section>
 
                         {/* Footer */}
-                        <div className="pt-6 border-t border-stone-200 dark:border-stone-800 text-[10px] text-stone-300 font-mono">
+                        <div className="pt-6 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-300 font-mono">
                             <p>© 2024 BeomHwi Choi</p>
                         </div>
                     </div>
