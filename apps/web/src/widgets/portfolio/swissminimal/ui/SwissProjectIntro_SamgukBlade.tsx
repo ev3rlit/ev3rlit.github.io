@@ -8,7 +8,7 @@ export const SwissProjectIntro_SamgukBlade = () => {
             sectionNumber="03"
             projectName="삼국블레이드 키우기"
             period="2023.04 - 2025.10"
-            projectRole="백엔드 개발자"
+            projectRole="게임 서버 개발자"
             genre="방치형 액션 RPG"
             engine="Unreal Engine 5 Client / Golang Server"
             description="글로벌 20개국에 서비스 중인 방치형 액션 RPG의 서버 아키텍처를 설계하고, 런칭부터 라이브 운영까지 전 사이클을 주도했습니다."

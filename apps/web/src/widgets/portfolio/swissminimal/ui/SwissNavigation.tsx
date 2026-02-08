@@ -1,57 +1,143 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { cn } from '@/shared/lib/cn';
-import { ThemeToggle } from '@/features/theme-toggle/ui/ThemeToggle';
+import { usePathname, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
-const navItems = [
-    { label: '홈', href: '#hero' },
-    { label: '소개', href: '#about' },
-    { label: '기능들', href: '/portfolio/features' },
-    { label: '프로젝트', href: '#works' },
-    { label: '연락처', href: '#contact' },
+import { ThemeToggle } from '@/features/theme-toggle/ui/ThemeToggle';
+import { cn } from '@/shared/lib/cn';
+
+interface NavItem {
+    label: string;
+    path: string;
+    hash?: string; // section id (without #)
+}
+
+const navItems: NavItem[] = [
+    { label: '홈', path: '/portfolio', hash: 'hero' },
+    { label: '소개', path: '/portfolio', hash: 'about' },
+    { label: '기능들', path: '/portfolio/features' },
+    { label: '프로젝트', path: '/portfolio', hash: 'project-samguk' },
+    { label: '연락처', path: '/portfolio', hash: 'contact' },
 ];
 
+// Map all observable section IDs → the nav item hash they belong to
+const sectionToNavHash: Record<string, string> = {
+    'hero': 'hero',
+    'about': 'about',
+    'resume': 'about',
+    'project-samguk': 'project-samguk',
+    'retrospective-samguk': 'project-samguk',
+    'project-bladex': 'project-samguk',
+    'retrospective-bladex': 'project-samguk',
+    'contact': 'contact',
+};
+
 export const SwissNavigation = () => {
-    const [activeSection, setActiveSection] = useState('hero');
+    const pathname = usePathname();
+    const router = useRouter();
+    const [activeNavHash, setActiveNavHash] = useState('hero');
     const [isScrolled, setIsScrolled] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            setIsScrolled(scrollY > 100);
+    const isPortfolioHome = pathname === '/portfolio';
 
-            // Determine active section
-            const sections = ['hero', 'about', 'works', 'contact'];
-            const sectionElements = sections.map(id => document.getElementById(id));
-
-            for (let i = sectionElements.length - 1; i >= 0; i--) {
-                const section = sectionElements[i];
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    // 섹션이 화면의 절반 지점에 걸쳐있을 때 활성화
-                    if (rect.top <= window.innerHeight / 2) {
-                        setActiveSection(sections[i]);
-                        break;
-                    }
-                }
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+    // Find the scroll container (motion.main in SwissMinimalPage)
+    const getScrollContainer = useCallback((): HTMLElement | null => {
+        return document.querySelector<HTMLElement>('.overflow-y-scroll');
     }, []);
 
-    const scrollToSection = (href: string) => {
-        if (!href.startsWith('#')) {
-            window.location.href = href;
+    // Scroll background detection
+    useEffect(() => {
+        const container = getScrollContainer();
+        const target = container || window;
+
+        const handleScroll = () => {
+            const scrollY = container ? container.scrollTop : window.scrollY;
+            setIsScrolled(scrollY > 100);
+        };
+
+        target.addEventListener('scroll', handleScroll, { passive: true });
+        return () => target.removeEventListener('scroll', handleScroll);
+    }, [getScrollContainer]);
+
+    // Active section detection via IntersectionObserver (portfolio page only)
+    useEffect(() => {
+        if (!isPortfolioHome) return;
+
+        const sectionIds = Object.keys(sectionToNavHash);
+        const visibleSections = new Map<string, number>();
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        visibleSections.set(entry.target.id, entry.intersectionRatio);
+                    } else {
+                        visibleSections.delete(entry.target.id);
+                    }
+                }
+
+                // Pick the section with the highest visibility
+                let bestId = '';
+                let bestRatio = 0;
+                visibleSections.forEach((ratio, id) => {
+                    if (ratio > bestRatio) {
+                        bestRatio = ratio;
+                        bestId = id;
+                    }
+                });
+
+                if (bestId) {
+                    const navHash = sectionToNavHash[bestId];
+                    if (navHash) setActiveNavHash(navHash);
+                }
+            },
+            { threshold: [0, 0.25, 0.5, 0.75, 1] }
+        );
+
+        // Delay slightly so the scroll container is mounted
+        const timer = setTimeout(() => {
+            for (const id of sectionIds) {
+                const el = document.getElementById(id);
+                if (el) observer.observe(el);
+            }
+        }, 150);
+
+        return () => {
+            clearTimeout(timer);
+            observer.disconnect();
+        };
+    }, [isPortfolioHome]);
+
+    const handleNavClick = (item: NavItem) => {
+        // Page link (no hash) → navigate directly
+        if (!item.hash) {
+            router.push(item.path);
             return;
         }
-        
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+
+        // On portfolio home → scroll to section
+        if (isPortfolioHome) {
+            const el = document.getElementById(item.hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+            return;
         }
+
+        // On other pages → navigate to portfolio page with hash
+        router.push(`${item.path}#${item.hash}`);
+    };
+
+    const isActive = (item: NavItem): boolean => {
+        // "기능들" (page link) — active on /portfolio/features and /portfolio/story/*
+        if (!item.hash) {
+            return pathname === item.path || pathname.startsWith('/portfolio/story') || pathname.startsWith('/portfolio/features');
+        }
+
+        // Section links — only highlight on portfolio home
+        if (isPortfolioHome) {
+            return activeNavHash === item.hash;
+        }
+
+        return false;
     };
 
     return (
@@ -68,7 +154,7 @@ export const SwissNavigation = () => {
                 <div className="col-span-6 md:col-span-2">
                     <button
                         type="button"
-                        onClick={() => scrollToSection('#hero')}
+                        onClick={() => handleNavClick(navItems[0])}
                         className="heading-md text-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                     >
                         HOMVELOPER.
@@ -78,27 +164,22 @@ export const SwissNavigation = () => {
                 {/* Navigation Links - Desktop */}
                 <div className="hidden md:flex col-span-8 justify-center gap-8">
                     {navItems.map((item) => (
-                        <a
-                            key={item.href}
-                            href={item.href}
-                            onClick={(e) => { 
-                                if (item.href.startsWith('#')) {
-                                    e.preventDefault(); 
-                                    scrollToSection(item.href); 
-                                }
-                            }}
+                        <button
+                            key={item.label}
+                            type="button"
+                            onClick={() => handleNavClick(item)}
                             className={cn(
                                 "label-text transition-all duration-300 relative",
-                                activeSection === item.href.slice(1)
+                                isActive(item)
                                     ? "text-stone-900 dark:text-white"
                                     : "text-stone-400 hover:text-stone-900 dark:hover:text-white"
                             )}
                         >
                             {item.label}
-                            {activeSection === item.href.slice(1) && (
-                                <span className="block absolute -bottom-1 left-0 w-full h-0.5 bg-indigo-600 dark:bg-indigo-400"></span>
+                            {isActive(item) && (
+                                <span className="block absolute -bottom-1 left-0 w-full h-0.5 bg-indigo-600 dark:bg-indigo-400" />
                             )}
-                        </a>
+                        </button>
                     ))}
                 </div>
 
@@ -107,7 +188,7 @@ export const SwissNavigation = () => {
                     <ThemeToggle />
                     <button
                         type="button"
-                        onClick={() => scrollToSection('#contact')}
+                        onClick={() => handleNavClick(navItems[4])}
                         className="label-text px-4 py-2 bg-stone-900 text-white dark:bg-white dark:text-stone-900 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white dark:hover:text-white transition-colors"
                     >
                         제안하기
@@ -120,7 +201,7 @@ export const SwissNavigation = () => {
                     <button
                         type="button"
                         className="label-text text-stone-500"
-                        onClick={() => scrollToSection('#contact')}
+                        onClick={() => handleNavClick(navItems[4])}
                     >
                         메뉴
                     </button>
