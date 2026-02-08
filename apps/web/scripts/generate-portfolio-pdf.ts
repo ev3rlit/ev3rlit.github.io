@@ -47,6 +47,7 @@ async function generatePortfolioPDF() {
 			el = el.parentElement;
 		}
 
+		// ── CSS: 안전한 전역 오버라이드만 ──
 		const style = document.createElement("style");
 		style.textContent = `
 			html, body {
@@ -59,6 +60,7 @@ async function generatePortfolioPDF() {
 			[class*="translate-x"] { transform: none !important; }
 			[class*="-translate"] { transform: none !important; }
 			[class*="scale-9"] { transform: none !important; }
+			.shadow-xl { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important; }
 			*, *::before, *::after {
 				animation: none !important;
 				transition: none !important;
@@ -67,6 +69,39 @@ async function generatePortfolioPDF() {
 			aside { display: none !important; }
 		`;
 		document.head.appendChild(style);
+
+		// ── JS: 정밀 타겟 DOM 조작 ──
+
+		// 1. 갤러리 '확대 보기' 호버 오버레이 숨김
+		document.querySelectorAll(".opacity-0").forEach((el) => {
+			if (el.className.includes("group-hover:")) {
+				(el as HTMLElement).style.display = "none";
+			}
+		});
+		// 갤러리 호버 배경 오버레이도 숨김
+		document.querySelectorAll("div").forEach((el) => {
+			if (
+				el.className.includes("group-hover:bg-black") &&
+				el.className.includes("absolute")
+			) {
+				(el as HTMLElement).style.display = "none";
+			}
+		});
+
+		// 2. 갤러리 양끝 그라데이션 페이드 숨김
+		document.querySelectorAll(".pointer-events-none").forEach((el) => {
+			if (el.className.includes("bg-gradient-to")) {
+				(el as HTMLElement).style.display = "none";
+			}
+		});
+
+		// 3. Sidebar 복원 버튼 숨김 (fixed position 버튼)
+		document.querySelectorAll("button").forEach((btn) => {
+			const computed = window.getComputedStyle(btn);
+			if (computed.position === "fixed") {
+				btn.style.display = "none";
+			}
+		});
 	});
 
 	await page.waitForTimeout(500);
