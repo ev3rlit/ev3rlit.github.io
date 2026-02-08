@@ -2,28 +2,24 @@
 
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 // --- Types ---
 
-interface Value {
-    keyword: string;
-    desc: ReactNode;
+interface AboutCard {
+    headline: string;
+    desc: string;
 }
 
 interface SwissAboutSectionProps {
     sectionNumber?: string;
-    title?: string;
+    headline?: ReactNode;
     name?: string;
     role?: string;
 
-    introduction?: ReactNode;
-    philosophy?: ReactNode;
+    philosophy?: string;
 
-    experienceLabel?: string;
-    experienceValue?: string;
-    experienceDesc?: string;
-
-    values?: Value[];
+    cards?: AboutCard[];
 
     motivation?: {
         title?: string;
@@ -31,46 +27,34 @@ interface SwissAboutSectionProps {
     };
 }
 
-// --- Default Data (3 values, 2-line descriptions) ---
+// --- Default Data ---
 
-const defaultValues: Value[] = [
+const defaultCards: AboutCard[] = [
     {
-        keyword: 'Stability First',
-        desc: '장애가 발생하지 않는 구조를 설계합니다. 에러 컨텍스트로 문제 원인을 빠르게 추적합니다.',
+        headline: '구조로 팀을 움직인다',
+        desc: '혼자 잘하는 코드보다 팀 전체가 생산적으로 일할 수 있는 구조를 먼저 고민합니다. 동료가 핵심 업무에만 집중할 수 있는 환경을 만드는 것이 제 역할입니다.',
     },
     {
-        keyword: 'Simplicity',
-        desc: '이해하기 쉽고 유지보수가 용이한 코드를 작성합니다. 명확한 구조가 장기적으로 더 안정적입니다.',
+        headline: '경계 없는 오너십',
+        desc: '"내 담당이 아닌데요"라는 말 대신 서비스 정상화를 최우선으로 둡니다. 다른 직군에서 발생한 긴급 장애도, 제가 해결할 수 있는 방법이 있다면 먼저 나서서 해결합니다.',
     },
     {
-        keyword: 'Team-Oriented',
-        desc: '팀 전체가 생산적으로 일할 수 있는 구조를 만듭니다. 직관적인 API로 핵심 로직에 집중할 수 있도록 합니다.',
+        headline: '실패를 성장으로 바꾸는 습관',
+        desc: '첫 프로젝트의 실패를 끝까지 복기하며 "왜 안 됐는지"를 파고들었고, 그 교훈을 다음 프로젝트의 성공 기반으로 삼았습니다. 실패를 빠르게 인식하고, 원인을 학습하고, 반드시 개선하는 반복이 저를 성장시킵니다.',
     },
 ];
 
 // --- Component ---
 
 export const SwissAboutSection = ({
-    sectionNumber = "ABOUT",
-    title = "WHO I AM",
+    sectionNumber = "소개",
+    headline = "실패를 끝까지 파고들어 성장으로 만드는 개발자",
     name = "최범휘",
-    role = "BACKEND DEVELOPER",
+    role = "백엔드 개발자",
 
-    introduction = (
-        <>
-            안정적인 시스템을 설계하고,{'\n'}
-            팀 전체의 생산성을 높이는{'\n'}
-            백엔드 개발자
-        </>
-    ),
+    philosophy = "복잡한 구조보다 단순하고 명확한 설계를 지향합니다. 좋은 아키텍처는 혼자 잘 짜는 코드가 아니라, 팀 전체가 생산적으로 일할 수 있게 만드는 구조라고 믿습니다.",
 
-    philosophy = "단순하고 명확한 설계를 지향합니다. 빠르게 검증하고 개선하는 반복적 개발을 선호합니다.",
-
-    experienceLabel = "EXPERIENCE",
-    experienceValue = "3.5Y",
-    experienceDesc = "GAME SERVER BACKEND",
-
-    values = defaultValues,
+    cards = defaultCards,
 
     motivation,
 }: SwissAboutSectionProps) => {
@@ -97,19 +81,19 @@ export const SwissAboutSection = ({
 
     return (
         <section ref={sectionRef} className="snap-section bg-white overflow-hidden">
-            <div className="w-full max-w-[1440px] mx-auto px-8 md:px-16">
+            <SwissSectionContainer className="flex flex-col justify-center h-full">
 
-                {/* ── Header ── */}
+                {/* ── Row 1: Headline ── */}
                 <div className={cn(
-                    "flex justify-between items-start mb-8 border-b border-gray-200 pb-4 transition-all duration-700",
+                    "flex justify-between items-end border-b border-gray-200 pb-5 mb-6 transition-all duration-700",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
                     <div>
-                        <h2 className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-2">
+                        <h2 className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-3">
                             {sectionNumber}
                         </h2>
-                        <h3 className="text-3xl md:text-4xl font-black text-black uppercase tracking-tight">
-                            {title}
+                        <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight break-keep">
+                            {headline}
                         </h3>
                     </div>
                     <div className="text-right hidden md:block">
@@ -118,115 +102,73 @@ export const SwissAboutSection = ({
                     </div>
                 </div>
 
-                {/* ── Asymmetric Grid (4:8) ── */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-
-                    {/* LEFT COL (Span 4) */}
-                    <div className="md:col-span-4 flex flex-col gap-6 pr-6 md:border-r border-gray-100">
-                        <div className={cn(
-                            "transition-all duration-700 delay-100",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}>
-                            <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
-                                01 Introduction
-                            </span>
-                            <div className="text-2xl font-bold leading-tight text-black break-keep whitespace-pre-line">
-                                {introduction}
-                            </div>
-                        </div>
-
-                        <div className={cn(
-                            "transition-all duration-700 delay-200",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}>
-                            <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
-                                02 Philosophy
-                            </span>
-                            <div className="text-sm text-gray-600 leading-relaxed font-medium break-keep">
-                                {philosophy}
-                            </div>
-                        </div>
-
-                        {/* Experience Highlight */}
-                        <div className={cn(
-                            "transition-all duration-700 delay-300",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}>
-                            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
-                                <span className="text-xs font-bold text-gray-400 uppercase block mb-1">
-                                    {experienceLabel}
-                                </span>
-                                <div className="text-3xl font-black text-black">
-                                    {experienceValue}
-                                </div>
-                                <div className="text-xs text-indigo-600 font-bold mt-1 uppercase">
-                                    {experienceDesc}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* RIGHT COL (Span 8) */}
-                    <div className="md:col-span-8 flex flex-col gap-6 pl-0 md:pl-4">
-
-                        {/* Core Values (3 cols) */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {values.map((val, idx) => (
-                                <div
-                                    key={val.keyword}
-                                    className={cn(
-                                        "transition-all duration-700",
-                                        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                                    )}
-                                    style={{ transitionDelay: `${200 + idx * 100}ms` }}
-                                >
-                                    <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
-                                        0{idx + 3} {val.keyword}
-                                    </span>
-                                    <div className="text-sm text-gray-700 leading-relaxed break-keep line-clamp-2">
-                                        {val.desc}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Motivation - Dark Block */}
-                        <div className={cn(
-                            "bg-gray-900 text-white p-6 transition-all duration-700",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}
-                            style={{ transitionDelay: '600ms' }}
-                        >
-                            {motivation ? (
-                                <>
-                                    <span className="text-xs font-bold text-gray-500 uppercase mb-2 block">
-                                        {motivation.title || "06 Motivation"}
-                                    </span>
-                                    <div className="text-sm text-gray-300 leading-relaxed break-keep">
-                                        {motivation.content}
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <span className="text-xs font-bold text-gray-500 uppercase mb-2 block">
-                                        06 Motivation
-                                    </span>
-                                    <div className="border border-dashed border-gray-700 p-4">
-                                        <p className="text-sm text-gray-400 mb-1">
-                                            지원 동기 (회사별 커스터마이징 영역)
-                                        </p>
-                                        <p className="text-xs text-gray-600">
-                                            motivation prop으로 회사별 지원 동기를 주입하세요.
-                                        </p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-
-                    </div>
+                {/* ── Row 2: Philosophy ── */}
+                <div className={cn(
+                    "border-b border-gray-100 pb-5 mb-6 transition-all duration-700 delay-100",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}>
+                    <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
+                        개발 철학
+                    </span>
+                    <p className="text-base text-gray-600 leading-relaxed font-medium break-keep">
+                        {philosophy}
+                    </p>
                 </div>
 
-            </div>
+                {/* ── Row 3: About Cards (3-col grid) ── */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                    {cards.map((card, idx) => (
+                        <div
+                            key={card.headline}
+                            className={cn(
+                                "border border-gray-200 p-5 flex flex-col transition-all duration-700",
+                                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                            )}
+                            style={{ transitionDelay: `${200 + idx * 120}ms` }}
+                        >
+                            <span className="text-xs font-bold text-indigo-600 font-mono mb-3">
+                                0{idx + 1}
+                            </span>
+                            <h4 className="text-base font-black text-black tracking-tight mb-3 break-keep">
+                                {card.headline}
+                            </h4>
+                            <p className="text-sm text-gray-600 leading-relaxed break-keep">
+                                {card.desc}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* ── Row 4: 지원 동기 ── */}
+                <div className={cn(
+                    "bg-black text-white p-6 transition-all duration-700",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+                    style={{ transitionDelay: '600ms' }}
+                >
+                    {motivation ? (
+                        <>
+                            <span className="text-sm font-bold text-white/50 uppercase mb-2 block">
+                                {motivation.title || "지원 동기"}
+                            </span>
+                            <div className="text-base text-white leading-relaxed break-keep">
+                                {motivation.content}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <span className="text-sm font-bold text-white/50 uppercase mb-2 block">
+                                지원 동기
+                            </span>
+                            <p className="text-base text-white/80 leading-relaxed break-keep">
+                                좋은 개발자는 혼자 잘하는 것이 아니라, 팀 전체가 더 나은 코드를 더 빠르게 작성할 수 있게 만드는 사람이라고 믿습니다.
+                                그동안 쌓아온 안정적인 서비스 운영 경험과 팀 생산성을 높이는 설계 역량을 바탕으로, 함께 성장할 수 있는 팀에서 실질적인 가치를 만들고 싶습니다.
+                            </p>
+                        </>
+                    )}
+                </div>
+
+            </SwissSectionContainer>
         </section>
     );
 };
