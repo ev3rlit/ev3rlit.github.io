@@ -80,37 +80,37 @@ export const SwissAboutSection = ({
     }, []);
 
     return (
-        <section ref={sectionRef} className="snap-section bg-white overflow-hidden">
+        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 overflow-hidden">
             <SwissSectionContainer className="flex flex-col justify-center h-full">
 
                 {/* ── Row 1: Headline ── */}
                 <div className={cn(
-                    "flex justify-between items-end border-b border-gray-200 pb-5 mb-6 transition-all duration-700",
+                    "flex justify-between items-end border-b border-stone-200 dark:border-stone-800 pb-5 mb-6 transition-all duration-700",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
                     <div>
-                        <h2 className="text-indigo-600 font-bold tracking-widest uppercase text-sm mb-3">
+                        <h2 className="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest uppercase text-sm mb-3">
                             {sectionNumber}
                         </h2>
-                        <h3 className="text-3xl md:text-4xl font-black text-black tracking-tight break-keep">
+                        <h3 className="text-3xl md:text-4xl font-black text-stone-900 dark:text-white tracking-tight break-keep">
                             {headline}
                         </h3>
                     </div>
                     <div className="text-right hidden md:block">
-                        <p className="font-bold text-gray-900 uppercase">{name}</p>
-                        <p className="text-sm text-gray-500 font-mono">{role}</p>
+                        <p className="font-bold text-stone-900 dark:text-white uppercase">{name}</p>
+                        <p className="text-sm text-stone-500 dark:text-stone-400 font-mono">{role}</p>
                     </div>
                 </div>
 
                 {/* ── Row 2: Philosophy ── */}
                 <div className={cn(
-                    "border-b border-gray-100 pb-5 mb-6 transition-all duration-700 delay-100",
+                    "border-b border-stone-100 dark:border-stone-800 pb-5 mb-6 transition-all duration-700 delay-100",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
-                    <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
+                    <span className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase mb-2 block">
                         개발 철학
                     </span>
-                    <p className="text-base text-gray-600 leading-relaxed font-medium break-keep">
+                    <p className="text-base text-stone-600 dark:text-stone-300 leading-relaxed font-medium break-keep">
                         {philosophy}
                     </p>
                 </div>
@@ -121,18 +121,18 @@ export const SwissAboutSection = ({
                         <div
                             key={card.headline}
                             className={cn(
-                                "border border-gray-200 p-5 flex flex-col transition-all duration-700",
+                                "border border-stone-200 dark:border-stone-700 p-5 flex flex-col transition-all duration-700",
                                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                             )}
                             style={{ transitionDelay: `${200 + idx * 120}ms` }}
                         >
-                            <span className="text-xs font-bold text-indigo-600 font-mono mb-3">
+                            <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono mb-3">
                                 0{idx + 1}
                             </span>
-                            <h4 className="text-base font-black text-black tracking-tight mb-3 break-keep">
+                            <h4 className="text-base font-black text-stone-900 dark:text-white tracking-tight mb-3 break-keep">
                                 {card.headline}
                             </h4>
-                            <p className="text-sm text-gray-600 leading-relaxed break-keep">
+                            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed break-keep">
                                 {card.desc}
                             </p>
                         </div>
@@ -141,7 +141,7 @@ export const SwissAboutSection = ({
 
                 {/* ── Row 4: 지원 동기 ── */}
                 <div className={cn(
-                    "bg-black text-white p-6 transition-all duration-700",
+                    "bg-stone-900 dark:bg-stone-800 text-white p-6 transition-all duration-700",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
                     style={{ transitionDelay: '600ms' }}
