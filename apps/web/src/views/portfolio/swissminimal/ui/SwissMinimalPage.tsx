@@ -4,9 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { useSidebarStore } from "@/features/layout/model/useSidebarStore";
 import {
-    SwissFeatureSummary_Documentation,
     SwissFeatureSummary_ErrorSystem,
-    SwissFeatureSummary_Growth,
     SwissFeatureSummary_GuildMineCqrs,
     SwissFeatureSummary_LogPipeline,
     SwissFeatureSummary_Payment,
@@ -15,13 +13,12 @@ import {
 } from "@/widgets/portfolio/stories";
 import {
     SwissAboutSection,
-    SwissBladeXRetrospectiveSection,
     SwissContactSection,
     SwissGrowthCurveSection,
     SwissHeroSection,
     SwissNavigation,
+    SwissProjectIntro_BladeX,
     SwissProjectIntro_SamgukBlade,
-    SwissProjectIntroSection,
     SwissResumeSection,
     SwissRetrospectiveSection,
     SwissWeaknessSection_Default,
@@ -143,25 +140,7 @@ export const SwissMinimalPage = () => {
 
                 {/* PAGE 10: PROJECT INTRO (BladeX) */}
                 <div id="project-bladex">
-                    <SwissProjectIntroSection
-                        sectionNumber="04"
-                        projectName="블레이드 X"
-                        period="2022.05 - 2023.04"
-                        projectRole="Game Server Developer"
-                        genre="콘솔급 블록체인 액션 RPG"
-                        engine="Unreal Engine / C++ Server"
-                        description="기존 서비스 종료된 Blade2 에셋을 재활용하여, 블록체인 기반의 신규 게임 개발. 이 프로젝트는 성공보다 실패에서 더 많이 배운 경험입니다."
-                        contribution={["문서화 없이 방치된 Legacy C++ 서버 코어를 분석하여 아키텍처 문서화 및 아이템/인벤토리 코어 로직 설계."]}
-                    />
-                </div>
-
-                {/* DYNAMIC STORIES (BladeX) */}
-                <SwissFeatureSummary_Documentation sectionNumber="S.07" storyNumber="07" />
-                <SwissFeatureSummary_Growth sectionNumber="S.08" storyNumber="08" />
-
-                {/* PAGE 13: RETROSPECTIVE (BladeX) */}
-                <div id="retrospective-bladex">
-                    <SwissBladeXRetrospectiveSection />
+                    <SwissProjectIntro_BladeX />
                 </div>
 
                 {/* PAGE 14: GROWTH CURVE */}
