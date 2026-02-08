@@ -29,7 +29,7 @@ export const SwissFeatureSummary_Payment = ({ sectionNumber, storyNumber }: { se
                 { label: "결제 건수", value: "10만 건" }
             ]}
             step07_capability="운영 중인 서비스의 무중단 데이터 구조 전환과 매출 집계 시스템을 설계한 경험이 있습니다. 기존 데이터 구조의 결함을 파악하고 서비스 중단 없이 개선할 수 있습니다."
-            storyId="payment"
+            storyId="payment-migration"
         />
     );
 };
