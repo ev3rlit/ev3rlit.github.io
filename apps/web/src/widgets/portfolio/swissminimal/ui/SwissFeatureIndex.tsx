@@ -71,6 +71,12 @@ export const SwissFeatureIndex = () => {
             title: "연합 금광: 분산 동시성 제어",
             description: "Redis Stream 기반 명령 라우팅과 멱등성 키, 직접 Aggregate 호출로 분산 서버 환경의 데이터 일관성 확보",
             storyId: "guild-mine-concurrency"
+        },
+        {
+            id: "F.15",
+            title: "유저 데이터 동기화 시스템",
+            description: "유저 데이터를 인메모리로 전환하고 Write-back 캐싱 + BSON Patch Diff로 DB 접근을 제거하여 요청 처리 시간 90% 단축.",
+            storyId: "tracking-container"
         }
     ];
 

@@ -10,6 +10,7 @@ import { Detail_GuildMineCqrs } from '@/views/portfolio/story-detail/Detail_Guil
 import { Detail_GuildMineConcurrency } from '@/views/portfolio/story-detail/Detail_GuildMineConcurrency';
 import { Detail_ErrorHandling } from '@/views/portfolio/story-detail/Detail_ErrorHandling';
 import { Detail_WebsocketMiddleware } from '@/views/portfolio/story-detail/Detail_WebsocketMiddleware';
+import { Detail_TrackingContainer } from '@/views/portfolio/story-detail/Detail_TrackingContainer';
 
 // Map story IDs to their detail components
 const storyMap: Record<string, React.ComponentType> = {
@@ -22,7 +23,8 @@ const storyMap: Record<string, React.ComponentType> = {
     'guild-mine-cqrs': Detail_GuildMineCqrs,
     'guild-mine-concurrency': Detail_GuildMineConcurrency,
     'error-handling': Detail_ErrorHandling,
-    'websocket-middleware': Detail_WebsocketMiddleware
+    'websocket-middleware': Detail_WebsocketMiddleware,
+    'tracking-container': Detail_TrackingContainer
 };
 
 interface PageProps {
