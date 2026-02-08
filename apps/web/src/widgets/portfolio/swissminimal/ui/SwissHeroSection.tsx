@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { cn } from '@/shared/lib/cn';
+import { SwissSectionContainer } from './SwissSectionContainer';
 
 export const SwissHeroSection = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -13,9 +14,10 @@ export const SwissHeroSection = () => {
 
     return (
         <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 flex flex-col justify-center min-h-screen">
-            <div className="swiss-grid items-center w-full px-6 md:px-12 lg:px-24">
+
+            <SwissSectionContainer className="grid grid-cols-12 gap-6 items-center h-full">
                 {/* Left Column - Main Content */}
-                <div className="col-span-12 lg:col-span-8 flex flex-col pt-20 lg:pt-0">
+                <div className="col-span-12 lg:col-span-8 flex flex-col">
 
 
                     <h1
@@ -99,10 +101,7 @@ export const SwissHeroSection = () => {
                                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
                             )}
                         >
-                             {/* Placeholder for image */}
-                            <div className="w-full h-full bg-stone-300 dark:bg-stone-700 flex items-center justify-center text-stone-500 dark:text-stone-400" >
-                                <span className="text-4xl filter grayscale opacity-50 font-serif italic">img</span> 
-                            </div>
+                            <img src="/images/portfolio/profile.png" alt="프로필 사진" className="w-full h-full object-cover" />
                         </div>
 
                         <div
@@ -137,7 +136,7 @@ export const SwissHeroSection = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </SwissSectionContainer>
 
             {/* Scroll Indicator */}
             <div className="scroll-indicator absolute bottom-8 left-12 lg:left-24 hidden md:flex flex-col gap-2">

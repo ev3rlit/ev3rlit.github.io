@@ -21,10 +21,11 @@ function calcDuration(period: string): string {
 const resumeData = {
     profile: {
         name: "최범휘",
-        role: "백엔드 개발자",
-        summary: "게임 서버 개발 3년차. Golang·C++ 기반 게임 서버 설계부터 라이브 운영까지 경험.",
+        role: "게임 서버 개발자",
+        summary: "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다.",
+        keywords: ["#꼼꼼함", "#안정지향", "#Extreme_Ownership", "#빈틈없는_대비"],
         contact: {
-            email: "cbh5487@gmail.com",
+            email: "bum4496@naver.com",
             github: "https://github.com/homveloper",
             blog: "https://ev3rlit.github.io/"
         }
@@ -32,7 +33,7 @@ const resumeData = {
     careers: [
         {
             company: '넥써쓰/원유니버스',
-            role: '백엔드 개발자',
+            role: '게임 서버 개발자',
             period: '2023.04 — 2025.10',
             projects: [
                 {
@@ -139,12 +140,10 @@ export const SwissResumeSection = () => {
                     {/* LEFT: Profile Image + Info (8 cols) */}
                     <div className="col-span-12 lg:col-span-8 flex gap-6">
                         {/* Profile Image Wireframe */}
-                        <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 flex items-center justify-center">
-                            <svg className="w-10 h-10 text-stone-300 dark:text-stone-700" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                            </svg>
+                        <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 overflow-hidden">
+                            <img src="/images/portfolio/profile.png" alt="프로필 사진" className="w-full h-full object-cover" />
                         </div>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                             <div className="flex items-baseline gap-3">
                                 <h3 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
                                     {resumeData.profile.name}
@@ -153,9 +152,16 @@ export const SwissResumeSection = () => {
                                     {resumeData.profile.role}
                                 </span>
                             </div>
-                            <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
+                            <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed break-keep">
                                 {resumeData.profile.summary}
                             </p>
+                            <div className="flex flex-wrap gap-2 mt-1">
+                                {resumeData.profile.keywords.map((kw) => (
+                                    <span key={kw} className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30 px-2 py-0.5 tracking-wide">
+                                        {kw}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -164,23 +170,23 @@ export const SwissResumeSection = () => {
                         <div>
                             <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
                             <a href={`mailto:${resumeData.profile.contact.email}`}
-                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
+                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
                                 {resumeData.profile.contact.email}
                             </a>
                         </div>
                         <div>
                             <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">GitHub</h4>
                             <a href={resumeData.profile.contact.github}
-                               target="_blank" rel="noopener noreferrer"
-                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                target="_blank" rel="noopener noreferrer"
+                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
                                 {resumeData.profile.contact.github}
                             </a>
                         </div>
                         <div>
                             <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Blog</h4>
                             <a href={resumeData.profile.contact.blog}
-                               target="_blank" rel="noopener noreferrer"
-                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                target="_blank" rel="noopener noreferrer"
+                                className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
                                 {resumeData.profile.contact.blog}
                             </a>
                         </div>
