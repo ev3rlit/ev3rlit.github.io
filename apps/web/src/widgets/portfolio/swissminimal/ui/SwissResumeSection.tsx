@@ -4,41 +4,79 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
 import { SwissSectionContainer } from './SwissSectionContainer';
 
-// Data derived from docs/portfolio_drafts/00_career_tech.md
+/** "YYYY.MM — YYYY.MM" 형식에서 근무 기간을 계산 */
+function calcDuration(period: string): string {
+    const match = period.match(/(\d{4})\.(\d{2})\s*—\s*(\d{4})\.(\d{2})/);
+    if (!match) return '';
+    const [, sy, sm, ey, em] = match.map(Number);
+    let months = (ey - sy) * 12 + (em - sm);
+    if (months < 0) months = 0;
+    const years = Math.floor(months / 12);
+    const remaining = months % 12;
+    if (years > 0 && remaining > 0) return `${years}년 ${remaining}개월`;
+    if (years > 0) return `${years}년`;
+    return `${remaining}개월`;
+}
+
 const resumeData = {
+    profile: {
+        name: "최범휘",
+        role: "백엔드 개발자",
+        summary: "게임 서버 개발 3년차. Golang·C++ 기반 게임 서버 설계부터 라이브 운영까지 경험.",
+        contact: {
+            email: "cbh5487@gmail.com",
+            github: "https://github.com/homveloper",
+            blog: "https://ev3rlit.github.io/"
+        }
+    },
     careers: [
         {
             company: '넥써쓰/원유니버스',
-            role: '게임 서버 개발',
+            role: '백엔드 개발자',
             period: '2023.04 — 2025.10',
-            desc: 'Golang 기반의 삼국블레이드 키우기 서버 아키텍처 설계 및 라이브 운영',
-            details: [
-                'MSA 아키텍처 설계: WebSocket RPC 기반의 마이크로서비스 구조 설계 및 핸들러 라우팅 시스템 구축',
-                '대규모 인프라 이관: 퍼블리셔 계약 종료에 따라 AWS에서 Naver Cloud로 전체 서비스 및 데이터 마이그레이션',
-                '데이터 정합성 보장: Redis 분산 락(Distributed Lock)과 트랜잭션 처리를 통한 동시성 이슈 해결',
-                '성능 최적화: Write-back 캐싱 패턴 도입으로 DB 병목을 해소하고 API 응답 속도 및 처리량 개선'
+            projects: [
+                {
+                    name: '삼국블레이드 키우기',
+                    desc: '글로벌 20개국 서비스 방치형 액션 RPG',
+                    details: [
+                        'Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성',
+                        '트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축',
+                        '퍼블리셔 계약 해지 후 AWS → NCP 전체 인프라·데이터 무중단 이관을 2개월 내 완수',
+                        '라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 설계 및 실행',
+                        '커스텀 에러 핸들링 시스템 도입으로 라이브 장애 발생률 90% 감소',
+                        'AWS Kinesis 기반 실시간 로그 파이프라인 구축으로 운영 모니터링 체계 확립',
+                        '인메모리 캐시 레이어 및 쿼리 최적화로 API 응답 속도 50ms → 5ms 개선',
+                        '관리자 페이지 REST API 설계 및 개발'
+                    ]
+                }
             ]
         },
         {
-            company: '액션스퀘어 (Action Square)',
-            role: '게임 서버 개발',
+            company: '액션스퀘어',
+            role: '게임 서버 개발자 (신입)',
             period: '2022.05 — 2023.04',
-            desc: 'C++ 기반의 BladeX 신규 프로젝트 코어 개발 및 런칭 경험',
-            details: [
-                '서버 코어 개발: C++ 서버 API 설계 및 유저 아이템, 상점, 길드등 게임 컨텐츠 구현',
-                '실시간 랭킹 시스템: Redis Sorted Set을 활용하여 대량의 데이터 정렬 및 실시간 순위 산출 로직 구현',
-                'CI/CD 자동화: Jenkins 파이프라인 구축을 통해 빌드/배포 프로세스를 자동화하여 배포 안정성 확보',
-                '레거시 문서화: 시스템 아키텍처 다이어그램 작성 및 온보딩 문서화를 통해 팀 내 지식 공유 프로세스 정립'
+            projects: [
+                {
+                    name: '블레이드 X',
+                    desc: '모바일 액션 RPG · C++14 서버',
+                    details: [
+                        '기존 서버 코어(인증/게임/월드/길드/채팅 5종) 분석 및 구조 문서화',
+                        '아이템·인벤토리 핵심 시스템의 데이터 구조 설계 및 Stored Procedure 기반 데이터 접근 구현',
+                        '범용 보상 시스템 설계: 그룹 식별자 기반 3가지 보상 타입 + 순환 참조 탐지 로직 적용',
+                        '인게임 재화 상점 및 앱 내 실결제 상점 구현',
+                        '중복 로그인 사용자 경험 개선: 서버 간 중계를 통한 유저 선택 방식으로 전환',
+                        '게임 유저 행동 로그 시스템 전수 구현'
+                    ]
+                }
             ]
         }
     ],
-    education: [
-        {
-            school: '금오공과대학교',
-            major: '컴퓨터소프트웨어공학과',
-            period: '2016.03 — 2022.02',
-            desc: '학점: 3.5 / 4.5'
-        }
+    techStack: [
+        { category: '언어', items: 'Golang, C++14' },
+        { category: '데이터베이스', items: 'MongoDB, MySQL, Redis' },
+        { category: '인프라', items: 'AWS, Naver Cloud Platform, Jenkins' },
+        { category: '프레임워크/라이브러리', items: 'Boost.Asio, AWS Kinesis' },
+        { category: '도구', items: 'Git, Jira, Confluence' }
     ],
     awards: [
         {
@@ -52,12 +90,13 @@ const resumeData = {
             year: '2019'
         }
     ],
-    techStack: [
-        { category: '언어', items: 'Golang, C++' },
-        { category: '프레임워크', items: 'Unreal Engine 5' },
-        { category: '데이터베이스', items: 'MongoDB, MySQL, Redis, AWS DocumentDB' },
-        { category: '인프라', items: 'AWS (EC2), Naver Cloud, Jenkins' },
-        { category: '도구', items: 'Git, Jira, Confluence, Slack' }
+    education: [
+        {
+            school: '금오공과대학교',
+            major: '컴퓨터소프트웨어공학과',
+            period: '2016.03 — 2022.02',
+            desc: '학점: 4.16 / 4.5'
+        }
     ]
 };
 
@@ -78,64 +117,136 @@ export const SwissResumeSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="snap-section bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800 transition-colors duration-500 group">
+        <section ref={sectionRef} className="min-h-screen bg-white dark:bg-stone-950 border-b border-stone-200 dark:border-stone-800 transition-colors duration-500 group">
             <SwissSectionContainer>
-                
-                {/* 
-                    Grid Layout: 9 Columns (Main) + 3 Columns (Side)
-                    The Label is now INTEGRATED into the Main Column at the top.
-                */}
+
+                {/* Section Header */}
+                <div className={cn(
+                    "flex items-baseline gap-3 border-b border-stone-200 dark:border-stone-800 pb-4 mb-8 transition-all duration-700",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}>
+                    <span className="label-text accent-indigo text-lg">(02)</span>
+                    <h2 className="text-lg font-bold text-stone-900 dark:text-white uppercase tracking-widest">
+                        경력 기술서
+                    </h2>
+                </div>
+
+                {/* Profile Bar — 12-column grid aligned with main layout */}
+                <div className={cn(
+                    "grid grid-cols-1 lg:grid-cols-12 gap-y-6 lg:gap-16 pb-8 mb-10 border-b border-stone-100 dark:border-stone-900 transition-all duration-700 delay-100",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}>
+                    {/* LEFT: Profile Image + Info (8 cols) */}
+                    <div className="col-span-12 lg:col-span-8 flex gap-6">
+                        {/* Profile Image Wireframe */}
+                        <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 border-2 border-dashed border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 flex items-center justify-center">
+                            <svg className="w-10 h-10 text-stone-300 dark:text-stone-700" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                            </svg>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-baseline gap-3">
+                                <h3 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
+                                    {resumeData.profile.name}
+                                </h3>
+                                <span className="text-base font-bold text-stone-600 dark:text-stone-300">
+                                    {resumeData.profile.role}
+                                </span>
+                            </div>
+                            <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
+                                {resumeData.profile.summary}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* RIGHT: Contact (3 cols, col-start-10 — aligned with sidebar) */}
+                    <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-3">
+                        <div>
+                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
+                            <a href={`mailto:${resumeData.profile.contact.email}`}
+                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
+                                {resumeData.profile.contact.email}
+                            </a>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">GitHub</h4>
+                            <a href={resumeData.profile.contact.github}
+                               target="_blank" rel="noopener noreferrer"
+                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                {resumeData.profile.contact.github}
+                            </a>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Blog</h4>
+                            <a href={resumeData.profile.contact.blog}
+                               target="_blank" rel="noopener noreferrer"
+                               className="font-mono text-sm text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
+                                {resumeData.profile.contact.blog}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Grid: Career (left) + Sidebar (right) */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-16">
 
-                    {/* 1. LEFT: Main Content (Span 8 - leaving 1 col gap before side) */}
-                    <div className="col-span-12 lg:col-span-8 flex flex-col gap-12">
-                        
-                        {/* SECTION LABEL (Integrated at Grid Top) */}
-                        <div className={cn(
-                            "flex items-baseline gap-3 border-b border-stone-200 dark:border-stone-800 pb-4 transition-all duration-700",
-                            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                        )}>
-                            <span className="label-text accent-indigo text-lg">(02)</span>
-                            <h2 className="text-lg font-bold text-stone-900 dark:text-white uppercase tracking-widest">
-                                경력 기술서
-                            </h2>
-                        </div>
+                    {/* LEFT: Career History (8 cols) */}
+                    <div className="col-span-12 lg:col-span-8 flex flex-col gap-16">
 
                         {/* Career Section */}
                         <section className={cn(
-                            "transition-all duration-1000 delay-200 pl-2 md:pl-0",
+                            "transition-all duration-1000 delay-200",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <div className="flex items-center gap-4 mb-8">
+                            <div className="flex items-center gap-4 mb-10">
                                 <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">
                                     업무 경력
                                 </h3>
                                 <span className="h-px bg-stone-200 dark:bg-stone-800 w-12"></span>
                             </div>
-                            
-                            <div className="space-y-12">
+
+                            <div className="space-y-16">
                                 {resumeData.careers.map((career) => (
-                                    <div key={career.company} className="group relative">
-                                        <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-3">
+                                    <div key={career.company}>
+                                        {/* Company Header */}
+                                        <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
                                             <h4 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">
                                                 {career.company}
                                             </h4>
-                                            <span className="font-mono text-xs font-bold text-stone-400 mt-1 md:mt-0">{career.period}</span>
+                                            <span className="font-mono text-xs font-bold text-stone-400 mt-1 md:mt-0">
+                                                {career.period}
+                                                <span className="ml-2 text-indigo-500 dark:text-indigo-400">
+                                                    ({calcDuration(career.period)})
+                                                </span>
+                                            </span>
                                         </div>
-                                        <div className="flex items-center gap-2 mb-4">
-                                            <p className="text-base font-bold text-stone-600 dark:text-stone-300">{career.role}</p>
-                                            <span className="w-1 h-1 bg-stone-300 rounded-full"></span>
-                                            <p className="text-sm text-stone-500 dark:text-stone-400">{career.desc}</p>
-                                        </div>
-                                        
-                                        <ul className="space-y-2">
-                                            {career.details.map((detail) => (
-                                                <li key={detail} className="flex items-start gap-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed group-hover:text-stone-900 dark:group-hover:text-stone-200 transition-colors duration-200">
-                                                    <span className="mt-2 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0 group-hover:bg-indigo-500 transition-colors duration-200"></span>
-                                                    <span>{detail}</span>
-                                                </li>
+                                        <p className="text-base font-bold text-stone-600 dark:text-stone-300 mb-6">
+                                            {career.role}
+                                        </p>
+
+                                        {/* Projects */}
+                                        <div className="space-y-10 pl-4 border-l-2 border-stone-200 dark:border-stone-800">
+                                            {career.projects.map((project) => (
+                                                <div key={project.name}>
+                                                    <div className="flex flex-col md:flex-row md:items-baseline gap-2 mb-3">
+                                                        <h5 className="text-base font-bold text-stone-900 dark:text-white">
+                                                            {project.name}
+                                                        </h5>
+                                                        <span className="text-sm text-stone-500 dark:text-stone-400">
+                                                            — {project.desc}
+                                                        </span>
+                                                    </div>
+                                                    <ul className="space-y-2">
+                                                        {project.details.map((detail) => (
+                                                            <li key={detail} className="flex items-start gap-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed hover:text-stone-900 dark:hover:text-stone-200 transition-colors duration-200">
+                                                                <span className="mt-2 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0"></span>
+                                                                <span>{detail}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
                                             ))}
-                                        </ul>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -143,7 +254,7 @@ export const SwissResumeSection = () => {
 
                         {/* Education Section */}
                         <section className={cn(
-                            "transition-all duration-1000 delay-300 pl-2 md:pl-0",
+                            "transition-all duration-1000 delay-300",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
                             <div className="flex items-center gap-4 mb-6">
@@ -165,23 +276,23 @@ export const SwissResumeSection = () => {
                         </section>
                     </div>
 
-                    {/* 2. RIGHT: Side Content (Span 3 - Offset 1 for gap) */}
-                    <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-12 lg:pt-20">
-                        {/* Added top padding to align visually with content start below header */}
-                        
+                    {/* RIGHT: Sidebar (3 cols, offset 1 for gap) */}
+                    <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-12">
+
                         {/* Tech Stack */}
                         <div className={cn(
                             "transition-all duration-1000 delay-500",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-6 block">
+                            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-6">
                                 기술 스택
                             </h3>
-
                             <div className="space-y-8">
                                 {resumeData.techStack.map((stack) => (
                                     <div key={stack.category}>
-                                        <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">{stack.category}</h4>
+                                        <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
+                                            {stack.category}
+                                        </h4>
                                         <p className="text-sm font-medium text-stone-800 dark:text-stone-300 leading-relaxed border-b border-stone-100 dark:border-stone-900 pb-2">
                                             {stack.items}
                                         </p>
@@ -195,7 +306,7 @@ export const SwissResumeSection = () => {
                             "transition-all duration-1000 delay-600",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                             <div className="flex items-center gap-4 mb-6">
+                            <div className="flex items-center gap-4 mb-6">
                                 <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">
                                     수상 내역
                                 </h3>
@@ -213,10 +324,8 @@ export const SwissResumeSection = () => {
                         </section>
 
                         {/* Footer */}
-                         <div className="pt-6 border-t border-stone-200 dark:border-stone-800 text-[10px] text-stone-300 font-mono">
-                             <p>
-                                © 2024 BeomHwi Choi
-                            </p>
+                        <div className="pt-6 border-t border-stone-200 dark:border-stone-800 text-[10px] text-stone-300 font-mono">
+                            <p>© 2024 BeomHwi Choi</p>
                         </div>
                     </div>
 
