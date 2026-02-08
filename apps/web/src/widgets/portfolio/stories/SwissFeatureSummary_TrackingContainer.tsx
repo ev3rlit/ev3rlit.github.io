@@ -23,7 +23,7 @@ export const SwissFeatureSummary_TrackingContainer = ({ sectionNumber, storyNumb
             ]}
             step06_performance="요청 처리 시간이 50ms에서 5ms 이내로 단축되어 체감 렉이 사라졌고, DB Round-trip 최소화로 서버 부하가 크게 감소했습니다."
             kpiList={[
-                { label: "평균 응답 속도", value: "50ms→5ms" },
+                { label: "평균 응답 속도", value: "5ms" },
                 { label: "DB 접근", value: "최소화" },
                 { label: "에러 롤백", value: "자동화" }
             ]}
