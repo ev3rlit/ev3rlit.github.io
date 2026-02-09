@@ -6,7 +6,7 @@ export const SwissFeatureSummary_GuildMineCqrs = ({ sectionNumber, storyNumber }
             sectionNumber={sectionNumber}
             storyNumber={storyNumber}
             keyword="Architecture · CQRS"
-            title="연합 금광 — 도메인 설계와
+            title="실시간 길드 컨텐츠 — 도메인 설계와
 CQRS 아키텍처"
             subtitle="4개 도메인 분리 + 20개 API 아키텍처 설계 (Backend Engineer, 6개월)"
             step01_intro="연합원들이 함께 광산을 개발하고 자원을 이송·약탈하는 실시간 멀티플레이어 콘텐츠에서, 4개 하위 시스템의 도메인을 분리하고 CQRS + 이벤트 소싱 아키텍처를 설계했습니다."
