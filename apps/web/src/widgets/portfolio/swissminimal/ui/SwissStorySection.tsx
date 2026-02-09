@@ -56,8 +56,9 @@ export const SwissFeatureSummary = ({
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
     const pathname = usePathname();
-    // /portfolio/gameserver → /portfolio/gameserver, /portfolio → /portfolio
-    const basePath = pathname.includes('/gameserver') ? '/portfolio/gameserver' : '/portfolio';
+    // /portfolio/backend-gameduo → /portfolio/backend-gameduo, /portfolio/gameserver → /portfolio/gameserver, /portfolio → /portfolio
+    const portfolioMatch = pathname.match(/^(\/portfolio\/[^/]+)/);
+    const basePath = portfolioMatch ? portfolioMatch[1] : '/portfolio';
 
     useEffect(() => {
         const observer = new IntersectionObserver(
