@@ -50,7 +50,7 @@ export const SwissHeroSection = () => {
                                 6개월
                             </h3>
                             <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
-                                Go & MongoDB 기반<br />상용 서비스 런칭
+                                Go·MongoDB를 학습하여<br />상용 서비스 런칭
                             </p>
                         </div>
                         <div className="border-l-2 border-stone-200 dark:border-stone-800 pl-4">

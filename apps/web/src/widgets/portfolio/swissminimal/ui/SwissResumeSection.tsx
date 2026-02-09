@@ -40,14 +40,25 @@ const resumeData = {
                     name: '삼국블레이드 키우기',
                     desc: '글로벌 20개국 서비스 방치형 액션 RPG',
                     details: [
-                        'Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성',
-                        '트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축',
-                        '퍼블리셔 계약 해지 후 AWS → NCP 전체 인프라·데이터 무중단 이관을 2개월 내 완수',
-                        '라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 설계 및 실행',
-                        '커스텀 에러 핸들링 시스템 도입으로 라이브 장애 발생률 90% 감소',
-                        'AWS Kinesis 기반 실시간 로그 파이프라인 구축으로 운영 모니터링 체계 확립',
-                        '인메모리 캐시 레이어 및 쿼리 최적화로 API 응답 속도 50ms → 5ms 개선',
-                        '관리자 페이지 REST API 설계 및 개발'
+                        {
+                            group: '게임 서버 설계 및 API 개발',
+                            items: [
+                                'C++ 서버 개발 경험을 기반으로 Go·MongoDB를 학습하여 6개월 만에 상용 서비스 런칭',
+                                'Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성',
+                                '트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축',
+                                '커스텀 에러 핸들링 시스템 도입으로 라이브 장애 발생률 90% 감소',
+                                '인메모리 캐시 레이어 및 쿼리 최적화로 API 응답 속도 50ms → 5ms 개선',
+                                '관리자 페이지 REST API 설계 및 개발',
+                            ]
+                        },
+                        {
+                            group: '인프라 운영 및 데이터 마이그레이션',
+                            items: [
+                                '퍼블리셔 계약 해지 후 AWS → NCP 전체 인프라·데이터 무중단 이관을 2개월 내 완수',
+                                '라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 설계 및 실행',
+                                'AWS Kinesis 기반 실시간 로그 파이프라인 구축으로 운영 모니터링 체계 확립',
+                            ]
+                        }
                     ]
                 }
             ]
@@ -61,12 +72,22 @@ const resumeData = {
                     name: '블레이드 X',
                     desc: '모바일 액션 RPG · C++14 서버',
                     details: [
-                        '기존 서버 코어(인증/게임/월드/길드/채팅 5종) 분석 및 구조 문서화',
-                        '아이템·인벤토리 핵심 시스템의 데이터 구조 설계 및 Stored Procedure 기반 데이터 접근 구현',
-                        '범용 보상 시스템 설계: 그룹 식별자 기반 3가지 보상 타입 + 순환 참조 탐지 로직 적용',
-                        '인게임 재화 상점 및 앱 내 실결제 상점 구현',
-                        '중복 로그인 사용자 경험 개선: 서버 간 중계를 통한 유저 선택 방식으로 전환',
-                        '게임 유저 행동 로그 시스템 전수 구현'
+                        {
+                            group: '게임 서버 API 설계 및 개발',
+                            items: [
+                                '아이템·인벤토리 시스템 스키마 설계 및 API 개발',
+                                '범용 보상 지급 시스템 설계 및 개발',
+                                '인게임 재화 상점 및 앱 내 실결제 상점 구현',
+                                '중복 로그인 사용자 경험 개선: 서버 간 중계를 통한 유저 선택 방식으로 전환',
+                            ]
+                        },
+                        {
+                            group: '서버 분석 및 운영 기반 구축',
+                            items: [
+                                '기존 서버 코어(인증/게임/월드/길드/채팅 5종) 분석 및 구조 문서화',
+                                '게임 유저 행동 로그 스키마 설계 및 개발',
+                            ]
+                        }
                     ]
                 }
             ]
@@ -242,14 +263,26 @@ export const SwissResumeSection = () => {
                                                             — {project.desc}
                                                         </span>
                                                     </div>
-                                                    <ul className="space-y-2">
+                                                    <div className="space-y-6">
                                                         {project.details.map((detail) => (
-                                                            <li key={detail} className="flex items-start gap-3 text-base text-stone-600 dark:text-stone-400 leading-relaxed hover:text-stone-900 dark:hover:text-stone-200 transition-colors duration-200">
-                                                                <span className="mt-2.5 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0"></span>
-                                                                <span>{detail}</span>
-                                                            </li>
+                                                            <div key={detail.group}>
+                                                                <div className="flex items-center gap-2 mb-3">
+                                                                    <span className="w-1.5 h-1.5 bg-indigo-500 dark:bg-indigo-400 rounded-full flex-shrink-0"></span>
+                                                                    <h6 className="text-base font-bold text-stone-800 dark:text-stone-200 tracking-tight">
+                                                                        {detail.group}
+                                                                    </h6>
+                                                                </div>
+                                                                <ul className="space-y-2 ml-4">
+                                                                    {detail.items.map((item) => (
+                                                                        <li key={item} className="flex items-start gap-3 text-base text-stone-600 dark:text-stone-400 leading-relaxed hover:text-stone-900 dark:hover:text-stone-200 transition-colors duration-200">
+                                                                            <span className="mt-2.5 w-1 h-1 bg-stone-300 dark:bg-stone-600 rounded-full flex-shrink-0"></span>
+                                                                            <span>{item}</span>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </div>
                                                         ))}
-                                                    </ul>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
