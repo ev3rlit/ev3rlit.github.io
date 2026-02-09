@@ -196,21 +196,21 @@ export const SwissResumeSection = ({ summary = defaultSummary }: SwissResumeSect
                     {/* RIGHT: Contact (3 cols, col-start-10 — aligned with sidebar) */}
                     <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-3">
                         <div>
-                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Phone</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 tracking-wider">연락처</h4>
                             <a href={`tel:${resumeData.profile.contact.phone}`}
                                 className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
                                 {resumeData.profile.contact.phone}
                             </a>
                         </div>
                         <div>
-                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 tracking-wider">이메일</h4>
                             <a href={`mailto:${resumeData.profile.contact.email}`}
                                 className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
                                 {resumeData.profile.contact.email}
                             </a>
                         </div>
                         <div>
-                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">GitHub</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 tracking-wider">깃허브</h4>
                             <a href={resumeData.profile.contact.github}
                                 target="_blank" rel="noopener noreferrer"
                                 className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
@@ -218,7 +218,7 @@ export const SwissResumeSection = ({ summary = defaultSummary }: SwissResumeSect
                             </a>
                         </div>
                         <div>
-                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Blog</h4>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 tracking-wider">블로그</h4>
                             <a href={resumeData.profile.contact.blog}
                                 target="_blank" rel="noopener noreferrer"
                                 className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block break-all">
