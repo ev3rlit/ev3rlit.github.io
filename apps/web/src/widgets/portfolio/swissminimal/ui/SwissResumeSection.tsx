@@ -22,7 +22,7 @@ const resumeData = {
     profile: {
         name: "최범휘",
         role: "게임 서버 개발자",
-        summary: "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다.",
+        summary: "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다. 게임 서버에서 실시간 처리, 동시성 제어, 무중단 마이그레이션 같은 문제를 풀며 개발의 즐거움을 알게 되었고, 앞으로는 백엔드 전반으로 영역을 넓혀 다양한 도메인에서 성장해 나가고 싶습니다.",
         keywords: ["#꼼꼼함", "#안정지향", "#책임감", "#빈틈없는_대비", "#빠른_학습_및_적응"],
         contact: {
             email: "bum4496@naver.com",
@@ -150,7 +150,7 @@ export const SwissResumeSection = () => {
                 )}>
                     <span className="label-text accent-indigo text-xl">(02)</span>
                     <h2 className="text-xl font-bold text-stone-900 dark:text-white uppercase tracking-widest">
-                        경력 기술서
+                        이력서
                     </h2>
                 </div>
 
