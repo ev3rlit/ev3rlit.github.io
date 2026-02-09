@@ -21,7 +21,7 @@ import {
     SwissProjectIntro_SamgukBlade,
     SwissResumeSection,
     SwissRetrospectiveSection,
-    SwissWeaknessSection_Default,
+    SwissWeaknessSection_Generic,
 } from "@/widgets/portfolio/swissminimal";
 
 export const SwissMinimalPage = () => {
@@ -120,7 +120,7 @@ export const SwissMinimalPage = () => {
 
                 {/* PAGE 13: WEAKNESS & PLAN */}
                 <div id="weakness-plan">
-                    <SwissWeaknessSection_Default />
+                    <SwissWeaknessSection_Generic />
                 </div>
 
                 {/* PAGE 14: SKILLS & CONTACT */}

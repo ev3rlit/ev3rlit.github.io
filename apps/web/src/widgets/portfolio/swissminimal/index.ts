@@ -9,7 +9,8 @@ export { SwissFeatureSummary as SwissStorySection } from './ui/SwissStorySection
 export { SwissRetrospectiveSection } from './ui/SwissRetrospectiveSection';
 export { SwissGrowthCurveSection } from './ui/SwissGrowthCurveSection';
 export { SwissWeaknessSection } from './ui/SwissWeaknessSection';
-export { SwissWeaknessSection_Default } from './ui/SwissWeaknessSection_Default';
+export { SwissWeaknessSection_NestJS } from './ui/SwissWeaknessSection_NestJS';
 export { SwissWeaknessSection_Sample } from './ui/SwissWeaknessSection_Sample';
+export { SwissWeaknessSection_Generic } from './ui/SwissWeaknessSection_Generic';
 export { SwissContactSection } from './ui/SwissContactSection';
 export { SwissScreenshotGallery } from './ui/SwissScreenshotGallery';
