@@ -2,6 +2,7 @@
 
 import type React from 'react';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUp, Github, ExternalLink, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -207,9 +208,14 @@ export const SwissProjectDetail = ({
     architecture,
     architectureDescription,
     mainTasks,
-    challenges
+    challenges,
 }: SwissProjectDetailProps) => {
     const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
+    const pathname = usePathname();
+    // /portfolio/gameserver/story/xxx → /portfolio/gameserver
+    // /portfolio/story/xxx → /portfolio
+    const storyIndex = pathname.indexOf('/story/');
+    const basePath = storyIndex !== -1 ? pathname.slice(0, storyIndex) : '/portfolio';
 
     // 동적 섹션 번호 계산
     const sectionNumbers = (() => {
@@ -246,7 +252,7 @@ export const SwissProjectDetail = ({
     return (
         <div className="h-full w-full overflow-y-auto bg-white dark:bg-stone-950 text-stone-900 dark:text-white font-sans selection:bg-stone-900 selection:text-white dark:selection:bg-white dark:selection:text-stone-900">
 
-            <SwissNavigation />
+            <SwissNavigation basePath={basePath} />
 
             <main className="w-full flex-grow pt-32 pb-24 px-6 md:px-12">
                 <div className="max-w-7xl mx-auto">

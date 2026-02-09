@@ -8,7 +8,11 @@ import { features } from './featureData';
 
 export { getFeatureNumber } from './featureData';
 
-export const SwissFeatureIndex = () => {
+interface SwissFeatureIndexProps {
+    basePath?: string;
+}
+
+export const SwissFeatureIndex = ({ basePath = '/portfolio' }: SwissFeatureIndexProps) => {
     const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
 
     useEffect(() => {
@@ -23,7 +27,7 @@ export const SwissFeatureIndex = () => {
     return (
         <div className="h-full w-full overflow-y-auto bg-white dark:bg-stone-950 text-stone-900 dark:text-white font-sans selection:bg-stone-900 selection:text-white dark:selection:bg-white dark:selection:text-stone-900">
 
-            <SwissNavigation />
+            <SwissNavigation basePath={basePath} />
 
             <main className="w-full flex-grow pt-32 pb-24 px-6 md:px-12">
                 <div className="max-w-7xl mx-auto">
@@ -58,6 +62,7 @@ export const SwissFeatureIndex = () => {
                                 key={feature.storyId}
                                 {...feature}
                                 id={`F.${String(idx + 1).padStart(3, '0')}`}
+                                basePath={basePath}
                             />
                         ))}
                     </div>

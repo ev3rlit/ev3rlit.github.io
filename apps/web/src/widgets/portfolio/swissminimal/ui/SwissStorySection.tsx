@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/cn';
 import { SwissSectionContainer } from './SwissSectionContainer';
@@ -54,6 +55,9 @@ export const SwissFeatureSummary = ({
 }: SwissFeatureSummaryProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
+    const pathname = usePathname();
+    // /portfolio/gameserver → /portfolio/gameserver, /portfolio → /portfolio
+    const basePath = pathname.includes('/gameserver') ? '/portfolio/gameserver' : '/portfolio';
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -160,7 +164,7 @@ export const SwissFeatureSummary = ({
                             "mt-auto hidden lg:block pt-4 border-t border-stone-200 dark:border-stone-800 transition-all duration-700 delay-700",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                             <Link href={`/portfolio/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-transparent hover:border-stone-900 dark:hover:border-white pb-1 transition-all cursor-pointer text-stone-500 hover:text-stone-900 dark:hover:text-white">
+                             <Link href={`${basePath}/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-transparent hover:border-stone-900 dark:hover:border-white pb-1 transition-all cursor-pointer text-stone-500 hover:text-stone-900 dark:hover:text-white">
                                 상세 스토리 보기 <span className="text-lg">→</span>
                             </Link>
                         </div>
@@ -251,7 +255,7 @@ export const SwissFeatureSummary = ({
                             "mt-12 lg:hidden transition-all duration-700 delay-700",
                             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         )}>
-                            <Link href={`/portfolio/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-stone-900 dark:border-white pb-1">
+                            <Link href={`${basePath}/story/${storyId}`} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-stone-900 dark:border-white pb-1">
                                 상세 스토리 보기 <span className="text-lg">→</span>
                             </Link>
                         </div>

@@ -6,9 +6,10 @@ interface SwissFeatureRowProps {
     title: string;
     description: string;
     storyId: string;
+    basePath?: string;
 }
 
-export const SwissFeatureRow = ({ id, title, description, storyId }: SwissFeatureRowProps) => {
+export const SwissFeatureRow = ({ id, title, description, storyId, basePath = '/portfolio' }: SwissFeatureRowProps) => {
     return (
         <article className="group relative border-t border-stone-900 dark:border-white py-8 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors duration-300">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-8 items-baseline">
@@ -36,7 +37,7 @@ export const SwissFeatureRow = ({ id, title, description, storyId }: SwissFeatur
                 {/* Action Column */}
                 <div className="md:col-span-2 flex md:justify-end mt-2 md:mt-0">
                     <Link
-                        href={`/portfolio/story/${storyId}`}
+                        href={`${basePath}/story/${storyId}`}
                         target="_blank"
                         className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                     >
