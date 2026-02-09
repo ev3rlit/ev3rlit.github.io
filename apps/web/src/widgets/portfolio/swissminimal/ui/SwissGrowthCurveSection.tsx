@@ -57,7 +57,7 @@ const phases: Phase[] = [
 		dotColor: "bg-emerald-500 border-emerald-500",
 		borderColor: "hover:border-emerald-500",
 		highlights: [
-			"CQRS + Event Sourcing → 클라이언트 트래픽 90% 감소 (30KB → 2-3KB)",
+			"CQRS + Event Sourcing → 클라이언트 데이터 동기화 최적화",
 			"Write-behind 캐싱 → API 응답 시간 10배 개선 (50ms → 5ms)",
 			"AWS → Naver Cloud 전체 인프라 마이그레이션 주도 (서비스 중단 0)",
 			"결제 데이터 10만 건 무중단 이관, 정합성 100%",
