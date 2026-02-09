@@ -30,6 +30,7 @@ const resumeData = {
         role: "게임 서버 개발자",
         keywords: ["#꼼꼼함", "#안정지향", "#책임감", "#빈틈없는_대비", "#빠른_학습_및_적응"],
         contact: {
+            phone: "010-4344-4496",
             email: "bum4496@naver.com",
             github: "https://github.com/ev3rlit",
             blog: "https://ev3rlit.github.io/"
@@ -194,6 +195,13 @@ export const SwissResumeSection = ({ summary = defaultSummary }: SwissResumeSect
 
                     {/* RIGHT: Contact (3 cols, col-start-10 — aligned with sidebar) */}
                     <div className="col-span-12 lg:col-span-3 lg:col-start-10 flex flex-col gap-3">
+                        <div>
+                            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Phone</h4>
+                            <a href={`tel:${resumeData.profile.contact.phone}`}
+                                className="font-mono text-base text-stone-800 dark:text-stone-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-stone-100 dark:border-stone-900 pb-2 block">
+                                {resumeData.profile.contact.phone}
+                            </a>
+                        </div>
                         <div>
                             <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1 uppercase tracking-wider">Email</h4>
                             <a href={`mailto:${resumeData.profile.contact.email}`}

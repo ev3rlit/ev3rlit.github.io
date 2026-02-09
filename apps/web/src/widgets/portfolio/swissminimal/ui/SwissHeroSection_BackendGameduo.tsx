@@ -117,6 +117,10 @@ export const SwissHeroSection_BackendGameduo = () => {
 
                             <ul className="space-y-2 text-sm text-stone-500 dark:text-stone-400 font-mono">
                                 <li className="flex flex-col">
+                                    <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">연락처</span>
+                                    <a href="tel:010-4344-4496" className="hover:text-indigo-600 transition-colors">010-4344-4496</a>
+                                </li>
+                                <li className="flex flex-col">
                                     <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">이메일</span>
                                     <a href="mailto:bum4496@naver.com" className="hover:text-indigo-600 transition-colors">bum4496@naver.com</a>
                                 </li>
