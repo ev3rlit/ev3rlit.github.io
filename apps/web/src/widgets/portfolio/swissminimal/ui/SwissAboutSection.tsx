@@ -148,7 +148,7 @@ export const SwissAboutSection = ({
                 >
                     {motivation ? (
                         <>
-                            <span className="text-sm font-bold text-white/50 uppercase mb-2 block">
+                            <span className="text-lg font-bold text-indigo-400 uppercase mb-2 block">
                                 {motivation.title || "지원 동기"}
                             </span>
                             <div className="text-base text-white leading-relaxed break-keep">
