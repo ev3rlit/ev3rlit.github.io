@@ -18,7 +18,7 @@ export const SwissFeatureSummary_ErrorSystem = ({ sectionNumber, storyNumber }: 
             step06_performance="API 개발 시 공통 코드 작성이 불필요해져 개발 속도가 향상되고, 개발자 실수로 인한 로깅 누락이나 에러 처리 불일치가 사라졌습니다."
             kpiList={[
                 { label: "핫픽스 시간", value: "90%↓" },
-                { label: "라이브 운영", value: "무중단" },
+                { label: "라이브 운영", value: "안정" },
                 { label: "개발 생산성", value: "DX 향상" }
             ]}
             step07_capability="에러 추적 시스템과 공통 기능 자동화 미들웨어를 바닥부터 설계·구현한 경험이 있습니다. 기존 시스템의 안정성을 빠르게 파악하고 개선할 수 있습니다."

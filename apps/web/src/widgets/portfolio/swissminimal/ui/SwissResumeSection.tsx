@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/cn';
 import { SwissSectionContainer } from './SwissSectionContainer';
 
+interface SwissResumeSectionProps {
+    summary?: string;
+}
+
 /** "YYYY.MM — YYYY.MM" 형식에서 근무 기간을 계산 */
 function calcDuration(period: string): string {
     const match = period.match(/(\d{4})\.(\d{2})\s*—\s*(\d{4})\.(\d{2})/);
@@ -18,11 +22,12 @@ function calcDuration(period: string): string {
     return `${remaining}개월`;
 }
 
+const defaultSummary = "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다. 게임 서버에서 실시간 처리, 동시성 제어, 무중단 마이그레이션 같은 문제를 풀며 개발의 즐거움을 알게 되었고, 앞으로는 백엔드 전반으로 영역을 넓혀 다양한 도메인에서 성장해 나가고 싶습니다.";
+
 const resumeData = {
     profile: {
         name: "최범휘",
         role: "게임 서버 개발자",
-        summary: "Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다. 게임 서버에서 실시간 처리, 동시성 제어, 무중단 마이그레이션 같은 문제를 풀며 개발의 즐거움을 알게 되었고, 앞으로는 백엔드 전반으로 영역을 넓혀 다양한 도메인에서 성장해 나가고 싶습니다.",
         keywords: ["#꼼꼼함", "#안정지향", "#책임감", "#빈틈없는_대비", "#빠른_학습_및_적응"],
         contact: {
             email: "bum4496@naver.com",
@@ -44,7 +49,7 @@ const resumeData = {
                             group: '게임 서버 설계 및 API 개발',
                             items: [
                                 'C++ 서버 개발 경험을 기반으로 Go·MongoDB를 학습하여 6개월 만에 상용 서비스 런칭',
-                                'Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성',
+                                'Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 안정 라이브 운영 달성',
                                 '트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축',
                                 '커스텀 에러 핸들링 시스템 도입으로 라이브 장애 발생률 90% 감소',
                                 'CQRS + Event Sourcing 아키텍처로 연합 금광 컨텐츠 설계·출시, 분산락 기반 동시성 제어 및 데이터 동기화 최적화',
@@ -123,7 +128,7 @@ const resumeData = {
     ]
 };
 
-export const SwissResumeSection = () => {
+export const SwissResumeSection = ({ summary = defaultSummary }: SwissResumeSectionProps) => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
 
@@ -175,7 +180,7 @@ export const SwissResumeSection = () => {
                                 </span>
                             </div>
                             <p className="text-base text-stone-600 dark:text-stone-300 leading-relaxed break-keep">
-                                {resumeData.profile.summary}
+                                {summary}
                             </p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {resumeData.profile.keywords.map((kw) => (

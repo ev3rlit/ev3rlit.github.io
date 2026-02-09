@@ -13,7 +13,7 @@ export const SwissProjectIntro_SamgukBlade = () => {
             engine="Unreal Engine 5 Client / Golang Server"
             description="글로벌 20개국에 서비스 중인 방치형 액션 RPG의 서버 아키텍처를 설계하고, 런칭부터 라이브 운영까지 전 사이클을 주도했습니다."
             contribution={[
-                "Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 무중단 라이브 운영 달성",
+                "Golang 기반 게임 서버 아키텍처 설계를 주도하여 런칭부터 21개월 안정 라이브 운영 달성",
                 "트랜잭션+롤백 미들웨어를 설계하여 모든 API에서 데이터 무결성 100% 보장 체계 구축",
                 "퍼블리셔 계약 해지 후 AWS → Naver Cloud Platform 전체 인프라·데이터 무중단 이관을 2개월 내 완수",
                 "라이브 서비스 중 결제 데이터 10만 건 무중단 마이그레이션 설계 및 실행",
@@ -25,7 +25,7 @@ export const SwissProjectIntro_SamgukBlade = () => {
             enhancedMetrics={[
                 { kpi: "Google Play 순위", value: "1위", context: "콜라보 이벤트 당일" },
                 { kpi: "피크 DAU", value: "10,000", context: "일간 활성 사용자" },
-                { kpi: "서비스 가용성", value: "무중단", context: "21개월 라이브 운영" },
+                { kpi: "서비스 가용성", value: "안정", context: "21개월 라이브 운영" },
                 { kpi: "API 응답 속도", value: "5ms", context: "50ms → 5ms 개선" },
             ]}
             techStack={["Golang", "MongoDB", "Redis", "WebSocket", "AWS Kinesis", "Naver Cloud Platform", "Jenkins"]}
