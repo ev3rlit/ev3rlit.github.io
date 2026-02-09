@@ -6,19 +6,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { ThemeToggle } from '@/features/theme-toggle/ui/ThemeToggle';
 import { cn } from '@/shared/lib/cn';
 
+interface SwissNavigationProps {
+    basePath?: string;
+}
+
 interface NavItem {
     label: string;
     path: string;
     hash?: string; // section id (without #)
 }
 
-const navItems: NavItem[] = [
-    { label: '홈', path: '/portfolio', hash: 'hero' },
-    { label: '소개', path: '/portfolio', hash: 'about' },
-    { label: '프로젝트', path: '/portfolio', hash: 'project-samguk' },
-    { label: '연락처', path: '/portfolio', hash: 'contact' },
-    { label: '기능들', path: '/portfolio/features' },
-];
+function buildNavItems(basePath: string): NavItem[] {
+    return [
+        { label: '홈', path: basePath, hash: 'hero' },
+        { label: '소개', path: basePath, hash: 'about' },
+        { label: '프로젝트', path: basePath, hash: 'project-samguk' },
+        { label: '연락처', path: basePath, hash: 'contact' },
+        { label: '기능들', path: `${basePath}/features` },
+    ];
+}
 
 // Map all observable section IDs → the nav item hash they belong to
 const sectionToNavHash: Record<string, string> = {
@@ -32,13 +38,14 @@ const sectionToNavHash: Record<string, string> = {
     'contact': 'contact',
 };
 
-export const SwissNavigation = () => {
+export const SwissNavigation = ({ basePath = '/portfolio' }: SwissNavigationProps) => {
     const pathname = usePathname();
     const router = useRouter();
     const [activeNavHash, setActiveNavHash] = useState('hero');
     const [isScrolled, setIsScrolled] = useState(false);
 
-    const isPortfolioHome = pathname === '/portfolio';
+    const navItems = buildNavItems(basePath);
+    const isPortfolioHome = pathname === basePath;
 
     // Find the scroll container (motion.main in SwissMinimalPage)
     const getScrollContainer = useCallback((): HTMLElement | null => {
@@ -127,9 +134,9 @@ export const SwissNavigation = () => {
     };
 
     const isActive = (item: NavItem): boolean => {
-        // "기능들" (page link) — active on /portfolio/features and /portfolio/story/*
+        // "기능들" (page link) — active on features and story pages
         if (!item.hash) {
-            return pathname === item.path || pathname.startsWith('/portfolio/story') || pathname.startsWith('/portfolio/features');
+            return pathname === item.path || pathname.startsWith(`${basePath}/story`) || pathname.startsWith(`${basePath}/features`);
         }
 
         // Section links — only highlight on portfolio home
@@ -179,7 +186,7 @@ export const SwissNavigation = () => {
                     <ThemeToggle />
                     <button
                         type="button"
-                        onClick={() => router.push('/portfolio/contact')}
+                        onClick={() => router.push(`${basePath}/contact`)}
                         className="label-text px-4 py-2 bg-stone-900 text-white dark:bg-white dark:text-stone-900 hover:bg-indigo-600 dark:hover:bg-indigo-400 hover:text-white dark:hover:text-white transition-colors"
                     >
                         제안하기
@@ -192,7 +199,7 @@ export const SwissNavigation = () => {
                     <button
                         type="button"
                         className="label-text text-stone-500"
-                        onClick={() => router.push('/portfolio/contact')}
+                        onClick={() => router.push(`${basePath}/contact`)}
                     >
                         메뉴
                     </button>
