@@ -161,9 +161,9 @@ export const SwissResumeSection = () => {
                 )}>
                     {/* LEFT: Profile Image + Info (8 cols) */}
                     <div className="col-span-12 lg:col-span-8 flex gap-6">
-                        {/* Profile Image Wireframe */}
-                        <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 overflow-hidden">
-                            <img src="/images/portfolio/profile.png" alt="프로필 사진" className="w-full h-full object-cover" />
+                        {/* Profile Image */}
+                        <div className="w-28 md:w-36 lg:w-40 flex-shrink-0 self-stretch overflow-hidden shadow-lg shadow-stone-900/20 dark:shadow-black/40">
+                            <img src="/images/portfolio/profile.jpg" alt="프로필 사진" className="w-full h-full object-cover" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex items-baseline gap-3">

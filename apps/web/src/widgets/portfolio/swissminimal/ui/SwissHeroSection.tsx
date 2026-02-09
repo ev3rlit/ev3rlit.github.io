@@ -101,7 +101,7 @@ export const SwissHeroSection = () => {
                                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
                             )}
                         >
-                            <img src="/images/portfolio/profile.png" alt="프로필 사진" className="w-full h-full object-cover" />
+                            <img src="/images/portfolio/profile.jpg" alt="프로필 사진" className="w-full h-full object-cover" />
                         </div>
 
                         <div
