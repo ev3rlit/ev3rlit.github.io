@@ -126,7 +126,7 @@ export const SwissHeroSection = () => {
                                 </li>
                                 <li className="flex flex-col">
                                     <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">블로그</span>
-                                    <a href="https://homveloper.github.io" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">homveloper.github.io</a>
+                                    <a href="https://ev3rlit.github.io" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">ev3rlit.github.io</a>
                                 </li>
                                 <li className="flex flex-col">
                                     <span className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">활동 지역</span>
