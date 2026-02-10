@@ -1,5 +1,6 @@
 export { SwissNavigation } from './ui/SwissNavigation';
 export { SwissHeroSection } from './ui/SwissHeroSection';
+export { SwissHeroProfile } from './ui/SwissHeroProfile';
 export { SwissAboutSection } from './ui/SwissAboutSection';
 export { SwissResumeSection } from './ui/SwissResumeSection';
 export { SwissProjectIntroSection } from './ui/SwissProjectIntroSection';
