@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SwissMinimalBackendGameduoPage } from "@/views/portfolio/backend-gameduo";
+import { SwissMinimalBackendExemPage } from "@/views/portfolio/backend-exem";
 
 export const metadata: Metadata = {
     title: "Portfolio | 백엔드 개발자 최범휘",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-    return <SwissMinimalBackendGameduoPage />;
+    return <SwissMinimalBackendExemPage />;
 }

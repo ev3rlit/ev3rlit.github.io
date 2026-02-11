@@ -1,6 +1,6 @@
 "use client";
 
-import { SwissHeroSection } from './SwissHeroSection';
+import { SwissHeroSection } from '@/widgets/portfolio/swissminimal';
 
 export const SwissHeroSection_BackendGameduo = () => (
     <SwissHeroSection

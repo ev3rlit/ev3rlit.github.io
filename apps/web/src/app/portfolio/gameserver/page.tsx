@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SwissMinimalGameServerPage } from "@/views/portfolio/swissminimal";
+import { SwissMinimalGameServerPage } from "@/views/portfolio/gameserver";
 
 export const metadata: Metadata = {
     title: "Portfolio | 게임 서버 개발자 최범휘",

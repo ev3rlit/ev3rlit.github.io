@@ -10,14 +10,6 @@ export { SwissFeatureSummary as SwissStorySection } from './ui/SwissStorySection
 export { SwissRetrospectiveSection } from './ui/SwissRetrospectiveSection';
 export { SwissGrowthCurveSection } from './ui/SwissGrowthCurveSection';
 export { SwissWeaknessSection } from './ui/SwissWeaknessSection';
-export { SwissWeaknessSection_NestJS } from './ui/SwissWeaknessSection_NestJS';
-export { SwissWeaknessSection_Sample } from './ui/SwissWeaknessSection_Sample';
-export { SwissWeaknessSection_Generic } from './ui/SwissWeaknessSection_Generic';
-export { SwissHeroSection_GameServer } from './ui/SwissHeroSection_GameServer';
-export { SwissGrowthCurveSection_GameServer } from './ui/SwissGrowthCurveSection_GameServer';
-export { SwissWeaknessSection_GameServer } from './ui/SwissWeaknessSection_GameServer';
-export { SwissHeroSection_BackendGameduo } from './ui/SwissHeroSection_BackendGameduo';
-export { SwissGrowthCurveSection_BackendGameduo } from './ui/SwissGrowthCurveSection_BackendGameduo';
-export { SwissWeaknessSection_BackendGameduo } from './ui/SwissWeaknessSection_BackendGameduo';
 export { SwissContactSection } from './ui/SwissContactSection';
 export { SwissScreenshotGallery } from './ui/SwissScreenshotGallery';
+export { SwissResumePageContent } from './resume/SwissResumePageContent';

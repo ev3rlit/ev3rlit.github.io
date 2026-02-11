@@ -1,3 +1,2 @@
 export { SwissMinimalPage } from './ui/SwissMinimalPage';
-export { SwissMinimalGameServerPage } from './ui/SwissMinimalGameServerPage';
-export { SwissMinimalBackendGameduoPage } from './ui/SwissMinimalBackendGameduoPage';
+export { SwissResumePage } from './ui/SwissResumePage';

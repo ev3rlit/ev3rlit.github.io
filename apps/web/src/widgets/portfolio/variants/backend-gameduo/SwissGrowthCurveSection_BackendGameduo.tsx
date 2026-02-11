@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/cn";
-import { SwissSectionContainer } from "./SwissSectionContainer";
+import { SwissSectionContainer } from "@/widgets/portfolio/swissminimal/ui/SwissSectionContainer";
 
 // --- Data ---
 

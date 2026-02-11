@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/cn";
-import { SwissSectionContainer } from "./SwissSectionContainer";
+import { SwissSectionContainer } from "@/widgets/portfolio/swissminimal/ui/SwissSectionContainer";
 
 // --- Data ---
 
@@ -66,14 +66,15 @@ const phases: Phase[] = [
 	{
 		number: 4,
 		period: "2025 — 현재",
-		title: "게임 서버 심화",
-		capability: "영역 확장",
+		title: "데이터 파이프라인 심화",
+		capability: "기술 확장",
 		color: "text-stone-500 dark:text-stone-400",
 		dotColor: "bg-stone-400 border-stone-400",
 		borderColor: "hover:border-stone-400",
 		highlights: [
-			"남은 기술 부채 명확히 인식 (RPC 배치, 모니터링, 에러 집계, 피처 토글)",
-			"대규모 동시접속 처리, 분산 시스템, 언리얼 엔진 데디케이티드 서버 학습",
+			"Kafka 기반 스트리밍 처리 학습 — AWS Kinesis 로그 파이프라인 경험에서 확장",
+			"ClickHouse 분석용 DB 탐구 — MongoDB·MySQL 경험 기반 컬럼형 DB 이해",
+			"Docker 컨테이너화 학습 — 인프라 마이그레이션 경험에서 컨테이너 환경으로 확장",
 			"부족한 영역 식별 → 체계적 학습 계획 수립",
 		],
 	},
@@ -103,13 +104,13 @@ const appealPoints: AppealPoint[] = [
 	{
 		title: "자기 인식",
 		description:
-			"부족한 영역을 명확히 인식하고, 게임 서버 도메인에서 더 깊이 파고드는 태도",
+			"부족한 영역을 명확히 인식하고, 데이터 파이프라인 심화를 위해 자기주도적으로 학습하는 태도",
 	},
 ];
 
 // --- Component ---
 
-export const SwissGrowthCurveSection_GameServer = () => {
+export const SwissGrowthCurveSection_BackendExem = () => {
 	const [isVisible, setIsVisible] = useState(false);
 	const sectionRef = useRef<HTMLElement>(null);
 

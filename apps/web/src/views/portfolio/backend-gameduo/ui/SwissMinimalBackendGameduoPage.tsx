@@ -14,16 +14,18 @@ import {
 import {
     SwissAboutSection,
     SwissContactSection,
-    SwissGrowthCurveSection_GameServer,
-    SwissHeroSection_GameServer,
     SwissNavigation,
     SwissProjectIntro_BladeX,
     SwissProjectIntro_SamgukBlade,
     SwissResumeSection,
-    SwissWeaknessSection_GameServer,
 } from "@/widgets/portfolio/swissminimal";
+import {
+    SwissGrowthCurveSection_BackendGameduo,
+    SwissHeroSection_BackendGameduo,
+    SwissWeaknessSection_BackendGameduo,
+} from "@/widgets/portfolio/variants/backend-gameduo";
 
-export const SwissMinimalGameServerPage = () => {
+export const SwissMinimalBackendGameduoPage = () => {
     const { setPortfolioMode, setSidebarOpen } = useSidebarStore();
     const mainRef = useRef<HTMLElement>(null);
 
@@ -73,7 +75,7 @@ export const SwissMinimalGameServerPage = () => {
 
     return (
         <div className="relative h-full w-full overflow-hidden bg-white dark:bg-stone-950">
-            <SwissNavigation basePath="/portfolio/gameserver" />
+            <SwissNavigation basePath="/portfolio/backend-gameduo" />
 
             <main
                 ref={mainRef}
@@ -81,16 +83,28 @@ export const SwissMinimalGameServerPage = () => {
             >
                 {/* PAGE 1: COVER */}
                 <div id="hero">
-                    <SwissHeroSection_GameServer />
+                    <SwissHeroSection_BackendGameduo />
                 </div>
 
                 {/* PAGE 2: INTRODUCTION */}
                 <div id="about">
                     <SwissAboutSection
-                        role="게임 서버 개발자"
+                        role="백엔드 개발자"
                         motivation={{
-                            title: "왜 게임 서버인가",
-                            content: "실시간 통신, 동시성 제어, 대규모 트래픽 처리 — 게임 서버는 가장 까다로운 기술적 도전이 밀집된 분야입니다. 이 도메인에서 더 깊이 파고들며 성장하고 싶습니다.",
+                            title: "왜 게임듀오인가",
+                            content: (
+                                <>
+                                    <p className="mb-3">
+                                        공고의 &lsquo;팀원의 한마디&rsquo;에서 &ldquo;서비스 품질을 안정적으로 유지하고, 팀이 유연하게 협업하면서 문제 해결에 집중하는&rdquo; 문화를 읽었습니다. 이것은 제가 게임 서버 팀에서 직접 경험하고 지향해온 방식과 동일합니다.
+                                    </p>
+                                    <p className="mb-3">
+                                        게임 서버에서 쌓은 실시간 처리, 동시성 제어, 라이브 운영 경험은 게임 백엔드의 핵심 역량과 직결됩니다. 이 경험을 Node.js/NestJS 생태계로 확장하여, 안정적인 서비스 운영과 지속적인 시스템 개선에 기여하고 싶습니다.
+                                    </p>
+                                    <p>
+                                        또한, 이전에는 사내 자체 배포 환경을 사용했기에 AWS 같은 클라우드 인프라를 더 깊이 경험하고 싶습니다. 로깅·에러 핸들링·사용자 로그 분석의 기반 시스템을 구축해왔지만, 이를 실제 인프라에 연동하여 모니터링하고 운영하는 영역까지 확장하며 성장하고 싶습니다.
+                                    </p>
+                                </>
+                            ),
                         }}
                     />
                 </div>
@@ -98,7 +112,7 @@ export const SwissMinimalGameServerPage = () => {
                 {/* PAGE 3: RESUME */}
                 <div id="resume">
                     <SwissResumeSection
-                        summary="Golang·C++ 기반 게임 서버를 설계하고, 런칭부터 글로벌 라이브 운영까지 전 사이클을 주도한 3년차 게임 서버 개발자입니다. 실시간 처리, 동시성 제어, 무중단 마이그레이션 같은 문제를 풀며 게임 서버의 깊이에 매료되었고, 앞으로도 이 도메인에서 대규모 동시접속, 분산 시스템, 네트워크 최적화 등 더 깊은 기술적 도전을 이어가고 싶습니다."
+                        summary="Golang·C++ 기반 게임 서버를 설계하고, 6개월 만에 상용 서비스를 런칭하여 21개월 안정적인 라이브 운영을 주도한 4년차 백엔드 개발자입니다. 실시간 처리, 동시성 제어, 무중단 마이그레이션 같은 문제를 풀며 서비스 안정성의 가치를 체감했고, 이 경험을 Node.js/NestJS 기반 게임 백엔드로 확장하며, 로깅·모니터링 기반 시스템을 실제 인프라에 연동하여 운영하는 영역까지 성장하고 싶습니다."
                     />
                 </div>
 
@@ -122,12 +136,12 @@ export const SwissMinimalGameServerPage = () => {
 
                 {/* PAGE 12: GROWTH CURVE */}
                 <div id="growth-curve">
-                    <SwissGrowthCurveSection_GameServer />
+                    <SwissGrowthCurveSection_BackendGameduo />
                 </div>
 
                 {/* PAGE 13: WEAKNESS & PLAN */}
                 <div id="weakness-plan">
-                    <SwissWeaknessSection_GameServer />
+                    <SwissWeaknessSection_BackendGameduo />
                 </div>
 
                 {/* PAGE 14: SKILLS & CONTACT */}

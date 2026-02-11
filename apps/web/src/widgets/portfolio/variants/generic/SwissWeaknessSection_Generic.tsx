@@ -3,7 +3,7 @@
 import {
 	SwissWeaknessSection,
 	type WeaknessItem,
-} from "./SwissWeaknessSection";
+} from "@/widgets/portfolio/swissminimal/ui/SwissWeaknessSection";
 
 const genericItems: WeaknessItem[] = [
 	{
