@@ -24,8 +24,7 @@ import { Switch, Case, Default } from "@/features/mdx-operators/ui/Switch";
 import { Map } from "@/features/mdx-operators/ui/Map";
 import { MindmapViewer } from "@/features/mdx-viewer/ui/MindmapViewer";
 
-// Portfolio Components
-import { ProblemSolution, Problem, Solution, Result, TechDetail, Lesson } from "@/features/portfolio/ui/PortfolioComponents";
+
 
 // Custom component for code blocks with syntax highlighting
 const Pre = ({ children }: { children?: React.ReactNode }) => {
@@ -69,13 +68,6 @@ const components = {
     Map,
     MindmapViewer,
     Network,
-    // Portfolio Components
-    ProblemSolution,
-    Problem,
-    Solution,
-    Result,
-    TechDetail,
-    Lesson,
     // Code block with syntax highlighting
     pre: Pre,
     code: Code,
