@@ -15,6 +15,7 @@ import { ContextRaceDemo } from "./ContextRaceDemo";
 import { StatCard } from "./StatCard";
 import { GraphwriteDemo } from "./GraphwriteDemo";
 import { CodeBlock } from "./CodeBlock";
+import { extractCodeBlockProps } from "../lib/extractCodeBlockProps";
 
 // MDX Operators (Polymorphic Components)
 import { Head } from "@/features/mdx-operators/ui/Head";
@@ -28,7 +29,13 @@ import { MindmapViewer } from "@/features/mdx-viewer/ui/MindmapViewer";
 
 // Custom component for code blocks with syntax highlighting
 const Pre = ({ children }: { children?: React.ReactNode }) => {
-    return <>{children}</>;
+    const codeBlockProps = extractCodeBlockProps(children);
+
+    if (codeBlockProps) {
+        return <CodeBlock className={codeBlockProps.className}>{codeBlockProps.children}</CodeBlock>;
+    }
+
+    return <pre>{children}</pre>;
 };
 
 const Code = ({ children, className }: { children?: React.ReactNode; className?: string }) => {
