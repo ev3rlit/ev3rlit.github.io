@@ -34,7 +34,7 @@ export function SiteTopbar() {
                     href="/"
                     className="text-sm font-extrabold tracking-[-0.02em] text-stone-950 no-underline dark:text-stone-50"
                 >
-                    homveloper<span className="text-indigo-500 dark:text-indigo-400">.</span>
+                    ev3rlit<span className="text-indigo-500 dark:text-indigo-400">.</span>
                 </Link>
 
                 <div className="flex items-center gap-4 sm:gap-5">
