@@ -44,7 +44,7 @@ const Code = ({ children, className }: { children?: React.ReactNode; className?:
         return <CodeBlock className={className}>{children}</CodeBlock>;
     }
     // Inline code (no language class)
-    return <code className="bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>;
+    return <code className="bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>;
 };
 
 const components = {
@@ -86,7 +86,7 @@ interface MdxContentProps {
 
 export function MdxContent({ source }: MdxContentProps) {
     return (
-        <article className="prose dark:prose-invert max-w-none break-words prose-strong:font-bold prose-strong:text-foreground prose-headings:scroll-mt-28">
+        <article className="prose dark:prose-invert max-w-none break-words prose-code:before:content-none prose-code:after:content-none prose-strong:font-bold prose-strong:text-foreground prose-headings:scroll-mt-28">
             <MDXRemote
                 source={source}
                 components={components}
