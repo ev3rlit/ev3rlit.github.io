@@ -2,9 +2,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import ReactFlow, {
-    Background,
     Controls,
-    BackgroundVariant,
     ConnectionMode,
     Node,
     Edge,
@@ -23,7 +21,6 @@ import {
     MathNode,
     StatsNode
 } from '@repo/whiteboard-ui';
-import { useTheme } from 'next-themes';
 import { ReactFlowProvider } from 'reactflow';
 
 // ============================================
@@ -67,8 +64,6 @@ function MindmapCanvas({
     readOnly?: boolean;
 }) {
     const [mounted, setMounted] = React.useState(false);
-    const { resolvedTheme } = useTheme();
-    const isDark = resolvedTheme === 'dark';
 
     useEffect(() => {
         setMounted(true);
@@ -92,15 +87,8 @@ function MindmapCanvas({
             zoomOnScroll={true}
             className="bg-transparent"
         >
-            <Background
-                key={resolvedTheme}
-                color={isDark ? "#57534e" : "#cbd5e1"}
-                gap={20}
-                size={1}
-                variant={BackgroundVariant.Dots}
-            />
             <Controls
-                className="!bg-white dark:!bg-stone-900 !border-slate-200 dark:!border-stone-800 !shadow-lg"
+                className="!bg-stone-50 dark:!bg-stone-950 !border-stone-200 dark:!border-stone-800 !shadow-none"
                 showInteractive={false}
             />
         </ReactFlow>
@@ -130,14 +118,14 @@ export function MindmapViewer({ source, readOnly = true, className }: MindmapVie
     // Empty state
     if (nodes.length === 0) {
         return (
-            <div className="flex items-center justify-center h-[400px] text-slate-400 dark:text-stone-500">
+            <div className="flex h-[400px] items-center justify-center text-stone-400 dark:text-stone-500">
                 마인드맵을 생성할 콘텐츠가 없습니다.
             </div>
         );
     }
 
     return (
-        <div className={`h-[600px] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-stone-800 bg-stone-50 dark:bg-[#0a0a0a] ${className ?? ''}`}>
+        <div className={`h-[600px] w-full overflow-hidden border border-stone-200 bg-stone-50 dark:border-stone-800 dark:bg-stone-950 ${className ?? ''}`}>
             <ReactFlowProvider>
                 <MindmapCanvas nodes={nodes} edges={edges} readOnly={readOnly} />
             </ReactFlowProvider>

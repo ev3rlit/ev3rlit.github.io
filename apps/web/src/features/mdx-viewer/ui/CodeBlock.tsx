@@ -1,86 +1,81 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Highlight, themes } from "prism-react-renderer";
-import { useTheme } from "next-themes";
+import { Highlight, themes, type PrismTheme } from "prism-react-renderer";
 import { cn } from "@/shared/lib/cn";
-import { Check, Copy } from "lucide-react";
-import { MacWindow } from "@/shared/ui/MacWindow";
 
 interface CodeBlockProps {
     children: string;
     className?: string;
 }
 
+const languageAliases: Record<string, string> = {
+    js: "javascript",
+    ts: "typescript",
+    sh: "bash",
+    shell: "bash",
+    zsh: "bash",
+    yml: "yaml",
+    conf: "ini",
+    config: "ini",
+    terminal: "bash",
+    plaintext: "text",
+};
+
+const languageLabels: Record<string, string> = {
+    typescript: "TypeScript",
+    javascript: "JavaScript",
+    tsx: "TSX",
+    jsx: "JSX",
+    go: "Go",
+    python: "Python",
+    rust: "Rust",
+    json: "JSON",
+    yaml: "YAML",
+    bash: "Terminal",
+    css: "CSS",
+    html: "HTML",
+    sql: "SQL",
+    mermaid: "Mermaid",
+    ini: "Config",
+    text: "Plain Text",
+};
+
+const darkCodeTheme: PrismTheme = {
+    ...themes.nightOwl,
+    plain: {
+        color: "#d6deeb",
+        backgroundColor: "#111827",
+    },
+    styles: [
+        ...(themes.nightOwl.styles ?? []),
+        { types: ["comment", "prolog", "doctype", "cdata"], style: { color: "#6b7280", fontStyle: "italic" } },
+        { types: ["punctuation", "operator"], style: { color: "#9ca3af" } },
+        { types: ["keyword", "atrule", "boolean"], style: { color: "#c084fc" } },
+        { types: ["string", "char", "inserted"], style: { color: "#86efac" } },
+        { types: ["number", "constant"], style: { color: "#fca5a5" } },
+        { types: ["function", "method"], style: { color: "#fde68a" } },
+        { types: ["property", "parameter", "variable"], style: { color: "#93c5fd" } },
+        { types: ["tag", "selector", "important"], style: { color: "#f9a8d4" } },
+    ],
+};
+
 export function CodeBlock({ children, className }: CodeBlockProps) {
-    const { resolvedTheme } = useTheme();
-    const [copied, setCopied] = useState(false);
-    const [mounted, setMounted] = useState(false); // Add mounted state
-
-    // Helper to ensure theme is loaded
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
     // Extract language from className (e.g., "language-typescript" -> "typescript")
-    const language = className?.replace(/language-/, "") || "text";
+    const rawLanguage = className?.replace(/language-/, "").toLowerCase() || "text";
+    const language = languageAliases[rawLanguage] || rawLanguage;
 
-    // Remove trailing newline if present
-    const code = children?.trim() || "";
-
-    const handleCopy = async () => {
-        await navigator.clipboard.writeText(code);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
-    // Language display name mapping
-    const languageLabels: Record<string, string> = {
-        typescript: "TypeScript",
-        javascript: "JavaScript",
-        tsx: "TSX",
-        jsx: "JSX",
-        go: "Go",
-        python: "Python",
-        rust: "Rust",
-        json: "JSON",
-        yaml: "YAML",
-        bash: "Bash",
-        shell: "Shell",
-        css: "CSS",
-        html: "HTML",
-        sql: "SQL",
-        text: "Plain Text",
-    };
+    // Preserve intentional indentation while dropping a single trailing newline from fenced blocks.
+    const code = children?.replace(/\n$/, "") || "";
 
     const displayLanguage = languageLabels[language] || language.toUpperCase();
 
-    // Copy Button Component
-    const CopyButton = (
-        <button
-            onClick={handleCopy}
-            className={cn(
-                "flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-all",
-                copied
-                    ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
-                    : "text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-800"
-            )}
-            title="Copy code"
-        >
-            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-        </button>
-    );
-
     return (
-        <MacWindow
-            title={displayLanguage}
-            headerRight={CopyButton}
-            containerClassName="my-6 shadow-sm"
-        >
+        <div className="my-8 overflow-hidden rounded-[10px] bg-stone-950 px-7 py-6">
+            <span className="mb-3.5 block text-[10px] font-bold uppercase tracking-[0.1em] text-stone-400">
+                {displayLanguage}
+            </span>
             <Highlight
-                // Force re-render when theme or mounted state changes
-                key={mounted ? resolvedTheme : 'loading'}
-                theme={mounted && resolvedTheme === "dark" ? themes.dracula : themes.github}
+                theme={darkCodeTheme}
                 code={code}
                 language={language}
             >
@@ -88,20 +83,16 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
                     <pre
                         className={cn(
                             highlightClassName,
-                            "overflow-x-auto text-sm leading-relaxed",
-                            "p-4 m-0 bg-transparent!"
+                            "m-0 overflow-x-auto p-0 text-[13px] leading-[1.8]"
                         )}
                         style={{
                             ...style,
-                            backgroundColor: 'transparent', // Let parent container handle bg
+                            backgroundColor: "transparent",
                         }}
                     >
                         <code>
                             {tokens.map((line, i) => (
                                 <div key={i} {...getLineProps({ line })}>
-                                    <span className="inline-block w-8 text-right mr-4 text-stone-400 dark:text-stone-600 select-none text-xs">
-                                        {i + 1}
-                                    </span>
                                     {line.map((token, key) => (
                                         <span key={key} {...getTokenProps({ token })} />
                                     ))}
@@ -111,6 +102,6 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
                     </pre>
                 )}
             </Highlight>
-        </MacWindow>
+        </div>
     );
 }

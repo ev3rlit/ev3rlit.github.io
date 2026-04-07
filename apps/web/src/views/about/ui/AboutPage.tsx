@@ -8,22 +8,22 @@ interface AboutPageProps {
 
 export default function AboutPage({ post }: AboutPageProps) {
     return (
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20 pt-16 max-w-4xl mx-auto px-6">
-            <header className="mb-20 border-b border-slate-100 dark:border-stone-800 pb-12">
-                <h1 className="text-5xl font-black tracking-tighter text-slate-900 dark:text-stone-100 sm:text-6xl lg:text-7xl mb-6">
+        <div className="pb-20 pt-16">
+            <header className="mb-14 border-b border-stone-200 pb-12 dark:border-stone-800">
+                <h1 className="mb-5 text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-none tracking-[-0.04em] text-stone-950 dark:text-stone-50">
                     About<span className="text-indigo-500">.</span>
                 </h1>
-                <p className="text-xl font-medium text-slate-400 dark:text-stone-500 leading-relaxed max-w-2xl">
+                <p className="max-w-[480px] text-base leading-[1.7] text-stone-600 dark:text-stone-400">
                     {SITE_CONFIG.title}를 운영하는 백엔드 개발자 최범휘입니다.
                 </p>
             </header>
 
-            <article className="relative overflow-hidden rounded-[2.5rem] bg-white/95 dark:bg-stone-900/95 p-8 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] ring-1 ring-slate-200/60 dark:ring-white/10 backdrop-blur-md md:p-16 lg:p-20">
+            <article>
                 <MdxContent source={post.content} />
             </article>
 
-            <footer className="mt-32 pt-12 border-t border-slate-50 dark:border-stone-900 text-center">
-                <div className="text-[12px] text-stone-300 dark:text-stone-700 font-bold tracking-[0.2em] uppercase">
+            <footer className="mt-20 border-t border-stone-200 pt-12 dark:border-stone-800">
+                <div className="text-[12px] font-bold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
                     © {new Date().getFullYear()} {SITE_CONFIG.title}
                 </div>
             </footer>

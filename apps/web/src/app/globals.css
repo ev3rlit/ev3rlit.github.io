@@ -14,8 +14,12 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply text-stone-900 dark:text-stone-100 overflow-hidden h-screen w-screen bg-white dark:bg-stone-950 transition-colors duration-300;
+    @apply min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 transition-colors duration-150 dark:bg-stone-950 dark:text-stone-50;
   }
 
   /* Custom Scrollbar for Dark Mode */
@@ -34,7 +38,7 @@
 
   /* React Flow Dark Mode Overrides */
   .dark .react-flow__controls {
-    @apply bg-stone-900 border-stone-800 shadow-xl shadow-black/20;
+    @apply bg-stone-900 border-stone-800 shadow-none;
   }
 
   .dark .react-flow__controls-button {
@@ -64,15 +68,6 @@
     pointer-events: none !important;
   }
 
-  /* Brand Highlight - <mark> tag styling */
-  .prose mark {
-    @apply bg-transparent text-indigo-600 dark:text-indigo-400 font-bold;
-  }
-
-  /* Brand Link - <a> tag styling */
-  .prose a {
-    @apply text-indigo-600 dark:text-indigo-400 font-medium no-underline hover:underline transition-colors;
-  }
 }
 
 /* ==========================================================================

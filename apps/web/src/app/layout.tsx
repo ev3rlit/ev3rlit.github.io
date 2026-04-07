@@ -3,13 +3,10 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/shared/lib/cn';
 import { ContentWatchdog } from '@/features/dev-tools/ui/ContentWatchdog';
-import { WhiteboardLayout } from '@/widgets/layout/ui/WhiteboardLayout';
-import { Sidebar } from '@/widgets/sidebar/ui';
-import { getPostList } from '@/entities/post/api/get-posts';
-
 import { ThemeProvider } from '@/app/providers/ThemeProvider';
 import { ViewProvider } from '@/shared/context/ViewContext';
 import { SITE_CONFIG } from '@/shared/config/site';
+import { SiteTopbar } from '@/widgets/layout/ui/SiteTopbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,16 +15,14 @@ export const metadata: Metadata = {
     description: SITE_CONFIG.description,
 };
 
-export default async function RootLayout({
+export default function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const posts = await getPostList();
-
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={cn(inter.className, "antialiased selection:bg-indigo-100 selection:text-indigo-900")}>
+            <body className={cn(inter.className, "antialiased selection:bg-indigo-100 selection:text-stone-900")}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -35,9 +30,12 @@ export default async function RootLayout({
                     disableTransitionOnChange
                 >
                     <ViewProvider>
-                        <WhiteboardLayout sidebarContent={<Sidebar posts={posts} />} posts={posts}>
-                            {children}
-                        </WhiteboardLayout>
+                        <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
+                            <SiteTopbar />
+                            <main className="mx-auto w-full max-w-[640px] px-6 pb-20 pt-[104px] sm:pt-[112px]">
+                                {children}
+                            </main>
+                        </div>
                     </ViewProvider>
                     {process.env.NODE_ENV === 'development' && <ContentWatchdog />}
                 </ThemeProvider>
@@ -45,4 +43,3 @@ export default async function RootLayout({
         </html>
     );
 }
-

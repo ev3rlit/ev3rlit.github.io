@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useViewMode } from '@/shared/context/ViewContext';
 
 // ============================================
@@ -27,21 +26,10 @@ interface ViewModeWrapperProps {
  */
 export function ViewModeWrapper({ children, mode }: ViewModeWrapperProps) {
     const { viewMode } = useViewMode();
-    const isVisible = viewMode === mode;
 
-    return (
-        <AnimatePresence mode="wait">
-            {isVisible && (
-                <motion.div
-                    key={mode}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                    {children}
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
+    if (viewMode !== mode) {
+        return null;
+    }
+
+    return <>{children}</>;
 }
